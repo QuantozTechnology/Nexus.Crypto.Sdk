@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+    <Company>Quantoz Technology</Company>
+    <Authors>Quantoz Technology</Authors>
+    <Product>Nexus.LabelApi.SDK</Product>
+    <Description />
+    <Copyright>Copyright © 2021</Copyright>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="JunitXml.TestLogger" Version="4.1.0" />
+    <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="6.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="System.Diagnostics.DiagnosticSource" Version="8.0.1" />
+    <!--
+    The existing versions used were vulnerable.
+    Updating the latest versions of the packages referring to System.Net.Http, System.Text.RegularExpressions, System.Text.Encodings.Web were still using the vulnerable versions.
+    So, adding explicit entries.
+    -->
+    <PackageReference Include="System.Net.Http" Version="4.3.4" />
+    <PackageReference Include="System.Text.RegularExpressions" Version="4.3.1" />
+    <PackageReference Include="System.Text.Encodings.Web" Version="8.0.0" />
+  </ItemGroup>
+
+</Project>
