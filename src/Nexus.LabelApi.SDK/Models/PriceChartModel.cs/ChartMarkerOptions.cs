@@ -1,37 +1,36 @@
-﻿namespace Nexus.LabelApi.SDK.Models.PriceChartModel
-{
-    public class ChartMarkerOptions
-    {
-        private bool _enabled = false;
-        private int _radius = 3;
+﻿namespace Nexus.LabelApi.SDK.Models.PriceChartModel;
 
-        public bool enabled
+public class ChartMarkerOptions
+{
+    private bool _enabled = false;
+    private int _radius = 3;
+
+    public bool enabled
+    {
+        get
         {
-            get
+            return _enabled;
+        }
+        set
+        {
+            if (value != _enabled)
             {
-                return _enabled;
-            }
-            set
-            {
-                if (value != _enabled)
-                {
-                    _enabled = value;
-                }
+                _enabled = value;
             }
         }
+    }
 
-        public int radius
+    public int radius
+    {
+        get
         {
-            get
+            return _radius;
+        }
+        set
+        {
+            if (value != _radius && value > 0)
             {
-                return _radius;
-            }
-            set
-            {
-                if (value != _radius && value > 0)
-                {
-                    _radius = value;
-                }
+                _radius = value;
             }
         }
     }

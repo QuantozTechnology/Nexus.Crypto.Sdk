@@ -2,65 +2,64 @@
 using Newtonsoft.Json;
 using Nexus.LabelApi.SDK.Helpers;
 
-namespace Nexus.LabelApi.SDK.Models.PriceChartModel
+namespace Nexus.LabelApi.SDK.Models.PriceChartModel;
+
+public class ChartSeriesModelPT
 {
-    public class ChartSeriesModelPT
+    private string _step = "false";
+    private ChartMarkerOptions chartMarkerOptions;
+
+    public ChartSeriesModelPT()
     {
-        private string _step = "false";
-        private ChartMarkerOptions chartMarkerOptions;
+        chartMarkerOptions = new ChartMarkerOptions();
+        LineWidth = 2;
+        FillOpacity = 0.75;
 
-        public ChartSeriesModelPT()
-        {
-            chartMarkerOptions = new ChartMarkerOptions();
-            LineWidth = 2;
-            FillOpacity = 0.75;
-
-            this.Data = new ArrayList();
-        }
-
-        public string Color { get; set; }
-        public bool Visible { get; set; }
-        public string Name { get; set; }
-        public string Type { get; set; }
-        public int LineWidth { get; set; }
-        public double FillOpacity { get; set; }
-
-        public string Step
-        {
-            get
-            {
-                return _step;
-            }
-            set
-            {
-                if (value.Equals("false") || value.Equals("true"))
-                {
-                    _step = value;
-                }
-            }
-        }
-
-        public ChartMarkerOptions Marker
-        {
-            get
-            {
-                return chartMarkerOptions;
-            }
-            set
-            {
-                if (value != chartMarkerOptions)
-                {
-                    chartMarkerOptions = value;
-                }
-            }
-        }
-
-        [JsonConverter(typeof(ArrayListConverter<string[]>))]
-        public ArrayList Data { get; set; }
+        this.Data = new ArrayList();
     }
 
-    public class ChartSeriesModelLinkedPT : ChartSeriesModelPT
+    public string Color { get; set; }
+    public bool Visible { get; set; }
+    public string Name { get; set; }
+    public string Type { get; set; }
+    public int LineWidth { get; set; }
+    public double FillOpacity { get; set; }
+
+    public string Step
     {
-        public string LinkedTo { get; set; }
+        get
+        {
+            return _step;
+        }
+        set
+        {
+            if (value.Equals("false") || value.Equals("true"))
+            {
+                _step = value;
+            }
+        }
     }
+
+    public ChartMarkerOptions Marker
+    {
+        get
+        {
+            return chartMarkerOptions;
+        }
+        set
+        {
+            if (value != chartMarkerOptions)
+            {
+                chartMarkerOptions = value;
+            }
+        }
+    }
+
+    [JsonConverter(typeof(ArrayListConverter<string[]>))]
+    public ArrayList Data { get; set; }
+}
+
+public class ChartSeriesModelLinkedPT : ChartSeriesModelPT
+{
+    public string LinkedTo { get; set; }
 }
