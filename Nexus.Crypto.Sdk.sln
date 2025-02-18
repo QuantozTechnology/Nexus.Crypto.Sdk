@@ -5,9 +5,9 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nexus.LabelApi.SDK", "src\Nexus.LabelApi.SDK\Nexus.LabelApi.SDK.csproj", "{0F47BF3C-09B1-024D-95C9-DD81B14485B4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nexus.Crypto.SDK", "src\Nexus.Crypto.SDK\Nexus.Crypto.SDK.csproj", "{0F47BF3C-09B1-024D-95C9-DD81B14485B4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nexus.LabelApi.SDK.Tests", "tests\Nexus.LabelApi.SDK.Tests\Nexus.LabelApi.SDK.Tests.csproj", "{C246954B-B3AF-35B0-7AD6-F0A49E1E3229}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nexus.Crypto.SDK.Tests", "tests\Nexus.Crypto.SDK.Tests\Nexus.Crypto.SDK.Tests.csproj", "{C246954B-B3AF-35B0-7AD6-F0A49E1E3229}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{FD293C05-587C-4A49-A388-48979B04D59C}"
 EndProject
