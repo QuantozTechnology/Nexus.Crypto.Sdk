@@ -4,7 +4,6 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using Nexus.Crypto.SDK.Tests.Helpers;
-using Nexus.LabelApi.SDK.Models;
 using Xunit;
 
 namespace Nexus.Crypto.SDK.Tests;

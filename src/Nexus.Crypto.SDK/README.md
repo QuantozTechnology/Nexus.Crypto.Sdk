@@ -1,4 +1,4 @@
-﻿# Nexus.LabelApi.SDK
+﻿# Nexus.Crypto.SDK
 
 This SDK needs to be integrated with a Microsoft AspNetCore App and complies with netstandard2.0
 

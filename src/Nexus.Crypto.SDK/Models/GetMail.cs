@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Nexus.Crypto.SDK.Models;
+﻿namespace Nexus.Crypto.SDK.Models;
 
 public class GetMail
 {
