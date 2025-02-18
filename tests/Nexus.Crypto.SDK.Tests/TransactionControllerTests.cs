@@ -66,7 +66,7 @@ public class TransactionControllerTests
                                     ""cryptoAmount"": 30.0,
                                     ""cryptoSent"": null,
                                     ""cryptoTraded"": 30.0,
-                                    ""cryptoExpectedAmount"": 0.312140214, 
+                                    ""cryptoExpectedAmount"": 0.312140214,
                                     ""cryptoEstimatePrice"": 0.312140214,
                                     ""cryptoTradePrice"": 0.312140214,
                                     ""cryptoPrice"": 0.312140214,
@@ -98,7 +98,7 @@ public class TransactionControllerTests
                 Content = new StringContent(mockResponseBody, Encoding.UTF8, "application/json"),
             });
 
-        var response = _logicHelper.ApiService.GetTransactions(new System.Collections.Generic.Dictionary<string, string>
+        var response = _logicHelper.BrokerApiService.GetTransactions(new System.Collections.Generic.Dictionary<string, string>
         {
             {"status", "BLOCKED|PAYOUTONHOLD"},
             {"customer", "NL51INGB7243913512"},
@@ -223,7 +223,7 @@ public class TransactionControllerTests
                 Content = new StringContent(mockResponseBody, Encoding.UTF8, "application/json"),
             });
 
-        var response = _logicHelper.ApiService.GetTransaction("DT20210604145241SL6").Result;
+        var response = _logicHelper.BrokerApiService.GetTransaction("DT20210604145241SL6").Result;
 
         Assert.Equal("Successfully processed your request", response.Message);
         Assert.Null(response.Errors);
@@ -304,7 +304,7 @@ public class TransactionControllerTests
 
         using (var client = _logicHelper.ApiClientFactory.GetClient(null))
         {
-            var response = _logicHelper.ApiService.GetTransactionTotals(new System.Collections.Generic.Dictionary<string, string>()).Result;
+            var response = _logicHelper.BrokerApiService.GetTransactionTotals(new System.Collections.Generic.Dictionary<string, string>()).Result;
             Assert.Equal("Successfully processed your request", response.Message);
             Assert.Null(response.Errors);
 

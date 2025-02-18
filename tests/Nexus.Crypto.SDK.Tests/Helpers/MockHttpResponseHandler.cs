@@ -10,13 +10,17 @@ public class LogicHelper
 {
     public readonly INexusApiClientFactory ApiClientFactory;
     public readonly INexusAPIService ApiService;
+    public readonly INexusBrokerAPIService BrokerApiService;
     public readonly MockHttpResponseHandler MockResponseHandler;
 
     public LogicHelper()
     {
         MockResponseHandler = new MockHttpResponseHandler();
         ApiClientFactory = new NexusApiClientFactoryMock(MockResponseHandler);
-        ApiService = new NexusAPIService(ApiClientFactory);
+
+        var apiService = new NexusAPIService(ApiClientFactory); ;
+        ApiService = apiService;
+        BrokerApiService = apiService;
     }
 }
 

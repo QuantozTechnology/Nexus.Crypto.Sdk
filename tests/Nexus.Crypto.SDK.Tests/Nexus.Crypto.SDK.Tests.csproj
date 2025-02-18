@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Nexus.LabelApi.SDK\Nexus.Crypto.SDK.csproj" />
+    <ProjectReference Include="..\..\src\Nexus.Crypto.SDK\Nexus.Crypto.SDK.csproj" />
   </ItemGroup>
 
 </Project>

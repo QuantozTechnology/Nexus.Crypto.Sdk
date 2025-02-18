@@ -3,6 +3,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
+using Nexus.Crypto.SDK.Models;
 using Nexus.Crypto.SDK.Tests.Helpers;
 using Xunit;
 

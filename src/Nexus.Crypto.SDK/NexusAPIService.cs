@@ -9,7 +9,7 @@ using Nexus.Crypto.SDK.Models.Response;
 
 namespace Nexus.Crypto.SDK;
 
-public class NexusAPIService : INexusAPIService
+public class NexusAPIService : INexusAPIService, INexusBrokerAPIService
 {
     private readonly INexusApiClientFactory _nexusApiClientFactory;
 
