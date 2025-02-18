@@ -7,14 +7,12 @@
     <Authors>Quantoz Technology</Authors>
     <Product>Nexus.Crypto.SDK</Product>
     <Description />
-    <Copyright>Copyright © 2024</Copyright>
+    <Copyright>Copyright © 2025</Copyright>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="JunitXml.TestLogger" Version="4.1.0" />
     <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="6.0.0" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.1" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="System.Diagnostics.DiagnosticSource" Version="8.0.1" />
     <!--
     The existing versions used were vulnerable.
