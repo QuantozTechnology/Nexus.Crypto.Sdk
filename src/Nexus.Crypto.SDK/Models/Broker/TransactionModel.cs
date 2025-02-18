@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Nexus.Crypto.SDK.Models;
+namespace Nexus.Crypto.SDK.Models.Broker;
 
 public enum TransactionSummaryPeriod
 {

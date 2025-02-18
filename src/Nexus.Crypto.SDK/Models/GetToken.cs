@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Nexus.Crypto.SDK.Models;
+﻿namespace Nexus.Crypto.SDK.Models;
 
 public class GetToken
 {

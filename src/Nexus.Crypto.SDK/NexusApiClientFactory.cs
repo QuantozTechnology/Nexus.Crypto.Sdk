@@ -1,8 +1,4 @@
-﻿using System;
-using System.Net.Http;
-using System.Threading.Tasks;
-
-namespace Nexus.Crypto.SDK;
+﻿namespace Nexus.Crypto.SDK;
 
 public class NexusApiClientFactory : INexusApiClientFactory
 {

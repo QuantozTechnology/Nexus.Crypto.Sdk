@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
-using Nexus.Crypto.SDK.Models;
+﻿using Nexus.Crypto.SDK.Models;
+using Nexus.Crypto.SDK.Models.Broker;
 using Nexus.Crypto.SDK.Models.PriceChartModel.cs;
 using Nexus.Crypto.SDK.Models.Response;
 
@@ -227,5 +223,14 @@ public class NexusAPIService : INexusAPIService, INexusBrokerAPIService
         }
 
         return query;
+    }
+
+    public async Task<CustomResultHolder<PagedResult<TransactionNotificationCallbackResponse>>> GetCallbacks(string transactionCode)
+    {
+        var endPoint = $"/transaction/{transactionCode}/callbacks";
+
+        var result = await GetAsync(endPoint, "1.2");
+
+        return await result.Content.ReadAsAsync<CustomResultHolder<PagedResult<TransactionNotificationCallbackResponse>>>();
     }
 }

@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Nexus.Crypto.SDK.Models.Response;
+﻿namespace Nexus.Crypto.SDK.Models.Response;
 
 public class PagedResult<T>
 {

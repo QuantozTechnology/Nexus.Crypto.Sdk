@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-
-namespace Nexus.Crypto.SDK;
+﻿namespace Nexus.Crypto.SDK;
 
 public interface INexusApiGetAccessToken
 {

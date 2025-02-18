@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Net.Http;
-using System.Threading.Tasks;
-using Nexus.Crypto.SDK.Models;
+﻿using Nexus.Crypto.SDK.Models;
+using Nexus.Crypto.SDK.Models.Broker;
 using Nexus.Crypto.SDK.Models.PriceChartModel.cs;
 using Nexus.Crypto.SDK.Models.Response;
 
@@ -23,6 +21,8 @@ public interface INexusAPIService
 
     Task<CustomResultHolder<PagedResult<GetTransfer>>> GetTransfers(Dictionary<string, string> queryParams);
     Task<IEnumerable<ChartSeriesModelPT>> GetMinutePrices(int timeSpan, string currencyCode, string cryptoCode);
+
+    Task<CustomResultHolder<PagedResult<TransactionNotificationCallbackResponse>>> GetCallbacks(string transactionCode);
 }
 
 public interface INexusBrokerAPIService : INexusAPIService
