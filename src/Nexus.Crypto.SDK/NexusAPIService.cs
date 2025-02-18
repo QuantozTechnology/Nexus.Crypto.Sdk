@@ -12,6 +12,7 @@ namespace Nexus.Crypto.SDK;
 public class NexusAPIService : INexusAPIService
 {
     private readonly INexusApiClientFactory _nexusApiClientFactory;
+
     public NexusAPIService(INexusApiClientFactory nexusApiClientFactory)
     {
         _nexusApiClientFactory = nexusApiClientFactory;
@@ -88,12 +89,11 @@ public class NexusAPIService : INexusAPIService
 
     public async Task<CustomResultHolder<GetLabelPartner>> GetLabelPartner()
     {
-        throw new NotImplementedException("GetLabelPartner");
-        //var endPoint = $"labelpartner";
+        var endPoint = $"labelpartner";
 
-        //var result = await GetAsync(endPoint, "1.2");
+        var result = await GetAsync(endPoint, "1.2");
 
-        //return await result.Content.ReadAsAsync<CustomResultHolder<GetLabelPartner>>();
+        return await result.Content.ReadAsAsync<CustomResultHolder<GetLabelPartner>>();
     }
 
     public async Task<CustomResultHolder<GetReserves>> GetReserves(string reservesTimeStamp = null)
