@@ -196,7 +196,7 @@ public class NexusAPIService(INexusApiClientFactory nexusApiClientFactory) : INe
     public async Task<CustomResultHolder<PagedResult<TransactionNotificationCallbackResponse>>> GetCallbacks(string transactionCode)
     {
         return await GetAsync<CustomResultHolder<PagedResult<TransactionNotificationCallbackResponse>>>(
-            $"/transaction/{transactionCode}/callbacks",
+            $"transaction/{transactionCode}/callbacks",
             "1.2");
     }
 }
