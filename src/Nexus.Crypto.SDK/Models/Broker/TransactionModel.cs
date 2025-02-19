@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace Nexus.Crypto.SDK.Models.Broker;
 
@@ -22,7 +22,7 @@ public class GetTransaction
     public string AccountCode { get; set; }
     public string CryptoCurrencyCode { get; set; }
     public string CurrencyCode { get; set; }
-    [JsonProperty("EnchangeCode")]
+    [JsonPropertyName("EnchangeCode")]
     public string ExchangeCode { get; set; }
     public string PaymentMethodCode { get; set; }
     public string ExchangeOrderCode { get; set; }

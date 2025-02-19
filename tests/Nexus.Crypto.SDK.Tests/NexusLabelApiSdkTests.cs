@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
+﻿using System.Net;
 using System.Text;
 using Nexus.Crypto.SDK.Models;
 using Nexus.Crypto.SDK.Tests.Helpers;
@@ -19,7 +16,7 @@ public class NexusLabelApiSdkTests
     }
 
     [Fact]
-    public void GetCurrencies_Success()
+    public async Task GetCurrencies_Success()
     {
         var mockResponseBody =
             @"
@@ -54,7 +51,7 @@ public class NexusLabelApiSdkTests
                 Content = new StringContent(mockResponseBody, Encoding.UTF8, "application/json"),
             });
 
-        var response = _logicHelper.ApiService.GetCurrencies().Result;
+        var response = await _logicHelper.ApiService.GetCurrencies();
 
         Assert.Null(response.Errors);
         Assert.Equal("Successfully processed your request", response.Message);
@@ -70,7 +67,7 @@ public class NexusLabelApiSdkTests
     }
 
     [Fact]
-    public void GetReserves_Success()
+    public async Task GetReserves_Success()
     {
         var mockResponseBody =
             @"
@@ -130,7 +127,7 @@ public class NexusLabelApiSdkTests
                 Content = new StringContent(mockResponseBody, Encoding.UTF8, "application/json"),
             });
 
-        var response = _logicHelper.ApiService.GetReserves("2020-08-24T01:02:04Z").Result;
+        var response = await _logicHelper.ApiService.GetReserves("2020-08-24T01:02:04Z");
         Assert.Null(response.Errors);
         Assert.Equal("Successfully processed your request", response.Message);
         Assert.Equal("EUR", response.Values.CurrencyReserves.First().Code);
@@ -164,7 +161,7 @@ public class NexusLabelApiSdkTests
     }
 
     [Fact]
-    public void GetCustodianBalances_Success()
+    public async Task GetCustodianBalances_Success()
     {
         var mockResponseBody =
             @"
@@ -204,7 +201,7 @@ public class NexusLabelApiSdkTests
                 Content = new StringContent(mockResponseBody, Encoding.UTF8, "application/json"),
             });
 
-        var response = _logicHelper.ApiService.GetCustodianBalances().Result;
+        var response = await _logicHelper.ApiService.GetCustodianBalances();
         Assert.Equal("Successfully processed your request", response.Message);
         Assert.Null(response.Errors);
 
@@ -222,7 +219,7 @@ public class NexusLabelApiSdkTests
     }
 
     [Fact]
-    public void GetMails_Success()
+    public async Task GetMails_Success()
     {
         var mockResponseBody =
             @"
@@ -284,7 +281,7 @@ public class NexusLabelApiSdkTests
             });
 
 
-        var response = _logicHelper.ApiService.GetMails(new System.Collections.Generic.Dictionary<string, string>
+        var response = await _logicHelper.ApiService.GetMails(new System.Collections.Generic.Dictionary<string, string>
         {
             { "startDate", "2020-06-21T16:24:09Z" },
             { "endDate", "2022-06-21T16:24:09Z" },
@@ -292,7 +289,7 @@ public class NexusLabelApiSdkTests
             { "customerCode", "NLTEST" },
             { "status", "ReadyToSend" },
             { "type", "TransactionToBeReturned" }
-        }).Result;
+        });
 
         Assert.Equal("Successfully processed your request", response.Message);
         Assert.Null(response.Errors);
@@ -323,7 +320,7 @@ public class NexusLabelApiSdkTests
     }
 
     [Fact]
-    public void GetBrokerBalances_Success()
+    public async Task GetBrokerBalances_Success()
     {
         var mockResponseBody =
             @"
@@ -393,7 +390,7 @@ public class NexusLabelApiSdkTests
                 Content = new StringContent(mockResponseBody, Encoding.UTF8, "application/json"),
             });
 
-        var response = _logicHelper.ApiService.GetBrokerBalances().Result;
+        var response = await _logicHelper.ApiService.GetBrokerBalances();
 
         // We don't test pass trough of all data from the endpoint, because the SDK does not support it yet.
 
@@ -415,7 +412,7 @@ public class NexusLabelApiSdkTests
     }
 
     [Fact]
-    public void GetBalancesMutations_Success()
+    public async Task GetBalancesMutations_Success()
     {
         var mockResponseBody =
             @"
@@ -462,9 +459,9 @@ public class NexusLabelApiSdkTests
                 Content = new StringContent(mockResponseBody, Encoding.UTF8, "application/json"),
             });
 
-        var response = _logicHelper.ApiService
+        var response = await _logicHelper.ApiService
             .GetBalanceMutations(
-                new System.Collections.Generic.Dictionary<string, string> { { "cryptoCode", "XLM" } }).Result;
+                new System.Collections.Generic.Dictionary<string, string> { { "cryptoCode", "XLM" } });
 
 
         var giftMutation = response.Values.Records.Single(x => x.Type == "GIFT");
@@ -485,7 +482,7 @@ public class NexusLabelApiSdkTests
     }
 
     [Fact]
-    public void GetTransfers_Success()
+    public async Task GetTransfers_Success()
     {
         var mockResponseBody =
             @"
@@ -538,11 +535,11 @@ public class NexusLabelApiSdkTests
                 Content = new StringContent(mockResponseBody, Encoding.UTF8, "application/json"),
             });
 
-        var response = _logicHelper.ApiService
+        var response = await _logicHelper.ApiService
             .GetTransfers(new System.Collections.Generic.Dictionary<string, string>
             {
                 { "sinkType", "HotWallet" }, { "sourceExchangeCode", "KRAKEN" }, { "limit", "1" }
-            }).Result;
+            });
 
         Assert.Equal("Successfully processed your request", response.Message);
         Assert.Null(response.Errors);
@@ -573,7 +570,7 @@ public class NexusLabelApiSdkTests
     }
 
     [Fact]
-    public void GetCustomer_Success()
+    public async Task GetCustomer_Success()
     {
         var mockResponseBody =
             @"
@@ -610,7 +607,7 @@ public class NexusLabelApiSdkTests
                 Content = new StringContent(mockResponseBody, Encoding.UTF8, "application/json"),
             });
 
-        var response = _logicHelper.ApiService.GetCustomer("NL29RABO3365135561").Result;
+        var response = await _logicHelper.ApiService.GetCustomer("NL29RABO3365135561");
 
         Assert.Equal("Successfully processed your request", response.Message);
         Assert.Null(response.Errors);
@@ -632,7 +629,7 @@ public class NexusLabelApiSdkTests
     }
 
     [Fact]
-    public void GetCustomers_Success()
+    public async Task GetCustomers_Success()
     {
         var mockResponseBody =
             @"
@@ -682,13 +679,13 @@ public class NexusLabelApiSdkTests
                 Content = new StringContent(mockResponseBody, Encoding.UTF8, "application/json"),
             });
 
-        var response = _logicHelper.ApiService
+        var response = await _logicHelper.ApiService
             .GetCustomers(new System.Collections.Generic.Dictionary<string, string>
             {
                 { "startDate", "2021-01-01T00:00:01Z" },
                 { "endDate", "2022-01-01T00:00:03Z" },
                 { "status", "Active" }
-            }).Result;
+            });
 
         Assert.Equal("Successfully processed your request", response.Message);
         Assert.Null(response.Errors);
@@ -716,7 +713,7 @@ public class NexusLabelApiSdkTests
     }
 
     [Fact]
-    public async void GetCustomers_InvalidQuery()
+    public async Task GetCustomers_InvalidQuery()
     {
         var mockResponseBody =
             @"
@@ -755,7 +752,7 @@ public class NexusLabelApiSdkTests
     }
 
     [Fact]
-    public void GetPrices_Success()
+    public async Task GetPrices_Success()
     {
         var mockResponseBody =
             @"
@@ -797,7 +794,7 @@ public class NexusLabelApiSdkTests
 
         using (var client = _logicHelper.ApiClientFactory.GetClient(null))
         {
-            var response = _logicHelper.ApiService.GetPrices("eur").Result;
+            var response = await _logicHelper.ApiService.GetPrices("eur");
             Assert.Null(response.Errors);
             Assert.Equal("Successfully processed your request", response.Message);
             Assert.Equal("2021-08-11T10:14:24", response.Values.Created);
@@ -814,5 +811,338 @@ public class NexusLabelApiSdkTests
             Assert.Null(response.Values.Prices["BCH"].EstimatedNetworkFastFee);
             Assert.Equal(DateTime.Parse("2021-08-11T10:14:10.973"), response.Values.Prices["BCH"].Updated);
         }
+    }
+
+    [Fact]
+    public async Task GetMinutePrices_Success()
+    {
+        var mockResponseBody =
+            """"
+            [
+                {
+                    "color": "#3A5E9A",
+                    "visible": true,
+                    "name": "Reference price",
+                    "type": "line",
+                    "lineWidth": 2,
+                    "fillOpacity": 0.75,
+                    "step": "false",
+                    "marker": {
+                        "enabled": false,
+                        "radius": 3
+                    },
+                    "data": [
+                        [
+                            1739964780000,
+                            91814.39261400001
+                        ],
+                        [
+                            1739964840000,
+                            91783.00963300001
+                        ],
+                        [
+                            1739964900000,
+                            91793.5501175
+                        ],
+                        [
+                            1739964960000,
+                            91821.5944835
+                        ],
+                        [
+                            1739965020000,
+                            91821.92834500001
+                        ],
+                        [
+                            1739965080000,
+                            91831.03799449999
+                        ],
+                        [
+                            1739965140000,
+                            91831.03799449999
+                        ],
+                        [
+                            1739965200000,
+                            91831.08568900001
+                        ],
+                        [
+                            1739965260000,
+                            91831.2287725
+                        ],
+                        [
+                            1739965320000,
+                            91812.1509725
+                        ],
+                        [
+                            1739965380000,
+                            91808.478496
+                        ],
+                        [
+                            1739965440000,
+                            91806.3322435
+                        ],
+                        [
+                            1739965500000,
+                            91810.91091549999
+                        ],
+                        [
+                            1739965560000,
+                            91805.616826
+                        ],
+                        [
+                            1739965620000,
+                            91810.91091549999
+                        ],
+                        [
+                            1739965680000,
+                            91810.91091549999
+                        ],
+                        [
+                            1739965740000,
+                            91810.91091549999
+                        ],
+                        [
+                            1739965800000,
+                            91810.7201375
+                        ],
+                        [
+                            1739965860000,
+                            91810.5293595
+                        ],
+                        [
+                            1739965920000,
+                            91845.25095549999
+                        ],
+                        [
+                            1739965980000,
+                            91845.25095549999
+                        ],
+                        [
+                            1739966040000,
+                            91845.25095549999
+                        ],
+                        [
+                            1739966100000,
+                            91859.55930549999
+                        ],
+                        [
+                            1739966160000,
+                            91859.55930549999
+                        ],
+                        [
+                            1739966220000,
+                            91859.55930549999
+                        ],
+                        [
+                            1739966280000,
+                            91891.51462049999
+                        ],
+                        [
+                            1739966340000,
+                            91911.06936549998
+                        ],
+                        [
+                            1739966400000,
+                            91911.06936549998
+                        ],
+                        [
+                            1739966460000,
+                            91919.17743049999
+                        ],
+                        [
+                            1739966520000,
+                            91919.17743049999
+                        ]
+                    ]
+                },
+                {
+                    "color": "#3A5E9A",
+                    "visible": true,
+                    "name": "Buy-sell spread",
+                    "type": "arearange",
+                    "lineWidth": 0,
+                    "fillOpacity": 0.3,
+                    "step": "false",
+                    "marker": {
+                        "enabled": false,
+                        "radius": 3
+                    },
+                    "data": [
+                        [
+                            1739964780000,
+                            91355.32065093,
+                            92273.46457707
+                        ],
+                        [
+                            1739964840000,
+                            91324.09458483501,
+                            92241.92468116501
+                        ],
+                        [
+                            1739964900000,
+                            91334.58236691251,
+                            92252.51786808748
+                        ],
+                        [
+                            1739964960000,
+                            91362.4865110825,
+                            92280.70245591749
+                        ],
+                        [
+                            1739965020000,
+                            91362.818703275,
+                            92281.03798672499
+                        ],
+                        [
+                            1739965080000,
+                            91371.8828045275,
+                            92290.19318447249
+                        ],
+                        [
+                            1739965140000,
+                            91371.8828045275,
+                            92290.19318447249
+                        ],
+                        [
+                            1739965200000,
+                            91371.930260555,
+                            92290.241117445
+                        ],
+                        [
+                            1739965260000,
+                            91372.0726286375,
+                            92290.3849163625
+                        ],
+                        [
+                            1739965320000,
+                            91353.0902176375,
+                            92271.21172736249
+                        ],
+                        [
+                            1739965380000,
+                            91349.43610352,
+                            92267.52088847998
+                        ],
+                        [
+                            1739965440000,
+                            91347.3005822825,
+                            92265.3639047175
+                        ],
+                        [
+                            1739965500000,
+                            91351.8563609225,
+                            92269.96547007748
+                        ],
+                        [
+                            1739965560000,
+                            91346.58874186999,
+                            92264.64491012998
+                        ],
+                        [
+                            1739965620000,
+                            91351.8563609225,
+                            92269.96547007748
+                        ],
+                        [
+                            1739965680000,
+                            91351.8563609225,
+                            92269.96547007748
+                        ],
+                        [
+                            1739965740000,
+                            91351.8563609225,
+                            92269.96547007748
+                        ],
+                        [
+                            1739965800000,
+                            91351.66653681251,
+                            92269.77373818749
+                        ],
+                        [
+                            1739965860000,
+                            91351.4767127025,
+                            92269.5820062975
+                        ],
+                        [
+                            1739965920000,
+                            91386.0247007225,
+                            92304.47721027749
+                        ],
+                        [
+                            1739965980000,
+                            91386.0247007225,
+                            92304.47721027749
+                        ],
+                        [
+                            1739966040000,
+                            91386.0247007225,
+                            92304.47721027749
+                        ],
+                        [
+                            1739966100000,
+                            91400.2615089725,
+                            92318.85710202748
+                        ],
+                        [
+                            1739966160000,
+                            91400.2615089725,
+                            92318.85710202748
+                        ],
+                        [
+                            1739966220000,
+                            91400.2615089725,
+                            92318.85710202748
+                        ],
+                        [
+                            1739966280000,
+                            91432.0570473975,
+                            92350.97219360249
+                        ],
+                        [
+                            1739966340000,
+                            91451.51401867249,
+                            92370.6247123275
+                        ],
+                        [
+                            1739966400000,
+                            91451.51401867249,
+                            92370.6247123275
+                        ],
+                        [
+                            1739966460000,
+                            91459.58154334749,
+                            92378.77331765249
+                        ],
+                        [
+                            1739966520000,
+                            91459.58154334749,
+                            92378.77331765249
+                        ]
+                    ]
+                }
+            ]
+            """";
+
+        _logicHelper.MockResponseHandler.AddMockResponse(
+            new HttpRequestMessage(HttpMethod.Get, new Uri("https://api.quantoznexus.com/api/MinuteChart/GetDefault/30?currency=EUR&dcCode=BTC"))
+            {
+                Headers = { { "api_version", "1.0" } }
+            },
+            new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(mockResponseBody, Encoding.UTF8, "application/json"),
+            });
+
+        using var client = _logicHelper.ApiClientFactory.GetClient(null);
+
+        var response = await _logicHelper.ApiService.GetMinutePrices(30, "EUR", "BTC");
+
+        var entry1 = response.First();
+
+        Assert.Equal("Reference price", entry1.Name);
+        Assert.Equal(30, entry1.Data.Count());
+
+        var fstDataEntry1 = entry1.Data.First();
+        Assert.Equal(1739964780000, fstDataEntry1[0]);
+        Assert.Equal(91814.39261400001, fstDataEntry1[1]);
     }
 }

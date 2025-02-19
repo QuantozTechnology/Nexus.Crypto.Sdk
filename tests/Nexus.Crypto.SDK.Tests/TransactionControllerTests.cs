@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
+﻿using System.Net;
 using System.Text;
 using Nexus.Crypto.SDK.Tests.Helpers;
 using Xunit;
@@ -18,7 +15,7 @@ public class TransactionControllerTests
     }
 
     [Fact]
-    public void GetTransactions_Success()
+    public async Task GetTransactions_Success()
     {
         var mockResponseBody =
             @"
@@ -98,7 +95,7 @@ public class TransactionControllerTests
                 Content = new StringContent(mockResponseBody, Encoding.UTF8, "application/json"),
             });
 
-        var response = _logicHelper.BrokerApiService.GetTransactions(new System.Collections.Generic.Dictionary<string, string>
+        var response = await _logicHelper.BrokerApiService.GetTransactions(new System.Collections.Generic.Dictionary<string, string>
         {
             {"status", "BLOCKED|PAYOUTONHOLD"},
             {"customer", "NL51INGB7243913512"},
@@ -110,7 +107,7 @@ public class TransactionControllerTests
             {"endDate", "2022-06-04T14:52:41Z"},
             {"type", "SELL"},
             {"isSettled", "false"}
-        }).Result;
+        });
 
         Assert.Equal("Successfully processed your request", response.Message);
         Assert.Null(response.Errors);
@@ -163,53 +160,52 @@ public class TransactionControllerTests
     }
 
     [Fact]
-    public void GetTransaction_Success()
+    public async Task GetTransaction_Success()
     {
         var mockResponseBody =
-            @"
-                    {
-                        ""message"": ""Successfully processed your request"",
-                        ""errors"": null,
-                        ""values"": {
-                            ""created"": ""2021-06-04T14:52:41"",
-                            ""transactionCode"": ""DT20210604145241SL6"",
-                            ""transactionType"": ""SELL"",
-                            ""status"": ""PayoutOnHold"",
-                            ""type"": ""SELL"",
-                            ""portfolioCode"": null,
-                            ""customerCode"": ""NL51INGB7243913512"",
-                            ""accountCode"": ""XYFWTUQF"",
-                            ""cryptoCurrencyCode"": ""XLM"",
-                            ""currencyCode"": ""EUR"",
-                            ""enchangeCode"": ""XLMWALLETDUROTAN"",
-                            ""paymentMethodCode"": ""DT_CRYPTO_SELL_XLM_EUR"",
-                            ""exchangeOrderCode"": null,
-                            ""cryptoSendTxId"": null,
-                            ""cryptoReceiveTxId"": ""Hic dolor qui et quas unde enim."",
-                            ""notified"": ""2021-06-04T14:52:41"",
-                            ""traded"": ""2021-06-04T14:52:42"",
-                            ""confirmed"": ""2021-06-04T14:52:43"",
-                            ""finished"": null,
-                            ""comment"": ""Exceeded maximum allowed transaction value set by DailySellLimit"",
-                            ""cryptoAmount"": 30.0,
-                            ""cryptoSent"": null,
-                            ""cryptoTraded"": 30.0,
-                            ""cryptoEstimatePrice"": 0.312140214,
-                            ""cryptoExpectedAmount"": 0.312140214,
-                            ""cryptoTradePrice"": 0.312140214,
-                            ""cryptoPrice"": 0.312140214,
-                            ""tradeValue"": 9.36396,
-                            ""bankCommission"": 0.8214,
-                            ""partnerCommission"": 0.1404594,
-                            ""networkCommission"": 0.1,
-                            ""payout"": 8.402100599999999,
-                            ""payComment"": null,
-                            ""bankTransferReference"": null,
-                            ""isSettled"": true
-                            }
-                        }
-                    }
-                ";
+            """
+            {
+                "message": "Successfully processed your request",
+                "errors": null,
+                "values": {
+                    "created": "2021-06-04T14:52:41",
+                    "transactionCode": "DT20210604145241SL6",
+                    "transactionType": "SELL",
+                    "status": "PayoutOnHold",
+                    "type": "SELL",
+                    "portfolioCode": null,
+                    "customerCode": "NL51INGB7243913512",
+                    "accountCode": "XYFWTUQF",
+                    "cryptoCurrencyCode": "XLM",
+                    "currencyCode": "EUR",
+                    "enchangeCode": "XLMWALLETDUROTAN",
+                    "paymentMethodCode": "DT_CRYPTO_SELL_XLM_EUR",
+                    "exchangeOrderCode": null,
+                    "cryptoSendTxId": null,
+                    "cryptoReceiveTxId": "Hic dolor qui et quas unde enim.",
+                    "notified": "2021-06-04T14:52:41",
+                    "traded": "2021-06-04T14:52:42",
+                    "confirmed": "2021-06-04T14:52:43",
+                    "finished": null,
+                    "comment": "Exceeded maximum allowed transaction value set by DailySellLimit",
+                    "cryptoAmount": 30.0,
+                    "cryptoSent": null,
+                    "cryptoTraded": 30.0,
+                    "cryptoEstimatePrice": 0.312140214,
+                    "cryptoExpectedAmount": 0.312140214,
+                    "cryptoTradePrice": 0.312140214,
+                    "cryptoPrice": 0.312140214,
+                    "tradeValue": 9.36396,
+                    "bankCommission": 0.8214,
+                    "partnerCommission": 0.1404594,
+                    "networkCommission": 0.1,
+                    "payout": 8.402100599999999,
+                    "payComment": null,
+                    "bankTransferReference": null,
+                    "isSettled": true
+                }
+            }
+            """;
 
         _logicHelper.MockResponseHandler.AddMockResponse(
             new HttpRequestMessage(HttpMethod.Get, new Uri("https://api.quantoznexus.com/transaction/DT20210604145241SL6"))
@@ -223,7 +219,7 @@ public class TransactionControllerTests
                 Content = new StringContent(mockResponseBody, Encoding.UTF8, "application/json"),
             });
 
-        var response = _logicHelper.BrokerApiService.GetTransaction("DT20210604145241SL6").Result;
+        var response = await _logicHelper.BrokerApiService.GetTransaction("DT20210604145241SL6");
 
         Assert.Equal("Successfully processed your request", response.Message);
         Assert.Null(response.Errors);
@@ -265,7 +261,7 @@ public class TransactionControllerTests
     }
 
     [Fact]
-    public void GetTransactionTotals_Success()
+    public async Task GetTransactionTotals_Success()
     {
         var mockResponseBody =
             @"
@@ -304,11 +300,11 @@ public class TransactionControllerTests
 
         using (var client = _logicHelper.ApiClientFactory.GetClient(null))
         {
-            var response = _logicHelper.BrokerApiService.GetTransactionTotals(new System.Collections.Generic.Dictionary<string, string>()).Result;
+            var response = await _logicHelper.BrokerApiService.GetTransactionTotals(new System.Collections.Generic.Dictionary<string, string>());
             Assert.Equal("Successfully processed your request", response.Message);
             Assert.Null(response.Errors);
 
-            Assert.Equal(0, response.Values.FilteringParameters.Count());
+            Assert.Empty(response.Values.FilteringParameters);
 
             var buyCompleted = response.Values.Totals.Single(x => x.Status == "BUYCOMPLETED");
             Assert.Equal("USD", buyCompleted.CurrencyCode);

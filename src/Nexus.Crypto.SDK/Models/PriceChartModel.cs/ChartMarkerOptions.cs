@@ -1,4 +1,4 @@
-﻿namespace Nexus.Crypto.SDK.Models.PriceChartModel.cs;
+﻿namespace Nexus.Crypto.SDK.Models.PriceChartModel;
 
 public class ChartMarkerOptions
 {

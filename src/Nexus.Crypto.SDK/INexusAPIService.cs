@@ -1,6 +1,6 @@
 ﻿using Nexus.Crypto.SDK.Models;
 using Nexus.Crypto.SDK.Models.Broker;
-using Nexus.Crypto.SDK.Models.PriceChartModel.cs;
+using Nexus.Crypto.SDK.Models.PriceChartModel;
 using Nexus.Crypto.SDK.Models.Response;
 
 namespace Nexus.Crypto.SDK;

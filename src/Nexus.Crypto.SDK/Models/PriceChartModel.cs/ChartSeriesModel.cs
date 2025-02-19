@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using Newtonsoft.Json;
-using Nexus.Crypto.SDK.Helpers;
-
-namespace Nexus.Crypto.SDK.Models.PriceChartModel.cs;
+﻿namespace Nexus.Crypto.SDK.Models.PriceChartModel;
 
 public class ChartSeriesModelPT
 {
@@ -15,7 +11,7 @@ public class ChartSeriesModelPT
         LineWidth = 2;
         FillOpacity = 0.75;
 
-        Data = new ArrayList();
+        Data = [];
     }
 
     public string Color { get; set; }
@@ -55,11 +51,5 @@ public class ChartSeriesModelPT
         }
     }
 
-    [JsonConverter(typeof(ArrayListConverter<string[]>))]
-    public ArrayList Data { get; set; }
-}
-
-public class ChartSeriesModelLinkedPT : ChartSeriesModelPT
-{
-    public string LinkedTo { get; set; }
+    public double[][] Data { get; set; }
 }

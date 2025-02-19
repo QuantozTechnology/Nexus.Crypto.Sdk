@@ -1,7 +1,8 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.Net.Http.Json;
 using Nexus.Crypto.SDK.Models;
 using Nexus.Crypto.SDK.Models.Broker;
-using Nexus.Crypto.SDK.Models.PriceChartModel.cs;
+using Nexus.Crypto.SDK.Models.PriceChartModel;
 using Nexus.Crypto.SDK.Models.Response;
 
 namespace Nexus.Crypto.SDK;
@@ -13,7 +14,7 @@ public class NexusAPIService(INexusApiClientFactory nexusApiClientFactory) : INe
 
     private static async Task HandleErrorResponse<T>(HttpResponseMessage response)
     {
-        var content = await response.Content.ReadAsAsync<CustomResultHolder<T>>();
+        var content = await response.Content.ReadFromJsonAsync<CustomResultHolder<T>>();
 
         var exception = content.Errors != null && content.Errors.Length > 0 ?
             new NexusApiException($"Request failed: {content.Errors.Aggregate((a, b) => a + ", " + b)}") :
@@ -65,7 +66,7 @@ public class NexusAPIService(INexusApiClientFactory nexusApiClientFactory) : INe
             await HandleErrorResponse<T>(httpResponse);
         }
 
-        return await httpResponse.Content.ReadAsAsync<T>();
+        return await httpResponse.Content.ReadFromJsonAsync<T>();
     }
 
     public async Task<CustomResultHolder<GetCurrencies>> GetCurrencies()
