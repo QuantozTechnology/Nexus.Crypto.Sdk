@@ -7,7 +7,6 @@ namespace Nexus.Crypto.SDK;
 
 public interface INexusAPIService
 {
-    Task<HttpClient> GetApiClient();
     Task<CustomResultHolder<GetLabelPartner>> GetLabelPartner();
     Task<CustomResultHolder<GetCurrencies>> GetCurrencies();
     Task<CustomResultHolder<GetCustomer>> GetCustomer(string customerCode);

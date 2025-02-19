@@ -1,201 +1,169 @@
-﻿using Nexus.Crypto.SDK.Models;
+﻿using System.Diagnostics.CodeAnalysis;
+using Nexus.Crypto.SDK.Models;
 using Nexus.Crypto.SDK.Models.Broker;
 using Nexus.Crypto.SDK.Models.PriceChartModel.cs;
 using Nexus.Crypto.SDK.Models.Response;
 
 namespace Nexus.Crypto.SDK;
 
-public class NexusAPIService : INexusAPIService, INexusBrokerAPIService
+public class NexusAPIService(INexusApiClientFactory nexusApiClientFactory) : INexusAPIService, INexusBrokerAPIService
 {
-    private readonly INexusApiClientFactory _nexusApiClientFactory;
+    private readonly Dictionary<string, string> _headers = [];
+    private string? _baseAddress = null;
 
-    public NexusAPIService(INexusApiClientFactory nexusApiClientFactory)
+    private static async Task HandleErrorResponse<T>(HttpResponseMessage response)
     {
-        _nexusApiClientFactory = nexusApiClientFactory;
-    }
-
-    private void HandleErrorResponse(HttpResponseMessage response)
-    {
-        var content = response.Content.ReadAsAsync<CustomResultHolder<object>>().Result;
+        var content = await response.Content.ReadAsAsync<CustomResultHolder<T>>();
 
         var exception = content.Errors != null && content.Errors.Length > 0 ?
             new NexusApiException($"Request failed: {content.Errors.Aggregate((a, b) => a + ", " + b)}") :
             new NexusApiException($"Request failed: {response.ReasonPhrase} ({(int)response.StatusCode})");
 
         exception.StatusCode = response.StatusCode;
-        exception.ResponseContent = response.Content.ReadAsStringAsync().Result;
+        exception.ResponseContent = await response.Content.ReadAsStringAsync();
 
         throw exception;
     }
 
-    public async Task<HttpClient> GetApiClient()
+    private async Task<HttpClient> GetApiClient(string apiVersion)
     {
-        return await _nexusApiClientFactory.GetClient();
+        var client = await nexusApiClientFactory.GetClient(apiVersion);
+
+        foreach (var header in _headers)
+        {
+            client.DefaultRequestHeaders.Add(header.Key, header.Value);
+        }
+
+        if (_baseAddress != null)
+        {
+            client.BaseAddress = new Uri(_baseAddress);
+        }
+
+        return client;
     }
 
-    private async Task<HttpResponseMessage> GetAsync(string endPoint, string apiVersion)
+    public NexusAPIService SetBaseAddress([StringSyntax(StringSyntaxAttribute.Uri)] string baseAddress)
     {
-        var client = await _nexusApiClientFactory.GetClient(apiVersion);
+        _baseAddress = baseAddress;
+        return this;
+    }
+
+    public NexusAPIService AddHeader(string key, string value)
+    {
+        _headers.Add(key, value);
+        return this;
+    }
+
+    private async Task<T> GetAsync<T>(string endPoint, string apiVersion)
+    {
+        var client = await GetApiClient(apiVersion);
 
         var httpResponse = await client.GetAsync(endPoint);
 
         if (!httpResponse.IsSuccessStatusCode)
         {
-            HandleErrorResponse(httpResponse);
+            await HandleErrorResponse<T>(httpResponse);
         }
 
-        return httpResponse;
+        return await httpResponse.Content.ReadAsAsync<T>();
     }
 
     public async Task<CustomResultHolder<GetCurrencies>> GetCurrencies()
     {
-        var endPoint = $"currencies";
-
-        var result = await GetAsync(endPoint, "1.2");
-
-        return await result.Content.ReadAsAsync<CustomResultHolder<GetCurrencies>>();
+        return await GetAsync<CustomResultHolder<GetCurrencies>>("currencies", "1.2");
     }
 
     public async Task<CustomResultHolder<GetCustomer>> GetCustomer(string customerCode)
     {
-        var endPoint = $"customer/{customerCode}";
-
-        var result = await GetAsync(endPoint, "1.2");
-
-        return await result.Content.ReadAsAsync<CustomResultHolder<GetCustomer>>();
+        return await GetAsync<CustomResultHolder<GetCustomer>>($"customer/{customerCode}", "1.2");
     }
 
     public async Task<CustomResultHolder<PagedResult<GetCustomer>>> GetCustomers(Dictionary<string, string> queryParams)
     {
-        var endPoint = $"customer{CreateUriQuery(queryParams)}";
-
-        var result = await GetAsync(endPoint, "1.2");
-
-        return await result.Content.ReadAsAsync<CustomResultHolder<PagedResult<GetCustomer>>>();
+        return await GetAsync<CustomResultHolder<PagedResult<GetCustomer>>>(
+            $"customer{CreateUriQuery(queryParams)}",
+            "1.2");
     }
 
     public async Task<CustomResultHolder<GetPrices>> GetPrices(string currency)
     {
-        var endPoint = $"prices/{currency}";
-
-        var result = await GetAsync(endPoint, "1.2");
-
-        return await result.Content.ReadAsAsync<CustomResultHolder<GetPrices>>();
+        return await GetAsync<CustomResultHolder<GetPrices>>($"prices/{currency}", "1.2");
     }
 
     public async Task<CustomResultHolder<GetLabelPartner>> GetLabelPartner()
     {
-        var endPoint = $"labelpartner";
-
-        var result = await GetAsync(endPoint, "1.2");
-
-        return await result.Content.ReadAsAsync<CustomResultHolder<GetLabelPartner>>();
+        return await GetAsync<CustomResultHolder<GetLabelPartner>>("labelpartner", "1.2");
     }
 
     public async Task<CustomResultHolder<GetReserves>> GetReserves(string reservesTimeStamp = null)
     {
-        var endPoint = $"reserves?reservesTimeStamp={reservesTimeStamp}";
-
-        var result = await GetAsync(endPoint, "1.2");
-
-        return await result.Content.ReadAsAsync<CustomResultHolder<GetReserves>>();
+        return await GetAsync<CustomResultHolder<GetReserves>>(
+            $"reserves?reservesTimeStamp={reservesTimeStamp}",
+            "1.2");
     }
 
     public async Task<CustomResultHolder<GetBrokerBalances_1_1>> GetBrokerBalances()
     {
-        var endPoint = $"labelpartner/balance";
-
-        var result = await GetAsync(endPoint, "1.1");
-
-        var content = await result.Content.ReadAsAsync<Dictionary<string, BalanceItem_1_1>>();
-        var contentList = new List<BalanceItem_1_1>(content.Count);
-
-        foreach (var c in content)
-        {
-            contentList.Add(c.Value);
-        }
+        var result = await GetAsync<Dictionary<string, BalanceItem_1_1>>("labelpartner/balance", "1.1");
 
         return new CustomResultHolder<GetBrokerBalances_1_1>()
         {
             Values = new GetBrokerBalances_1_1()
             {
-                Balances = contentList
+                Balances = result.Values.ToList()
             }
         };
     }
 
     public async Task<CustomResultHolder<GetCustodianBalances_1_2>> GetCustodianBalances()
     {
-        var endPoint = $"balances";
-
-        var result = await GetAsync(endPoint, "1.2");
-
-        return await result.Content.ReadAsAsync<CustomResultHolder<GetCustodianBalances_1_2>>();
+        return await GetAsync<CustomResultHolder<GetCustodianBalances_1_2>>("balances", "1.2");
     }
 
     public async Task<CustomResultHolder<PagedResult<GetBalanceMutation>>> GetBalanceMutations(
         Dictionary<string, string> queryParams)
     {
-        var endPoint = $"/balances/hotwallet/mutations{CreateUriQuery(queryParams)}";
-
-        var result = await GetAsync(endPoint, "1.2");
-
-        return await result.Content.ReadAsAsync<CustomResultHolder<PagedResult<GetBalanceMutation>>>();
+        return await GetAsync<CustomResultHolder<PagedResult<GetBalanceMutation>>>(
+            $"/balances/hotwallet/mutations{CreateUriQuery(queryParams)}",
+            "1.2");
     }
 
     public async Task<CustomResultHolder<PagedResult<GetMail>>> GetMails(
         Dictionary<string, string> queryParams)
     {
-        var endPoint = $"/mail{CreateUriQuery(queryParams)}";
-
-        var result = await GetAsync(endPoint, "1.2");
-
-        return await result.Content.ReadAsAsync<CustomResultHolder<PagedResult<GetMail>>>();
+        return await GetAsync<CustomResultHolder<PagedResult<GetMail>>>(
+            $"/mail{CreateUriQuery(queryParams)}",
+            "1.2");
     }
 
     public async Task<CustomResultHolder<GetTransaction>> GetTransaction(string txCode)
     {
-        var endPoint = $"transaction/{txCode}";
-
-        var result = await GetAsync(endPoint, "1.2");
-
-        return await result.Content.ReadAsAsync<CustomResultHolder<GetTransaction>>();
+        return await GetAsync<CustomResultHolder<GetTransaction>>($"transaction/{txCode}", "1.2");
     }
 
     public async Task<CustomResultHolder<PagedResult<GetTransaction>>> GetTransactions(Dictionary<string, string> queryParams)
     {
-        var endPoint = $"transaction{CreateUriQuery(queryParams)}";
-
-        var result = await GetAsync(endPoint, "1.2");
-
-        return await result.Content.ReadAsAsync<CustomResultHolder<PagedResult<GetTransaction>>>();
+        return await GetAsync<CustomResultHolder<PagedResult<GetTransaction>>>(
+            $"transaction{CreateUriQuery(queryParams)}", "1.2");
     }
 
     public async Task<CustomResultHolder<TotalsResult<TransactionTotals>>> GetTransactionTotals(Dictionary<string, string> queryParams)
     {
-        var endPoint = $"transaction/totals{CreateUriQuery(queryParams)}";
-
-        var result = await GetAsync(endPoint, "1.2");
-
-        return await result.Content.ReadAsAsync<CustomResultHolder<TotalsResult<TransactionTotals>>>();
+        return await GetAsync<CustomResultHolder<TotalsResult<TransactionTotals>>>(
+            $"transaction/totals{CreateUriQuery(queryParams)}", "1.2");
     }
 
     public async Task<CustomResultHolder<PagedResult<GetTransfer>>> GetTransfers(Dictionary<string, string> queryParams)
     {
-        var endPoint = $"/transfers{CreateUriQuery(queryParams)}";
-
-        var result = await GetAsync(endPoint, "1.2");
-
-        return await result.Content.ReadAsAsync<CustomResultHolder<PagedResult<GetTransfer>>>();
+        return await GetAsync<CustomResultHolder<PagedResult<GetTransfer>>>(
+            $"/transfers{CreateUriQuery(queryParams)}", "1.2");
     }
 
     public async Task<IEnumerable<ChartSeriesModelPT>> GetMinutePrices(int timeSpan, string currencyCode, string cryptoCode)
     {
-        var endPoint = $"api/MinuteChart/GetDefault/{timeSpan}?currency={currencyCode}&dcCode={cryptoCode}";
-
-        var result = await GetAsync(endPoint, "1.0");
-
-        return await result.Content.ReadAsAsync<IEnumerable<ChartSeriesModelPT>>();
+        return await GetAsync<IEnumerable<ChartSeriesModelPT>>(
+            $"api/MinuteChart/GetDefault/{timeSpan}?currency={currencyCode}&dcCode={cryptoCode}",
+            "1.0");
     }
 
     /// <summary>
@@ -227,10 +195,8 @@ public class NexusAPIService : INexusAPIService, INexusBrokerAPIService
 
     public async Task<CustomResultHolder<PagedResult<TransactionNotificationCallbackResponse>>> GetCallbacks(string transactionCode)
     {
-        var endPoint = $"/transaction/{transactionCode}/callbacks";
-
-        var result = await GetAsync(endPoint, "1.2");
-
-        return await result.Content.ReadAsAsync<CustomResultHolder<PagedResult<TransactionNotificationCallbackResponse>>>();
+        return await GetAsync<CustomResultHolder<PagedResult<TransactionNotificationCallbackResponse>>>(
+            $"/transaction/{transactionCode}/callbacks",
+            "1.2");
     }
 }
