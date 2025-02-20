@@ -19,6 +19,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		LICENSE = LICENSE
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{A3178A1A-3774-40FA-B2BE-062D27A6E7AA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SdkWebSample", "samples\SdkWebSample\SdkWebSample.csproj", "{A4A24520-331C-40A0-AE3D-C4F9A0350409}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +37,10 @@ Global
 		{C246954B-B3AF-35B0-7AD6-F0A49E1E3229}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C246954B-B3AF-35B0-7AD6-F0A49E1E3229}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C246954B-B3AF-35B0-7AD6-F0A49E1E3229}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4A24520-331C-40A0-AE3D-C4F9A0350409}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4A24520-331C-40A0-AE3D-C4F9A0350409}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4A24520-331C-40A0-AE3D-C4F9A0350409}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4A24520-331C-40A0-AE3D-C4F9A0350409}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -40,6 +48,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{0F47BF3C-09B1-024D-95C9-DD81B14485B4} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{C246954B-B3AF-35B0-7AD6-F0A49E1E3229} = {FD293C05-587C-4A49-A388-48979B04D59C}
+		{A4A24520-331C-40A0-AE3D-C4F9A0350409} = {A3178A1A-3774-40FA-B2BE-062D27A6E7AA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BDB3EE4E-7A74-4D2F-8D3D-E9FC43CDE0F4}

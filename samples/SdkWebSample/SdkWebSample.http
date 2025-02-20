@@ -1,0 +1,6 @@
+@SdkWebSample_HostAddress = http://localhost:5177
+
+GET {{SdkWebSample_HostAddress}}/customers/
+Accept: application/json
+
+###
