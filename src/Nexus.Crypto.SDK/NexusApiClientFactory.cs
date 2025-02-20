@@ -1,24 +1,36 @@
-﻿namespace Nexus.Crypto.SDK;
+﻿using Microsoft.Extensions.Options;
 
-public class NexusApiClientFactory : INexusApiClientFactory
+namespace Nexus.Crypto.SDK;
+
+public class NexusApiClientFactory(
+    IHttpClientFactory httpClientFactory,
+    INexusApiGetAccessToken getAccessTokenFunc,
+    IOptions<NexusApiOptions> options)
+    : INexusApiClientFactory
 {
-    private readonly IHttpClientFactory _httpClientFactory;
-    private readonly Func<Task<string>> _getAccessTokenFunc;
+    private readonly Func<Task<string?>> _getAccessTokenFunc = getAccessTokenFunc.GetAccessToken;
 
-    public NexusApiClientFactory(
-        IHttpClientFactory httpClientFactory,
-        INexusApiGetAccessToken getAccessTokenFunc)
-    {
-        _httpClientFactory = httpClientFactory;
-        _getAccessTokenFunc = getAccessTokenFunc.GetAccessToken;
-    }
-
-    // The passthrough client expects that the api_version already exists in the header
-    // It only adds the authorization token to it.
     public async Task<HttpClient> GetClient()
     {
-        var nexusApiClient = _httpClientFactory.CreateClient("NexusApiClient");
+        var nexusApiClient = httpClientFactory.CreateClient("NexusApiClient");
         var accessToken = await _getAccessTokenFunc();
+
+        if (string.IsNullOrEmpty(accessToken)
+            && options.Value.ThrowOnMissingAccessToken)
+        {
+            throw new Exception("No access token found");
+        }
+
+        // Set the default base address if it is not already set
+        if (nexusApiClient.BaseAddress is null)
+        {
+            if (string.IsNullOrEmpty(options.Value.DefaultBaseAddress))
+            {
+                throw new Exception("No default base address found");
+            }
+
+            nexusApiClient.BaseAddress = new Uri(options.Value.DefaultBaseAddress);
+        }
 
         nexusApiClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {accessToken}");
 

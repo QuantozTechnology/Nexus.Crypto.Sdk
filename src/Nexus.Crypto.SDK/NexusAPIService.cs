@@ -9,14 +9,15 @@ namespace Nexus.Crypto.SDK;
 
 public class NexusAPIService(INexusApiClientFactory nexusApiClientFactory) : INexusAPIService, INexusBrokerAPIService
 {
+    public const string ISO8601DateTimeFormat = "yyyy-MM-ddTHH:mm:ssZ";
+
     private readonly Dictionary<string, string> _headers = [];
-    private string? _baseAddress = null;
 
     private static async Task HandleErrorResponse<T>(HttpResponseMessage response)
     {
         var content = await response.Content.ReadFromJsonAsync<CustomResultHolder<T>>();
 
-        var exception = content.Errors != null && content.Errors.Length > 0 ?
+        var exception = content?.Errors is { Length: > 0 } ?
             new NexusApiException($"Request failed: {content.Errors.Aggregate((a, b) => a + ", " + b)}") :
             new NexusApiException($"Request failed: {response.ReasonPhrase} ({(int)response.StatusCode})");
 
@@ -35,18 +36,7 @@ public class NexusAPIService(INexusApiClientFactory nexusApiClientFactory) : INe
             client.DefaultRequestHeaders.Add(header.Key, header.Value);
         }
 
-        if (_baseAddress != null)
-        {
-            client.BaseAddress = new Uri(_baseAddress);
-        }
-
         return client;
-    }
-
-    public NexusAPIService SetBaseAddress([StringSyntax(StringSyntaxAttribute.Uri)] string baseAddress)
-    {
-        _baseAddress = baseAddress;
-        return this;
     }
 
     public NexusAPIService AddHeader(string key, string value)
@@ -198,6 +188,20 @@ public class NexusAPIService(INexusApiClientFactory nexusApiClientFactory) : INe
     {
         return await GetAsync<CustomResultHolder<PagedResult<TransactionNotificationCallbackResponse>>>(
             $"transaction/{transactionCode}/callbacks",
+            "1.2");
+    }
+
+    public Task<CustomResultHolder<GetCustomerTraceSummary[]>> GetCustomerTraceSummary(string customerCode, DateTime startDate)
+    {
+        return GetAsync<CustomResultHolder<GetCustomerTraceSummary[]>>(
+            $"customer/{customerCode}/trace/summary?startDate={startDate.ToString(ISO8601DateTimeFormat)}",
+            "1.2");
+    }
+
+    public Task<CustomResultHolder<PagedResult<GetCustomerTrace>>> GetCustomerTraces(string customerCode, DateTime startDate)
+    {
+        return GetAsync<CustomResultHolder<PagedResult<GetCustomerTrace>>>(
+            $"customer/{customerCode}/trace?startDate={startDate.ToString(ISO8601DateTimeFormat)}",
             "1.2");
     }
 }

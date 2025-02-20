@@ -22,6 +22,9 @@ public interface INexusAPIService
     Task<IEnumerable<ChartSeriesModelPT>> GetMinutePrices(int timeSpan, string currencyCode, string cryptoCode);
 
     Task<CustomResultHolder<PagedResult<TransactionNotificationCallbackResponse>>> GetCallbacks(string transactionCode);
+
+    Task<CustomResultHolder<GetCustomerTraceSummary[]>> GetCustomerTraceSummary(string customerCode, DateTime startDate);
+    Task<CustomResultHolder<PagedResult<GetCustomerTrace>>> GetCustomerTraces(string customerCode, DateTime startDate);
 }
 
 public interface INexusBrokerAPIService : INexusAPIService

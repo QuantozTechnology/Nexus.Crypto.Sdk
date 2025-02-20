@@ -9,6 +9,7 @@
     <Description />
     <Copyright>Copyright © 2025</Copyright>
     <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
