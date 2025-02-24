@@ -18,7 +18,8 @@ public class NexusAPIService(INexusApiClientFactory nexusApiClientFactory)
 
     private readonly JsonSerializerOptions _serializerOptions = new()
     {
-        Converters = { new JsonStringEnumConverter() }
+        Converters = { new JsonStringEnumConverter() },
+        PropertyNameCaseInsensitive = true
     };
 
     private static async Task HandleErrorResponse<T>(HttpResponseMessage response)
