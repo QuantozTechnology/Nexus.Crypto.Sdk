@@ -169,15 +169,6 @@ public class NexusLabelApiSdkTests
                         ""message"": ""Successfully processed your request"",
                         ""errors"": null,
                         ""values"": {
-                            ""currencyBalances"": [
-                                {
-                                    ""code"": ""EUR"",
-                                    ""name"": ""Euro"",
-                                    ""locked"": 0.1,
-                                    ""total"": 0.3,
-                                    ""available"": 0.2
-                                }
-                            ],
                             ""cryptoBalances"": [
                                 {
                                     ""code"": ""XLM"",
@@ -204,12 +195,6 @@ public class NexusLabelApiSdkTests
         var response = await _logicHelper.ApiService.GetCustodianBalances();
         Assert.Equal("Successfully processed your request", response.Message);
         Assert.Null(response.Errors);
-
-        Assert.Equal("EUR", response.Values.CurrencyBalances.First().Code);
-        Assert.Equal("Euro", response.Values.CurrencyBalances.First().Name);
-        Assert.Equal(0.1M, response.Values.CurrencyBalances.First().Locked);
-        Assert.Equal(0.3M, response.Values.CurrencyBalances.First().Total);
-        Assert.Equal(0.2M, response.Values.CurrencyBalances.First().Available);
 
         Assert.Equal("XLM", response.Values.CryptoBalances.First().Code);
         Assert.Equal("Lumens", response.Values.CryptoBalances.First().Name);

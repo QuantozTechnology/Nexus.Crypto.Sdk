@@ -1,6 +1,6 @@
 ﻿namespace Nexus.Crypto.SDK.Models;
 
-public class BalanceItem_1_2
+public class CustodianBalanceItem
 {
     public string Code { get; set; }
     public string Name { get; set; }
@@ -12,8 +12,7 @@ public class BalanceItem_1_2
 /// <summary>
 /// Get Custodian Balance
 /// </summary>
-public class GetCustodianBalances_1_2
+public class GetCustodianBalances
 {
-    public IEnumerable<BalanceItem_1_2> CurrencyBalances { get; set; }
-    public IEnumerable<BalanceItem_1_2> CryptoBalances { get; set; }
+    public IEnumerable<CustodianBalanceItem> CryptoBalances { get; set; }
 }

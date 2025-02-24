@@ -21,7 +21,6 @@ app.UseHttpsRedirection();
 app.UseSwagger();
 app.UseSwaggerUI();
 
-
 app.MapGet("/customers", async (NexusAPIService api) =>
 {
     var customers = await api.GetCustomers([]);

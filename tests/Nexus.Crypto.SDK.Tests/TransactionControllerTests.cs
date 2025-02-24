@@ -95,7 +95,7 @@ public class TransactionControllerTests
                 Content = new StringContent(mockResponseBody, Encoding.UTF8, "application/json"),
             });
 
-        var response = await _logicHelper.BrokerApiService.GetTransactions(new System.Collections.Generic.Dictionary<string, string>
+        var response = await _logicHelper.BrokerApiService.GetBrokerTransactions(new System.Collections.Generic.Dictionary<string, string>
         {
             {"status", "BLOCKED|PAYOUTONHOLD"},
             {"customer", "NL51INGB7243913512"},
@@ -219,7 +219,7 @@ public class TransactionControllerTests
                 Content = new StringContent(mockResponseBody, Encoding.UTF8, "application/json"),
             });
 
-        var response = await _logicHelper.BrokerApiService.GetTransaction("DT20210604145241SL6");
+        var response = await _logicHelper.BrokerApiService.GetBrokerTransaction("DT20210604145241SL6");
 
         Assert.Equal("Successfully processed your request", response.Message);
         Assert.Null(response.Errors);
@@ -300,7 +300,7 @@ public class TransactionControllerTests
 
         using (var client = _logicHelper.ApiClientFactory.GetClient(null))
         {
-            var response = await _logicHelper.BrokerApiService.GetTransactionTotals(new System.Collections.Generic.Dictionary<string, string>());
+            var response = await _logicHelper.BrokerApiService.GetBrokerTransactionTotals(new System.Collections.Generic.Dictionary<string, string>());
             Assert.Equal("Successfully processed your request", response.Message);
             Assert.Null(response.Errors);
 

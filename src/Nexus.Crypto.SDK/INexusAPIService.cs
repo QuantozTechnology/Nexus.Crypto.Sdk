@@ -1,5 +1,6 @@
 ﻿using Nexus.Crypto.SDK.Models;
 using Nexus.Crypto.SDK.Models.Broker;
+using Nexus.Crypto.SDK.Models.Custodian;
 using Nexus.Crypto.SDK.Models.PriceChartModel;
 using Nexus.Crypto.SDK.Models.Response;
 
@@ -13,7 +14,7 @@ public interface INexusAPIService
     Task<CustomResultHolder<PagedResult<GetCustomer>>> GetCustomers(Dictionary<string, string> queryParams);
     Task<CustomResultHolder<GetPrices>> GetPrices(string currency);
     Task<CustomResultHolder<GetReserves>> GetReserves(string reservesTimeStamp);
-    Task<CustomResultHolder<GetCustodianBalances_1_2>> GetCustodianBalances();
+    Task<CustomResultHolder<GetCustodianBalances>> GetCustodianBalances();
     Task<CustomResultHolder<GetBrokerBalances_1_1>> GetBrokerBalances();
     Task<CustomResultHolder<PagedResult<GetBalanceMutation>>> GetBalanceMutations(Dictionary<string, string> queryParams);
     Task<CustomResultHolder<PagedResult<GetMail>>> GetMails(Dictionary<string, string> queryParams);
@@ -29,7 +30,13 @@ public interface INexusAPIService
 
 public interface INexusBrokerAPIService : INexusAPIService
 {
-    Task<CustomResultHolder<GetTransaction>> GetTransaction(string txCode);
-    Task<CustomResultHolder<PagedResult<GetTransaction>>> GetTransactions(Dictionary<string, string> queryParams);
-    Task<CustomResultHolder<TotalsResult<TransactionTotals>>> GetTransactionTotals(Dictionary<string, string> queryParams);
+    Task<CustomResultHolder<GetTransaction>> GetBrokerTransaction(string txCode);
+    Task<CustomResultHolder<PagedResult<GetTransaction>>> GetBrokerTransactions(Dictionary<string, string> queryParams);
+    Task<CustomResultHolder<TotalsResult<TransactionTotals>>> GetBrokerTransactionTotals(Dictionary<string, string> queryParams);
+}
+
+public interface INexusCustodianAPIService : INexusAPIService
+{
+    Task<CustomResultHolder<ListCustodianTransactionResponse>> GetCustodianTransaction(string txCode);
+    Task<CustomResultHolder<CustodianCancelResponse>> CancelCustodianTransaction(string txCode);
 }
