@@ -231,14 +231,14 @@ public class NexusAPIService(INexusApiClientFactory nexusApiClientFactory)
     public Task<CustomResultHolder<ListCustodianTransactionResponse>> GetCustodianTransaction(string txCode)
     {
         return GetAsync<CustomResultHolder<ListCustodianTransactionResponse>>(
-            $"/transactions/custodian/{txCode}",
+            $"transactions/custodian/{txCode}",
             "1.2");
     }
 
     public Task<CustomResultHolder<CustodianCancelResponse>> CancelCustodianTransaction(string txCode)
     {
         return PostAsync<CustomResultHolder<CustodianCancelResponse>>(
-            $"/transactions/custodian/{txCode}/cancel",
+            $"transactions/custodian/{txCode}/cancel",
             "1.2");
     }
 }
