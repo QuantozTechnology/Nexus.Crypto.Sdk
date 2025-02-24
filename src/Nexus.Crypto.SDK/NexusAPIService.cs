@@ -1,4 +1,6 @@
 ﻿using System.Net.Http.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Nexus.Crypto.SDK.Models;
 using Nexus.Crypto.SDK.Models.Broker;
 using Nexus.Crypto.SDK.Models.Custodian;
@@ -13,6 +15,11 @@ public class NexusAPIService(INexusApiClientFactory nexusApiClientFactory)
     public const string ISO8601DateTimeFormat = "yyyy-MM-ddTHH:mm:ssZ";
 
     private readonly Dictionary<string, string> _headers = [];
+
+    private readonly JsonSerializerOptions _serializerOptions = new()
+    {
+        Converters = { new JsonStringEnumConverter() }
+    };
 
     private static async Task HandleErrorResponse<T>(HttpResponseMessage response)
     {
@@ -57,10 +64,10 @@ public class NexusAPIService(INexusApiClientFactory nexusApiClientFactory)
             await HandleErrorResponse<T>(httpResponse);
         }
 
-        return (await httpResponse.Content.ReadFromJsonAsync<T>())!;
+        return (await httpResponse.Content.ReadFromJsonAsync<T>(options: _serializerOptions))!;
     }
 
-    private async Task<T2> PostAsync<T1, T2>(string endPoint, T1? postObject, string apiVersion)
+    private async Task<TResponse> PostAsync<TInput, TResponse>(string endPoint, TInput? postObject, string apiVersion)
     {
         var client = await GetApiClient(apiVersion);
 
@@ -68,10 +75,10 @@ public class NexusAPIService(INexusApiClientFactory nexusApiClientFactory)
 
         if (!httpResponse.IsSuccessStatusCode)
         {
-            await HandleErrorResponse<T2>(httpResponse);
+            await HandleErrorResponse<TResponse>(httpResponse);
         }
 
-        return (await httpResponse.Content.ReadFromJsonAsync<T2>())!;
+        return (await httpResponse.Content.ReadFromJsonAsync<TResponse>(options: _serializerOptions))!;
     }
 
     private async Task<T2> PostAsync<T2>(string endPoint, string apiVersion)
