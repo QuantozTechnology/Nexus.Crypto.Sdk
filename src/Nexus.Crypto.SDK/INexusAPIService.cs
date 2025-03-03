@@ -26,6 +26,10 @@ public interface INexusAPIService
 
     Task<CustomResultHolder<GetCustomerTraceSummary[]>> GetCustomerTraceSummary(string customerCode, DateTime startDate);
     Task<CustomResultHolder<PagedResult<GetCustomerTrace>>> GetCustomerTraces(string customerCode, DateTime startDate);
+
+    Task<CustomResultHolder<List<GetPortfolio>>> GetPortfolios();
+
+    Task<CustomResultHolder<PagedResult<GetTrustLevel>>> GetTrustLevels();
 }
 
 public interface INexusBrokerAPIService : INexusAPIService

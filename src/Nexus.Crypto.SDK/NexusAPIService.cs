@@ -249,4 +249,14 @@ public class NexusAPIService(INexusApiClientFactory nexusApiClientFactory)
             $"transactions/custodian/{txCode}/cancel",
             "1.2");
     }
+
+    public async Task<CustomResultHolder<List<GetPortfolio>>> GetPortfolios()
+    {
+        return await GetAsync<CustomResultHolder<List<GetPortfolio>>>("portfolios", "1.2");
+    }
+
+    public async Task<CustomResultHolder<PagedResult<GetTrustLevel>>> GetTrustLevels()
+    {
+        return await GetAsync<CustomResultHolder<PagedResult<GetTrustLevel>>>("labelpartner/trustlevels", "1.2");
+    }
 }
