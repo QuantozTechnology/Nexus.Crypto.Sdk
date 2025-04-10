@@ -2,18 +2,18 @@
 
 public class GetTransfersRequest
 {
-    public string CreatedFrom { get; set; }
-    public string CreatedTill { get; set; }
-    public string FinishedFrom { get; set; }
-    public string FinishedTill { get; set; }
+    public DateTime? CreatedFrom { get; set; }
+    public DateTime? CreatedTill { get; set; }
+    public DateTime? FinishedFrom { get; set; }
+    public DateTime? FinishedTill { get; set; }
     public int? Page { get; set; }
     public int? Limit { get; set; }
-    public string SortBy { get; set; }
-    public string Status { get; set; }
-    public string SourceType { get; set; }
-    public string SinkType { get; set; }
-    public string SourceExchangeCode { get; set; }
-    public string SinkExchangeCode { get; set; }
+    public string? SortBy { get; set; }
+    public TransferStatus? Status { get; set; }
+    public TransferAddressType? SourceType { get; set; }
+    public TransferAddressType? SinkType { get; set; }
+    public string? SourceExchangeCode { get; set; }
+    public string? SinkExchangeCode { get; set; }
     public SortDirection? SortDirection { get; set; }
 }
 
@@ -42,8 +42,8 @@ public class GetTransfer
 
 public class GetTransferAddress
 {
-    public string SourceType { get; set; }
-    public string SinkType { get; set; }
+    public TransferAddressType SourceType { get; set; }
+    public TransferAddressType SinkType { get; set; }
     public string Address { get; set; }
     public string? SinkExchangeCode { get; set; }
     public string? SourceExchangeCode { get; set; }

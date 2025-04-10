@@ -2,17 +2,17 @@
 
 public class GetOrdersRequest
 {
-    public string? OrderCode { get; set; }
-    public string? CreatedFrom { get; set; }
-    public string? CreatedTill { get; set; }
-    public string? FinishedFrom { get; set; }
-    public string? FinishedTill { get; set; }
-    public string? Status { get; set; }
+    public DateTime? OrderCode { get; set; }
+    public DateTime? CreatedFrom { get; set; }
+    public DateTime? CreatedTill { get; set; }
+    public DateTime? FinishedFrom { get; set; }
+    public DateTime? FinishedTill { get; set; }
+    public GetOrderStatus? Status { get; set; }
     public string? ExchangeCode { get; set; }
     public string? CryptoCode { get; set; }
     public string? CurrencyCode { get; set; }
-    public string? OrderType { get; set; }
-    public string? ActionType { get; set; }
+    public GetOrderType? OrderType { get; set; }
+    public GetOrderAction? ActionType { get; set; }
     public decimal? AmountFrom { get; set; }
     public decimal? AmountTo { get; set; }
     public bool? IsPartial { get; set; }

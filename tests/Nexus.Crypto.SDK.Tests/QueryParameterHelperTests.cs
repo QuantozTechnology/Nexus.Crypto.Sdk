@@ -4,11 +4,19 @@ using Xunit;
 
 public class QueryParameterHelperTests
 {
+    private enum TestEnum
+    {
+        Value1,
+        Value2,
+        Value3
+    }
+
     private class TestObject
     {
         public string Name { get; set; }
-        public int Age { get; set; }
+        public int? Age { get; set; }
         public string City { get; set; }
+        public TestEnum? EnumValue { get; set; }
     }
 
     [Fact]
@@ -41,13 +49,13 @@ public class QueryParameterHelperTests
     public void ToQueryString_ObjectWithProperties_ReturnsQueryString()
     {
         // Arrange
-        var obj = new TestObject { Name = "John Doe", Age = 30, City = "New York" };
+        var obj = new TestObject { Name = "John Doe", Age = 30, City = "New York", EnumValue = TestEnum.Value1 };
 
         // Act
         var result = QueryParameterHelper.ToQueryString(obj);
 
         // Assert
-        Assert.Equal("name=John%20Doe&age=30&city=New%20York", result);
+        Assert.Equal("name=John%20Doe&age=30&city=New%20York&enumValue=Value1", result);
     }
 
     [Fact]

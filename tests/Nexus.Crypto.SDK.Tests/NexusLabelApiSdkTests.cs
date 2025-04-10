@@ -632,7 +632,7 @@ public class NexusLabelApiSdkTests
             });
 
         var response = await _logicHelper.ApiService
-            .GetTransfers(new GetTransfersRequest { SinkType = "HotWallet", SourceExchangeCode = "KRAKEN", Limit = 1 });
+            .GetTransfers(new GetTransfersRequest { SinkType = TransferAddressType.HotWallet, SourceExchangeCode = "KRAKEN", Limit = 1 });
 
         Assert.Equal("Successfully processed your request", response.Message);
         Assert.Null(response.Errors);
@@ -654,8 +654,8 @@ public class NexusLabelApiSdkTests
         Assert.Equal("other", response.Values.Records.Single().Comment);
         Assert.Equal("XLM", response.Values.Records.Single().CryptoCode);
 
-        Assert.Equal("Exchange", response.Values.Records.Single().Address.SourceType);
-        Assert.Equal("HotWallet", response.Values.Records.Single().Address.SinkType);
+        Assert.Equal(TransferAddressType.Exchange, response.Values.Records.Single().Address.SourceType);
+        Assert.Equal(TransferAddressType.HotWallet, response.Values.Records.Single().Address.SinkType);
         Assert.Equal("GDUZG3G6T276CGLKZVRLPI7SVO3UEP3L67JEG6FO3E2HH4CHJCJRH3GB",
             response.Values.Records.Single().Address.Address);
         Assert.Null(response.Values.Records.Single().Address.SinkExchangeCode);
