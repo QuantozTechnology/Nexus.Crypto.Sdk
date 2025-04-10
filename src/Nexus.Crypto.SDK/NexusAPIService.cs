@@ -18,8 +18,7 @@ public class NexusAPIService(INexusApiClientFactory nexusApiClientFactory)
 
     private readonly JsonSerializerOptions _serializerOptions = new()
     {
-        Converters = { new JsonStringEnumConverter() },
-        PropertyNameCaseInsensitive = true
+        Converters = { new JsonStringEnumConverter() }, PropertyNameCaseInsensitive = true
     };
 
     private static async Task HandleErrorResponse<T>(HttpResponseMessage response)
@@ -171,10 +170,10 @@ public class NexusAPIService(INexusApiClientFactory nexusApiClientFactory)
             $"transaction/totals{CreateUriQuery(queryParams)}", "1.2");
     }
 
-    public async Task<CustomResultHolder<PagedResult<GetTransfer>>> GetTransfers(Dictionary<string, string> queryParams)
+    public async Task<CustomResultHolder<PagedResult<GetTransfer>>> GetTransfers(GetTransferRequest? request = null)
     {
         return await GetAsync<CustomResultHolder<PagedResult<GetTransfer>>>(
-            $"/transfers{CreateUriQuery(queryParams)}", "1.2");
+            $"/transfers?{QueryParameterHelper.ToQueryString(request)}", "1.2");
     }
 
     public async Task<IEnumerable<ChartSeriesModelPT>> GetMinutePrices(int timeSpan, string currencyCode,

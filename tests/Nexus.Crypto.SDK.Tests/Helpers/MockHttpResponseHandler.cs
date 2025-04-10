@@ -12,21 +12,14 @@ public class LogicHelper
         MockResponseHandler = new MockHttpResponseHandler();
         ApiClientFactory = new NexusApiClientFactoryMock(MockResponseHandler);
 
-        var apiService = new NexusAPIService(ApiClientFactory); ;
+        var apiService = new NexusAPIService(ApiClientFactory);
         ApiService = apiService;
         BrokerApiService = apiService;
     }
 }
 
-public class NexusApiClientFactoryMock : INexusApiClientFactory
+public class NexusApiClientFactoryMock(MockHttpResponseHandler mockResponseHandler) : INexusApiClientFactory
 {
-    public readonly MockHttpResponseHandler _mockResponseHandler;
-
-    public NexusApiClientFactoryMock(MockHttpResponseHandler mockResponseHandler)
-    {
-        _mockResponseHandler = mockResponseHandler;
-    }
-
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
     public async Task<HttpClient> GetClient()
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronou
@@ -43,7 +36,7 @@ public class NexusApiClientFactoryMock : INexusApiClientFactory
     public async Task<HttpClient> GetClient(string apiVersion)
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
     {
-        var httpClient = new HttpClient(_mockResponseHandler, disposeHandler: false)
+        var httpClient = new HttpClient(mockResponseHandler, disposeHandler: false)
         {
             BaseAddress = new Uri("https://api.quantoznexus.com"),
         };
@@ -55,24 +48,17 @@ public class NexusApiClientFactoryMock : INexusApiClientFactory
 
 public class MockHttpResponseHandler : DelegatingHandler
 {
-    public class Request : IEquatable<Request>
+    private class Request(HttpRequestMessage r) : IEquatable<Request>
     {
-        public string Uri { get; set; }
-        public string Content { get; set; }
-        public HttpMethod Method { get; set; }
-        public string ApiVersionHeader { get; set; }
-
-        public Request(HttpRequestMessage r)
-        {
-            Content = r?.Content?.ReadAsStringAsync().Result;
-            Uri = r?.RequestUri?.ToString();
-            Method = r?.Method;
-            ApiVersionHeader = r?.Headers.GetValues("api_version").FirstOrDefault();
-        }
+        private string Uri { get; } = r?.RequestUri?.ToString();
+        private string Content { get; } = r?.Content?.ReadAsStringAsync().Result;
+        private HttpMethod Method { get; } = r?.Method;
+        private string ApiVersionHeader { get; } = r?.Headers.GetValues("api_version").FirstOrDefault();
 
         bool IEquatable<Request>.Equals(Request other)
         {
-            return Uri == other.Uri && Content == other.Content && Method == other.Method && ApiVersionHeader == other.ApiVersionHeader;
+            return Uri == other?.Uri && Content == other?.Content && Method == other?.Method &&
+                   ApiVersionHeader == other?.ApiVersionHeader;
         }
 
         public override int GetHashCode()
@@ -81,9 +67,15 @@ public class MockHttpResponseHandler : DelegatingHandler
             // This will give poor hash performance, but will prevent bugs.
             return 0;
         }
+
+        public override bool Equals(object obj)
+        {
+            return ((IEquatable<Request>)this).Equals(obj as Request);
+        }
     }
 
-    private readonly Dictionary<Request, HttpResponseMessage> _mockResponses = new Dictionary<Request, HttpResponseMessage>();
+    private readonly Dictionary<Request, HttpResponseMessage> _mockResponses =
+        new Dictionary<Request, HttpResponseMessage>();
 
     public void AddMockResponse(HttpRequestMessage requestMessage, HttpResponseMessage responseMessage)
     {
@@ -91,18 +83,18 @@ public class MockHttpResponseHandler : DelegatingHandler
     }
 
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-    protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage requestMessage, System.Threading.CancellationToken cancellationToken)
+    protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage requestMessage,
+        System.Threading.CancellationToken cancellationToken)
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
     {
         var request = new Request(requestMessage);
-        if (_mockResponses.ContainsKey(request))
+        if (_mockResponses.TryGetValue(request, out var response))
         {
-            return _mockResponses[request];
+            return response;
         }
         else
         {
             throw new ArgumentException("FakeRequest not registered");
         }
     }
-
 }

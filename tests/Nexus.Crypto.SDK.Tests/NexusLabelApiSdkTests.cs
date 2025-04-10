@@ -8,12 +8,7 @@ namespace Nexus.Crypto.SDK.Tests;
 
 public class NexusLabelApiSdkTests
 {
-    readonly LogicHelper _logicHelper;
-
-    public NexusLabelApiSdkTests()
-    {
-        _logicHelper = new LogicHelper();
-    }
+    readonly LogicHelper _logicHelper = new();
 
     [Fact]
     public async Task GetCurrencies_Success()
@@ -470,48 +465,48 @@ public class NexusLabelApiSdkTests
     public async Task GetTransfers_Success()
     {
         var mockResponseBody =
-            @"
-                    {
-                        ""message"": ""Successfully processed your request"",
-                        ""errors"": null,
-                        ""values"": {
-                            ""page"": 1,
-                            ""total"": 59,
-                            ""totalPages"": 59,
-                            ""filteringParameters"": {
-                                ""sinkType"": ""HotWallet"",
-                                ""sourceExchangeCode"": ""KRAKEN""
-                            },
-                            ""records"": [
-                                {
-                                    ""transferCode"": ""TFR-DC20200921091445TFPP"",
-                                    ""type"": ""DEPOSIT"",
-                                    ""status"": ""COMPLETED"",
-                                    ""amount"": 199.99998000,
-                                    ""created"": ""2020-09-21T09:14:45"",
-                                    ""finished"": ""2020-09-21T09:15:12"",
-                                    ""exchangeTransferCode"": null,
-                                    ""price"": 0.06367,
-                                    ""txId"": ""136233420576702465"",
-                                    ""userName"": null,
-                                    ""comment"": ""other"",
-                                    ""cryptoCode"": ""XLM"",
-                                    ""address"": {
-                                        ""sourceType"": ""Exchange"",
-                                        ""sinkType"": ""HotWallet"",
-                                        ""address"": ""GDUZG3G6T276CGLKZVRLPI7SVO3UEP3L67JEG6FO3E2HH4CHJCJRH3GB"",
-                                        ""sinkExchangeCode"": null,
-                                        ""sourceExchangeCode"": ""KRAKEN""
-                                    }
+            """
+                {
+                    "message": "Successfully processed your request",
+                    "errors": null,
+                    "values": {
+                        "page": 1,
+                        "total": 59,
+                        "totalPages": 59,
+                        "filteringParameters": {
+                            "sinkType": "HotWallet",
+                            "sourceExchangeCode": "KRAKEN"
+                        },
+                        "records": [
+                            {
+                                "transferCode": "TFR-DC20200921091445TFPP",
+                                "type": "DEPOSIT",
+                                "status": "COMPLETED",
+                                "amount": 199.99998000,
+                                "created": "2020-09-21T09:14:45",
+                                "finished": "2020-09-21T09:15:12",
+                                "exchangeTransferCode": null,
+                                "price": 0.06367,
+                                "txId": "136233420576702465",
+                                "userName": null,
+                                "comment": "other",
+                                "cryptoCode": "XLM",
+                                "address": {
+                                    "sourceType": "Exchange",
+                                    "sinkType": "HotWallet",
+                                    "address": "GDUZG3G6T276CGLKZVRLPI7SVO3UEP3L67JEG6FO3E2HH4CHJCJRH3GB",
+                                    "sinkExchangeCode": null,
+                                    "sourceExchangeCode": "KRAKEN"
                                 }
-                            ]
-                        }
+                            }
+                        ]
                     }
-                ";
+                }
+            """;
 
         _logicHelper.MockResponseHandler.AddMockResponse(
             new HttpRequestMessage(HttpMethod.Get, new Uri("https://api.quantoznexus.com/transfers?" +
-                                                           "sinkType=HotWallet&sourceExchangeCode=KRAKEN&limit=1"))
+                                                           "limit=1&sinkType=HotWallet&sourceExchangeCode=KRAKEN"))
             {
                 Headers = { { "api_version", "1.2" } }
             },
@@ -521,9 +516,11 @@ public class NexusLabelApiSdkTests
             });
 
         var response = await _logicHelper.ApiService
-            .GetTransfers(new System.Collections.Generic.Dictionary<string, string>
+            .GetTransfers(new GetTransferRequest
             {
-                { "sinkType", "HotWallet" }, { "sourceExchangeCode", "KRAKEN" }, { "limit", "1" }
+                SinkType = "HotWallet",
+                SourceExchangeCode = "KRAKEN",
+                Limit = 1
             });
 
         Assert.Equal("Successfully processed your request", response.Message);
@@ -534,11 +531,11 @@ public class NexusLabelApiSdkTests
         Assert.Equal(59, response.Values.TotalPages);
         Assert.Equal(2, response.Values.FilteringParameters.Count);
         Assert.Equal("TFR-DC20200921091445TFPP", response.Values.Records.Single().TransferCode);
-        Assert.Equal("DEPOSIT", response.Values.Records.Single().Type);
-        Assert.Equal("COMPLETED", response.Values.Records.Single().Status);
+        Assert.Equal(TransferType.Deposit, response.Values.Records.Single().Type);
+        Assert.Equal(TransferStatus.Completed, response.Values.Records.Single().Status);
         Assert.Equal(199.99998000M, response.Values.Records.Single().Amount);
-        Assert.Equal("2020-09-21T09:14:45", response.Values.Records.Single().Created);
-        Assert.Equal("2020-09-21T09:15:12", response.Values.Records.Single().Finished);
+        Assert.Equal(DateTimeOffset.Parse("2020-09-21T09:14:45"), response.Values.Records.Single().Created);
+        Assert.Equal(DateTimeOffset.Parse("2020-09-21T09:15:12"), response.Values.Records.Single().Finished);
         Assert.Null(response.Values.Records.Single().ExchangeTransferCode);
         Assert.Equal(0.06367m, response.Values.Records.Single().Price);
         Assert.Equal("136233420576702465", response.Values.Records.Single().TxId);
