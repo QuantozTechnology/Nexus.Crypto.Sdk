@@ -2,7 +2,7 @@
 
 public class GetOrdersRequest
 {
-    public DateTime? OrderCode { get; set; }
+    public string? OrderCode { get; set; }
     public DateTime? CreatedFrom { get; set; }
     public DateTime? CreatedTill { get; set; }
     public DateTime? FinishedFrom { get; set; }
