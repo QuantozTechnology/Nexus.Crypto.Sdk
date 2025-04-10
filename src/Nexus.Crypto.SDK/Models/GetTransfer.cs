@@ -57,11 +57,13 @@ public enum TransferType
 
 public enum TransferStatus
 {
-    Initiated,
-    Completed,
-    Failed,
-    Cancelled,
-    ToCancel
+    Sending,
+    COMPLETED,
+    Confirming,
+    CANCELLED,
+    ToCancel,
+    REJECTED,
+    Initiated
 }
 
 public enum TransferAddressType
