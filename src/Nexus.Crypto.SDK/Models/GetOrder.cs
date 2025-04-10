@@ -65,7 +65,7 @@ public class ListOrder
     public string ExchangeTradeCode { get; set; }
 
     /// <summary>
-    /// Exchange unique identifier
+    /// TradePair of the order
     /// </summary>
     public GetOrderTradePair TradePair { get; set; }
 
@@ -178,12 +178,21 @@ public class GetOrderExecuted
 
 public class GetOrderTradePair
 {
+    /// <summary>
+    /// Exchange unique identifier
+    /// </summary>
+    /// <example>KRAKEN</example>
     public string ExchangeCode { get; set; }
 
     /// <summary>
     /// Unique identifier of the currency (ISO 4217)
     /// </summary>
+    /// <example>EUR</example>
     public string CurrencyCode { get; set; }
 
+    /// <summary>
+    /// Crypto currency unique identifier
+    /// </summary>
+    /// <example>BTC</example>
     public string CryptoCode { get; set; }
 }
