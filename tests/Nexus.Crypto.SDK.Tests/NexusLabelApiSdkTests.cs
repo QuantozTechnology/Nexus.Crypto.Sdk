@@ -643,7 +643,7 @@ public class NexusLabelApiSdkTests
         Assert.Equal(2, response.Values.FilteringParameters.Count);
         Assert.Equal("TFR-DC20200921091445TFPP", response.Values.Records.Single().TransferCode);
         Assert.Equal(TransferType.Deposit, response.Values.Records.Single().Type);
-        Assert.Equal(TransferStatus.Completed, response.Values.Records.Single().Status);
+        Assert.Equal(TransferStatus.COMPLETED, response.Values.Records.Single().Status);
         Assert.Equal(199.99998000M, response.Values.Records.Single().Amount);
         Assert.Equal(DateTimeOffset.Parse("2020-09-21T09:14:45"), response.Values.Records.Single().Created);
         Assert.Equal(DateTimeOffset.Parse("2020-09-21T09:15:12"), response.Values.Records.Single().Finished);
