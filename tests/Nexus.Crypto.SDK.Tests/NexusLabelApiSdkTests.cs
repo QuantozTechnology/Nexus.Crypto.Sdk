@@ -8,12 +8,7 @@ namespace Nexus.Crypto.SDK.Tests;
 
 public class NexusLabelApiSdkTests
 {
-    readonly LogicHelper _logicHelper;
-
-    public NexusLabelApiSdkTests()
-    {
-        _logicHelper = new LogicHelper();
-    }
+    readonly LogicHelper _logicHelper = new();
 
     [Fact]
     public async Task GetCurrencies_Success()
@@ -466,52 +461,168 @@ public class NexusLabelApiSdkTests
         Assert.Equal(-2.8580000000000004E-06M, feeMutation.Value);
     }
 
+    public async Task GetOrders_Success()
+    {
+        var mockResponseBody = """
+           {
+               "message": "Successfully processed your request",
+               "errors": null,
+               "values": {
+                   "page": 1,
+                   "total": 3,
+                   "totalPages": 1,
+                   "filteringParameters": {},
+                   "records": [
+                       {
+                           "orderCode": "TEST_ORDER_CODE_3",
+                           "exchangeTradeCode": null,
+                           "tradePair": {
+                               "exchangeCode": "KRAKEN",
+                               "currencyCode": "EUR",
+                               "cryptoCode": "BTC"
+                           },
+                           "action": "Buy",
+                           "type": "Market",
+                           "status": "Initiated",
+                           "amount": 100.00000000,
+                           "limitPrice": null,
+                           "created": "2025-04-10T08:07:25",
+                           "finished": "2025-04-10T08:07:25",
+                           "originalValidTill": "2025-04-11T08:07:25",
+                           "executed": {
+                               "amount": null,
+                               "price": null,
+                               "value": null,
+                               "partial": false,
+                               "fee": null
+                           }
+                       },
+                       {
+                           "orderCode": "TEST_ORDER_CODE_2",
+                           "exchangeTradeCode": null,
+                           "tradePair": {
+                               "exchangeCode": "KRAKEN",
+                               "currencyCode": "EUR",
+                               "cryptoCode": "BTC"
+                           },
+                           "action": "Buy",
+                           "type": "Market",
+                           "status": "Initiated",
+                           "amount": 100.00000000,
+                           "limitPrice": null,
+                           "created": "2025-04-10T08:07:25",
+                           "finished": "2025-04-10T08:07:25",
+                           "originalValidTill": "2025-04-11T08:07:25",
+                           "executed": {
+                               "amount": null,
+                               "price": null,
+                               "value": null,
+                               "partial": false,
+                               "fee": null
+                           }
+                       },
+                       {
+                           "orderCode": "TEST_ORDER_CODE_1",
+                           "exchangeTradeCode": null,
+                           "tradePair": {
+                               "exchangeCode": "KRAKEN",
+                               "currencyCode": "EUR",
+                               "cryptoCode": "BTC"
+                           },
+                           "action": "Buy",
+                           "type": "Market",
+                           "status": "Initiated",
+                           "amount": 100.00000000,
+                           "limitPrice": null,
+                           "created": "2025-04-10T08:07:25",
+                           "finished": "2025-04-10T08:07:25",
+                           "originalValidTill": "2025-04-11T08:07:25",
+                           "executed": {
+                               "amount": null,
+                               "price": null,
+                               "value": null,
+                               "partial": false,
+                               "fee": null
+                           }
+                       }
+                   ]
+               }
+           }
+           """;
+
+        _logicHelper.MockResponseHandler.AddMockResponse(
+            new HttpRequestMessage(HttpMethod.Get,
+                new Uri(
+                    "https://api.quantoznexus.com/orders"))
+            {
+                Headers = { { "api_version", "1.2" } }
+            },
+            new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(mockResponseBody, Encoding.UTF8, "application/json"),
+            });
+        var response = await _logicHelper.ApiService
+            .GetOrders(new GetOrdersRequest
+            {
+                ExchangeCode = "KRAKEN", CurrencyCode = "EUR", CryptoCode = "BTC", Limit = 1
+            });
+
+        Assert.Equal("Successfully processed your request", response.Message);
+        Assert.Null(response.Errors);
+        Assert.Equal(1, response.Values.Page);
+        Assert.Equal(3, response.Values.Total);
+        Assert.Equal(1, response.Values.TotalPages);
+        Assert.Equal(0, response.Values.FilteringParameters.Count);
+        Assert.Equal("TEST_ORDER_CODE_3", response.Values.Records.First().OrderCode);
+        Assert.Null(response.Values.Records.First().ExchangeTradeCode);
+    }
+
     [Fact]
     public async Task GetTransfers_Success()
     {
         var mockResponseBody =
-            @"
-                    {
-                        ""message"": ""Successfully processed your request"",
-                        ""errors"": null,
-                        ""values"": {
-                            ""page"": 1,
-                            ""total"": 59,
-                            ""totalPages"": 59,
-                            ""filteringParameters"": {
-                                ""sinkType"": ""HotWallet"",
-                                ""sourceExchangeCode"": ""KRAKEN""
-                            },
-                            ""records"": [
-                                {
-                                    ""transferCode"": ""TFR-DC20200921091445TFPP"",
-                                    ""type"": ""DEPOSIT"",
-                                    ""status"": ""COMPLETED"",
-                                    ""amount"": 199.99998000,
-                                    ""created"": ""2020-09-21T09:14:45"",
-                                    ""finished"": ""2020-09-21T09:15:12"",
-                                    ""exchangeTransferCode"": null,
-                                    ""price"": 0.06367,
-                                    ""txId"": ""136233420576702465"",
-                                    ""userName"": null,
-                                    ""comment"": ""other"",
-                                    ""cryptoCode"": ""XLM"",
-                                    ""address"": {
-                                        ""sourceType"": ""Exchange"",
-                                        ""sinkType"": ""HotWallet"",
-                                        ""address"": ""GDUZG3G6T276CGLKZVRLPI7SVO3UEP3L67JEG6FO3E2HH4CHJCJRH3GB"",
-                                        ""sinkExchangeCode"": null,
-                                        ""sourceExchangeCode"": ""KRAKEN""
-                                    }
+            """
+                {
+                    "message": "Successfully processed your request",
+                    "errors": null,
+                    "values": {
+                        "page": 1,
+                        "total": 59,
+                        "totalPages": 59,
+                        "filteringParameters": {
+                            "sinkType": "HotWallet",
+                            "sourceExchangeCode": "KRAKEN"
+                        },
+                        "records": [
+                            {
+                                "transferCode": "TFR-DC20200921091445TFPP",
+                                "type": "DEPOSIT",
+                                "status": "COMPLETED",
+                                "amount": 199.99998000,
+                                "created": "2020-09-21T09:14:45",
+                                "finished": "2020-09-21T09:15:12",
+                                "exchangeTransferCode": null,
+                                "price": 0.06367,
+                                "txId": "136233420576702465",
+                                "userName": null,
+                                "comment": "other",
+                                "cryptoCode": "XLM",
+                                "address": {
+                                    "sourceType": "Exchange",
+                                    "sinkType": "HotWallet",
+                                    "address": "GDUZG3G6T276CGLKZVRLPI7SVO3UEP3L67JEG6FO3E2HH4CHJCJRH3GB",
+                                    "sinkExchangeCode": null,
+                                    "sourceExchangeCode": "KRAKEN"
                                 }
-                            ]
-                        }
+                            }
+                        ]
                     }
-                ";
+                }
+            """;
 
         _logicHelper.MockResponseHandler.AddMockResponse(
             new HttpRequestMessage(HttpMethod.Get, new Uri("https://api.quantoznexus.com/transfers?" +
-                                                           "sinkType=HotWallet&sourceExchangeCode=KRAKEN&limit=1"))
+                                                           "limit=1&sinkType=HotWallet&sourceExchangeCode=KRAKEN"))
             {
                 Headers = { { "api_version", "1.2" } }
             },
@@ -521,10 +632,7 @@ public class NexusLabelApiSdkTests
             });
 
         var response = await _logicHelper.ApiService
-            .GetTransfers(new System.Collections.Generic.Dictionary<string, string>
-            {
-                { "sinkType", "HotWallet" }, { "sourceExchangeCode", "KRAKEN" }, { "limit", "1" }
-            });
+            .GetTransfers(new GetTransfersRequest { SinkType = TransferAddressType.HotWallet, SourceExchangeCode = "KRAKEN", Limit = 1 });
 
         Assert.Equal("Successfully processed your request", response.Message);
         Assert.Null(response.Errors);
@@ -534,11 +642,11 @@ public class NexusLabelApiSdkTests
         Assert.Equal(59, response.Values.TotalPages);
         Assert.Equal(2, response.Values.FilteringParameters.Count);
         Assert.Equal("TFR-DC20200921091445TFPP", response.Values.Records.Single().TransferCode);
-        Assert.Equal("DEPOSIT", response.Values.Records.Single().Type);
-        Assert.Equal("COMPLETED", response.Values.Records.Single().Status);
+        Assert.Equal(TransferType.Deposit, response.Values.Records.Single().Type);
+        Assert.Equal(TransferStatus.Completed, response.Values.Records.Single().Status);
         Assert.Equal(199.99998000M, response.Values.Records.Single().Amount);
-        Assert.Equal("2020-09-21T09:14:45", response.Values.Records.Single().Created);
-        Assert.Equal("2020-09-21T09:15:12", response.Values.Records.Single().Finished);
+        Assert.Equal(DateTimeOffset.Parse("2020-09-21T09:14:45"), response.Values.Records.Single().Created);
+        Assert.Equal(DateTimeOffset.Parse("2020-09-21T09:15:12"), response.Values.Records.Single().Finished);
         Assert.Null(response.Values.Records.Single().ExchangeTransferCode);
         Assert.Equal(0.06367m, response.Values.Records.Single().Price);
         Assert.Equal("136233420576702465", response.Values.Records.Single().TxId);
@@ -546,8 +654,8 @@ public class NexusLabelApiSdkTests
         Assert.Equal("other", response.Values.Records.Single().Comment);
         Assert.Equal("XLM", response.Values.Records.Single().CryptoCode);
 
-        Assert.Equal("Exchange", response.Values.Records.Single().Address.SourceType);
-        Assert.Equal("HotWallet", response.Values.Records.Single().Address.SinkType);
+        Assert.Equal(TransferAddressType.Exchange, response.Values.Records.Single().Address.SourceType);
+        Assert.Equal(TransferAddressType.HotWallet, response.Values.Records.Single().Address.SinkType);
         Assert.Equal("GDUZG3G6T276CGLKZVRLPI7SVO3UEP3L67JEG6FO3E2HH4CHJCJRH3GB",
             response.Values.Records.Single().Address.Address);
         Assert.Null(response.Values.Records.Single().Address.SinkExchangeCode);
@@ -1108,7 +1216,8 @@ public class NexusLabelApiSdkTests
             """";
 
         _logicHelper.MockResponseHandler.AddMockResponse(
-            new HttpRequestMessage(HttpMethod.Get, new Uri("https://api.quantoznexus.com/api/MinuteChart/GetDefault/30?currency=EUR&dcCode=BTC"))
+            new HttpRequestMessage(HttpMethod.Get,
+                new Uri("https://api.quantoznexus.com/api/MinuteChart/GetDefault/30?currency=EUR&dcCode=BTC"))
             {
                 Headers = { { "api_version", "1.0" } }
             },
