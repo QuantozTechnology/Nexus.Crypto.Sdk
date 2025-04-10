@@ -170,10 +170,16 @@ public class NexusAPIService(INexusApiClientFactory nexusApiClientFactory)
             $"transaction/totals{CreateUriQuery(queryParams)}", "1.2");
     }
 
-    public async Task<CustomResultHolder<PagedResult<GetTransfer>>> GetTransfers(GetTransferRequest? request = null)
+    public async Task<CustomResultHolder<PagedResult<GetTransfer>>> GetTransfers(GetTransfersRequest? request = null)
     {
         return await GetAsync<CustomResultHolder<PagedResult<GetTransfer>>>(
             $"/transfers?{QueryParameterHelper.ToQueryString(request)}", "1.2");
+    }
+
+    public async Task<CustomResultHolder<PagedResult<ListOrder>>> GetOrders(GetOrdersRequest? request = null)
+    {
+        return await GetAsync<CustomResultHolder<PagedResult<ListOrder>>>(
+            $"/orders?{QueryParameterHelper.ToQueryString(request)}", "1.2");
     }
 
     public async Task<IEnumerable<ChartSeriesModelPT>> GetMinutePrices(int timeSpan, string currencyCode,

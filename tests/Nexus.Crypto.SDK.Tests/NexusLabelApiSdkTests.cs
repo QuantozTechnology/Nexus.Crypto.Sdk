@@ -461,6 +461,122 @@ public class NexusLabelApiSdkTests
         Assert.Equal(-2.8580000000000004E-06M, feeMutation.Value);
     }
 
+    public async Task GetOrders_Success()
+    {
+        var mockResponseBody = """
+           {
+               "message": "Successfully processed your request",
+               "errors": null,
+               "values": {
+                   "page": 1,
+                   "total": 3,
+                   "totalPages": 1,
+                   "filteringParameters": {},
+                   "records": [
+                       {
+                           "orderCode": "TEST_ORDER_CODE_3",
+                           "exchangeTradeCode": null,
+                           "tradePair": {
+                               "exchangeCode": "KRAKEN",
+                               "currencyCode": "EUR",
+                               "cryptoCode": "BTC"
+                           },
+                           "action": "Buy",
+                           "type": "Market",
+                           "status": "Initiated",
+                           "amount": 100.00000000,
+                           "limitPrice": null,
+                           "created": "2025-04-10T08:07:25",
+                           "finished": "2025-04-10T08:07:25",
+                           "originalValidTill": "2025-04-11T08:07:25",
+                           "executed": {
+                               "amount": null,
+                               "price": null,
+                               "value": null,
+                               "partial": false,
+                               "fee": null
+                           }
+                       },
+                       {
+                           "orderCode": "TEST_ORDER_CODE_2",
+                           "exchangeTradeCode": null,
+                           "tradePair": {
+                               "exchangeCode": "KRAKEN",
+                               "currencyCode": "EUR",
+                               "cryptoCode": "BTC"
+                           },
+                           "action": "Buy",
+                           "type": "Market",
+                           "status": "Initiated",
+                           "amount": 100.00000000,
+                           "limitPrice": null,
+                           "created": "2025-04-10T08:07:25",
+                           "finished": "2025-04-10T08:07:25",
+                           "originalValidTill": "2025-04-11T08:07:25",
+                           "executed": {
+                               "amount": null,
+                               "price": null,
+                               "value": null,
+                               "partial": false,
+                               "fee": null
+                           }
+                       },
+                       {
+                           "orderCode": "TEST_ORDER_CODE_1",
+                           "exchangeTradeCode": null,
+                           "tradePair": {
+                               "exchangeCode": "KRAKEN",
+                               "currencyCode": "EUR",
+                               "cryptoCode": "BTC"
+                           },
+                           "action": "Buy",
+                           "type": "Market",
+                           "status": "Initiated",
+                           "amount": 100.00000000,
+                           "limitPrice": null,
+                           "created": "2025-04-10T08:07:25",
+                           "finished": "2025-04-10T08:07:25",
+                           "originalValidTill": "2025-04-11T08:07:25",
+                           "executed": {
+                               "amount": null,
+                               "price": null,
+                               "value": null,
+                               "partial": false,
+                               "fee": null
+                           }
+                       }
+                   ]
+               }
+           }
+           """;
+
+        _logicHelper.MockResponseHandler.AddMockResponse(
+            new HttpRequestMessage(HttpMethod.Get,
+                new Uri(
+                    "https://api.quantoznexus.com/orders"))
+            {
+                Headers = { { "api_version", "1.2" } }
+            },
+            new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(mockResponseBody, Encoding.UTF8, "application/json"),
+            });
+        var response = await _logicHelper.ApiService
+            .GetOrders(new GetOrdersRequest
+            {
+                ExchangeCode = "KRAKEN", CurrencyCode = "EUR", CryptoCode = "BTC", Limit = 1
+            });
+
+        Assert.Equal("Successfully processed your request", response.Message);
+        Assert.Null(response.Errors);
+        Assert.Equal(1, response.Values.Page);
+        Assert.Equal(3, response.Values.Total);
+        Assert.Equal(1, response.Values.TotalPages);
+        Assert.Equal(0, response.Values.FilteringParameters.Count);
+        Assert.Equal("TEST_ORDER_CODE_3", response.Values.Records.First().OrderCode);
+        Assert.Null(response.Values.Records.First().ExchangeTradeCode);
+    }
+
     [Fact]
     public async Task GetTransfers_Success()
     {
@@ -516,12 +632,7 @@ public class NexusLabelApiSdkTests
             });
 
         var response = await _logicHelper.ApiService
-            .GetTransfers(new GetTransferRequest
-            {
-                SinkType = "HotWallet",
-                SourceExchangeCode = "KRAKEN",
-                Limit = 1
-            });
+            .GetTransfers(new GetTransfersRequest { SinkType = "HotWallet", SourceExchangeCode = "KRAKEN", Limit = 1 });
 
         Assert.Equal("Successfully processed your request", response.Message);
         Assert.Null(response.Errors);
@@ -1105,7 +1216,8 @@ public class NexusLabelApiSdkTests
             """";
 
         _logicHelper.MockResponseHandler.AddMockResponse(
-            new HttpRequestMessage(HttpMethod.Get, new Uri("https://api.quantoznexus.com/api/MinuteChart/GetDefault/30?currency=EUR&dcCode=BTC"))
+            new HttpRequestMessage(HttpMethod.Get,
+                new Uri("https://api.quantoznexus.com/api/MinuteChart/GetDefault/30?currency=EUR&dcCode=BTC"))
             {
                 Headers = { { "api_version", "1.0" } }
             },

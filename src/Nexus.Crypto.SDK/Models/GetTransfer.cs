@@ -1,6 +1,6 @@
 ﻿namespace Nexus.Crypto.SDK.Models;
 
-public class GetTransferRequest
+public class GetTransfersRequest
 {
     public string CreatedFrom { get; set; }
     public string CreatedTill { get; set; }
