@@ -264,4 +264,11 @@ public class NexusAPIService(INexusApiClientFactory nexusApiClientFactory)
     {
         return await GetAsync<CustomResultHolder<PagedResult<GetTrustLevel>>>("labelpartner/trustlevels", "1.2");
     }
+
+    public async Task<CustomResultHolder<PagedResult<GetCustomerBankAccounts>>> GetCustomerBankAccounts(Dictionary<string, string> queryParams)
+    {
+        return  await GetAsync<CustomResultHolder<PagedResult<GetCustomerBankAccounts>>>( 
+            $"customer/bankaccounts{CreateUriQuery(queryParams)}",
+            "1.2");
+    }
 }
