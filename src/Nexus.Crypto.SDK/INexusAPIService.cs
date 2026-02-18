@@ -31,7 +31,7 @@ public interface INexusAPIService
     Task<CustomResultHolder<List<GetPortfolio>>> GetPortfolios();
 
     Task<CustomResultHolder<PagedResult<GetTrustLevel>>> GetTrustLevels();
-    Task<CustomResultHolder<PagedResult<GetCustomerBankAccounts>>> GetCustomerBankAccounts(Dictionary<string, string> queryParams);
+    Task<CustomResultHolder<PagedResult<GetCustomerBankAccounts>>> GetCustomerBankAccounts(string customerCode, Dictionary<string, string> queryParams);
 }
 
 public interface INexusBrokerAPIService : INexusAPIService
