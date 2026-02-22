@@ -85,6 +85,32 @@ public class NexusAPIService(INexusApiClientFactory nexusApiClientFactory)
     {
         return await PostAsync<object, T2>(endPoint, null, apiVersion);
     }
+    
+    private async Task<TResponse> PutAsync<TInput, TResponse>(string endPoint, TInput? postObject, string apiVersion)
+    {
+        var client = await GetApiClient(apiVersion);
+
+        var httpResponse = await client.PutAsJsonAsync(endPoint, postObject);
+
+        if (!httpResponse.IsSuccessStatusCode)
+        {
+            await HandleErrorResponse<TResponse>(httpResponse);
+        }
+
+        return (await httpResponse.Content.ReadFromJsonAsync<TResponse>(options: _serializerOptions))!;
+    }
+    
+    private async Task DeleteAsync(string endPoint, string apiVersion)
+    {
+        var client = await GetApiClient(apiVersion);
+
+        var httpResponse = await client.DeleteAsync(endPoint);
+
+        if (!httpResponse.IsSuccessStatusCode)
+        {
+            await HandleErrorResponse<object>(httpResponse);
+        }
+    }
 
     public async Task<CustomResultHolder<GetCurrencies>> GetCurrencies()
     {
@@ -265,10 +291,33 @@ public class NexusAPIService(INexusApiClientFactory nexusApiClientFactory)
         return await GetAsync<CustomResultHolder<PagedResult<GetTrustLevel>>>("labelpartner/trustlevels", "1.2");
     }
 
-    public async Task<CustomResultHolder<PagedResult<GetCustomerBankAccounts>>> GetCustomerBankAccounts(string customerCode, Dictionary<string, string> queryParams)
+    public async Task<CustomResultHolder<PagedResult<CustomerBankAccountResponse>>> GetCustomerBankAccounts(string customerCode, Dictionary<string, string> queryParams)
     {
-        return  await GetAsync<CustomResultHolder<PagedResult<GetCustomerBankAccounts>>>( 
+        return  await GetAsync<CustomResultHolder<PagedResult<CustomerBankAccountResponse>>>( 
             $"customer/{customerCode}/bankaccounts{CreateUriQuery(queryParams)}",
+            "1.2");
+    }
+    
+    public async Task<CustomResultHolder<CustomerBankAccountResponse>> CreateCustomerBankAccount(string customerCode, CreateBankAccountRequestModel request)
+    {
+        return await PostAsync<CreateBankAccountRequestModel, CustomResultHolder<CustomerBankAccountResponse>>(
+            $"customer/{customerCode}/bankaccounts", request, "1.2");
+    }
+
+    public async Task<CustomResultHolder<CustomerBankAccountResponse>> UpdateCustomerBankAccount(string customerCode,
+        Guid bankAccountId, UpdateBankAccountRequest request)
+    {
+        return await PutAsync<UpdateBankAccountRequest, CustomResultHolder<CustomerBankAccountResponse>>(
+            $"customer/{customerCode}/bankaccounts/{bankAccountId}",
+            request,
+            "1.2"
+        );
+    }
+
+    public Task DeleteCustomerBankAccount(string customerCode, Guid bankAccountId)
+    {
+        return DeleteAsync(
+            $"customer/{customerCode}/bankAccounts/{bankAccountId}",
             "1.2");
     }
 }
