@@ -6,110 +6,17 @@ using Nexus.Crypto.SDK.Models.Broker;
 using Nexus.Crypto.SDK.Models.Custodian;
 using Nexus.Crypto.SDK.Models.PriceChartModel;
 using Nexus.Crypto.SDK.Models.Response;
+using Nexus.Crypto.SDK.Services;
 
 namespace Nexus.Crypto.SDK;
 
 public class NexusAPIService(INexusApiClientFactory nexusApiClientFactory)
-    : INexusAPIService, INexusBrokerAPIService, INexusCustodianAPIService
+    : BaseService(nexusApiClientFactory), INexusBrokerAPIService, INexusCustodianAPIService
 {
-    public const string ISO8601DateTimeFormat = "yyyy-MM-ddTHH:mm:ssZ";
-
-    private readonly Dictionary<string, string> _headers = [];
-
-    private readonly JsonSerializerOptions _serializerOptions = new()
-    {
-        Converters = { new JsonStringEnumConverter() }, PropertyNameCaseInsensitive = true
-    };
-
-    private static async Task HandleErrorResponse<T>(HttpResponseMessage response)
-    {
-        var content = await response.Content.ReadFromJsonAsync<CustomResultHolder<T>>();
-
-        var exception = content?.Errors is { Length: > 0 }
-            ? new NexusApiException($"Request failed: {content.Errors.Aggregate((a, b) => a + ", " + b)}")
-            : new NexusApiException($"Request failed: {response.ReasonPhrase} ({(int)response.StatusCode})");
-
-        exception.StatusCode = response.StatusCode;
-        exception.ResponseContent = await response.Content.ReadAsStringAsync();
-
-        throw exception;
-    }
-
-    private async Task<HttpClient> GetApiClient(string apiVersion)
-    {
-        var client = await nexusApiClientFactory.GetClient(apiVersion);
-
-        foreach (var header in _headers)
-        {
-            client.DefaultRequestHeaders.Add(header.Key, header.Value);
-        }
-
-        return client;
-    }
-
     public NexusAPIService AddHeader(string key, string value)
     {
         _headers.Add(key, value);
         return this;
-    }
-
-    private async Task<T> GetAsync<T>(string endPoint, string apiVersion)
-    {
-        var client = await GetApiClient(apiVersion);
-
-        var httpResponse = await client.GetAsync(endPoint);
-
-        if (!httpResponse.IsSuccessStatusCode)
-        {
-            await HandleErrorResponse<T>(httpResponse);
-        }
-
-        return (await httpResponse.Content.ReadFromJsonAsync<T>(options: _serializerOptions))!;
-    }
-
-    private async Task<TResponse> PostAsync<TInput, TResponse>(string endPoint, TInput? postObject, string apiVersion)
-    {
-        var client = await GetApiClient(apiVersion);
-
-        var httpResponse = await client.PostAsJsonAsync(endPoint, postObject);
-
-        if (!httpResponse.IsSuccessStatusCode)
-        {
-            await HandleErrorResponse<TResponse>(httpResponse);
-        }
-
-        return (await httpResponse.Content.ReadFromJsonAsync<TResponse>(options: _serializerOptions))!;
-    }
-
-    private async Task<T2> PostAsync<T2>(string endPoint, string apiVersion)
-    {
-        return await PostAsync<object, T2>(endPoint, null, apiVersion);
-    }
-    
-    private async Task<TResponse> PutAsync<TInput, TResponse>(string endPoint, TInput? postObject, string apiVersion)
-    {
-        var client = await GetApiClient(apiVersion);
-
-        var httpResponse = await client.PutAsJsonAsync(endPoint, postObject);
-
-        if (!httpResponse.IsSuccessStatusCode)
-        {
-            await HandleErrorResponse<TResponse>(httpResponse);
-        }
-
-        return (await httpResponse.Content.ReadFromJsonAsync<TResponse>(options: _serializerOptions))!;
-    }
-    
-    private async Task DeleteAsync(string endPoint, string apiVersion)
-    {
-        var client = await GetApiClient(apiVersion);
-
-        var httpResponse = await client.DeleteAsync(endPoint);
-
-        if (!httpResponse.IsSuccessStatusCode)
-        {
-            await HandleErrorResponse<object>(httpResponse);
-        }
     }
 
     public async Task<CustomResultHolder<GetCurrencies>> GetCurrencies()
@@ -150,9 +57,9 @@ public class NexusAPIService(INexusApiClientFactory nexusApiClientFactory)
     {
         var result = await GetAsync<Dictionary<string, BalanceItem_1_1>>("labelpartner/balance", "1.1");
 
-        return new CustomResultHolder<GetBrokerBalances_1_1>()
+        return new CustomResultHolder<GetBrokerBalances_1_1>
         {
-            Values = new GetBrokerBalances_1_1() { Balances = result.Values.ToList() }
+            Values = new GetBrokerBalances_1_1 { Balances = result.Values.ToList() }
         };
     }
 
@@ -214,33 +121,6 @@ public class NexusAPIService(INexusApiClientFactory nexusApiClientFactory)
         return await GetAsync<IEnumerable<ChartSeriesModelPT>>(
             $"api/MinuteChart/GetDefault/{timeSpan}?currency={currencyCode}&dcCode={cryptoCode}",
             "1.0");
-    }
-
-    /// <summary>
-    /// Take Dictionary of query parameters and creates the query string to paste to the URI.
-    /// Prepends the '?'. When the dictionary is empty, returns an empty string;
-    /// </summary>
-    /// <param name="queryParams"></param>
-    /// <returns></returns>
-    private static string CreateUriQuery(Dictionary<string, string> queryParams)
-    {
-        var query = string.Empty;
-
-        foreach (var p in queryParams)
-        {
-            if (query == string.Empty)
-            {
-                query += "?";
-            }
-            else
-            {
-                query += "&";
-            }
-
-            query += $"{p.Key}={p.Value}";
-        }
-
-        return query;
     }
 
     public async Task<CustomResultHolder<PagedResult<TransactionNotificationCallbackResponse>>> GetCallbacks(
