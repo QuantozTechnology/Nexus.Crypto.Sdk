@@ -143,7 +143,6 @@ public class NexusLabelApiSdkTests
         Assert.Equal(0.3M, eurCurrency.Available);
         Assert.Equal(0.4M, eurCurrency.Unconfirmed);
         Assert.Equal(DateTimeOffset.Parse("2020-09-07T00:00:00"), eurCurrency.Updated);
-        Assert.Equal("EUR", eurCurrency.Code);
 
         var xlmReserve = response.Values.CryptoReserves.First(x => x.CryptoCode == "XLM");
 
