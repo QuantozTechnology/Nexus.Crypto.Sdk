@@ -86,6 +86,9 @@ public class NexusLabelApiSdkTests
                             ""cryptoReserves"": [
                                 {
                                     ""code"": ""XLM"",
+                                    ""cryptoCode"": ""XLM"",
+                                    ""blockchainCode"": ""XLM"",
+                                    ""tokenCode"": ""XLM"",
                                     ""name"": ""Lumens"",
                                     ""type"": ""Exchange"",
                                     ""exchangeCode"": ""KRAKEN"",
@@ -97,6 +100,9 @@ public class NexusLabelApiSdkTests
                                 },
                                 {
                                     ""code"": ""ETH"",
+                                    ""cryptoCode"": ""ETH"",
+                                    ""blockchainCode"": ""ETH"",
+                                    ""tokenCode"": ""ETH"",
                                     ""name"": null,
                                     ""type"": ""Coldstore"",
                                     ""exchangeCode"": null,
@@ -123,36 +129,42 @@ public class NexusLabelApiSdkTests
             });
 
         var response = await _logicHelper.ApiService.GetReserves("2020-08-24T01:02:04Z");
+
+        var eurCurrency = response.Values.CurrencyReserves.First();
+
         Assert.Null(response.Errors);
         Assert.Equal("Successfully processed your request", response.Message);
-        Assert.Equal("EUR", response.Values.CurrencyReserves.First().Code);
-        Assert.Equal("Euro", response.Values.CurrencyReserves.First().Name);
-        Assert.Equal("Exchange", response.Values.CurrencyReserves.First().Type);
-        Assert.Equal("KRAKEN", response.Values.CurrencyReserves.First().ExchangeCode);
-        Assert.Equal(0.1M, response.Values.CurrencyReserves.First().Total);
-        Assert.Equal(0.2M, response.Values.CurrencyReserves.First().Locked);
-        Assert.Equal(0.3M, response.Values.CurrencyReserves.First().Available);
-        Assert.Equal(0.4M, response.Values.CurrencyReserves.First().Unconfirmed);
-        Assert.Equal("2020-09-07T00:00:00", response.Values.CurrencyReserves.First().Updated);
-        Assert.Equal("EUR", response.Values.CurrencyReserves.First().Code);
+        Assert.Equal("EUR", eurCurrency.Code);
+        Assert.Equal("Euro", eurCurrency.Name);
+        Assert.Equal(ReserveType.Exchange, eurCurrency.Type);
+        Assert.Equal("KRAKEN", eurCurrency.ExchangeCode);
+        Assert.Equal(0.1M, eurCurrency.Total);
+        Assert.Equal(0.2M, eurCurrency.Locked);
+        Assert.Equal(0.3M, eurCurrency.Available);
+        Assert.Equal(0.4M, eurCurrency.Unconfirmed);
+        Assert.Equal(DateTimeOffset.Parse("2020-09-07T00:00:00"), eurCurrency.Updated);
 
-        Assert.Equal("Lumens", response.Values.CryptoReserves.First(x => x.Code == "XLM").Name);
-        Assert.Equal("Exchange", response.Values.CryptoReserves.First(x => x.Code == "XLM").Type);
-        Assert.Equal("KRAKEN", response.Values.CryptoReserves.First(x => x.Code == "XLM").ExchangeCode);
-        Assert.Equal(1.0M, response.Values.CryptoReserves.First(x => x.Code == "XLM").Total);
-        Assert.Equal(0.0001M, response.Values.CryptoReserves.First(x => x.Code == "XLM").Locked);
-        Assert.Equal(0.9999M, response.Values.CryptoReserves.First(x => x.Code == "XLM").Available);
-        Assert.Equal(0.0M, response.Values.CryptoReserves.First(x => x.Code == "XLM").Unconfirmed);
-        Assert.Equal("2020-08-19T00:00:00", response.Values.CryptoReserves.First(x => x.Code == "XLM").Updated);
+        var xlmReserve = response.Values.CryptoReserves.First(x => x.CryptoCode == "XLM");
 
-        Assert.Null(response.Values.CryptoReserves.First(x => x.Code == "ETH").Name);
-        Assert.Equal("Coldstore", response.Values.CryptoReserves.First(x => x.Code == "ETH").Type);
-        Assert.Null(response.Values.CryptoReserves.First(x => x.Code == "ETH").ExchangeCode);
-        Assert.Equal(0.00000001M, response.Values.CryptoReserves.First(x => x.Code == "ETH").Total);
-        Assert.Equal(0.0M, response.Values.CryptoReserves.First(x => x.Code == "ETH").Locked);
-        Assert.Equal(0.00000001M, response.Values.CryptoReserves.First(x => x.Code == "ETH").Available);
-        Assert.Null(response.Values.CryptoReserves.First(x => x.Code == "ETH").Unconfirmed);
-        Assert.Equal("2021-08-12T12:29:59", response.Values.CryptoReserves.First(x => x.Code == "ETH").Updated);
+        Assert.Equal("Lumens", xlmReserve.Name);
+        Assert.Equal(ReserveType.Exchange, xlmReserve.Type);
+        Assert.Equal("KRAKEN", xlmReserve.ExchangeCode);
+        Assert.Equal(1.0M, xlmReserve.Total);
+        Assert.Equal(0.0001M, xlmReserve.Locked);
+        Assert.Equal(0.9999M, xlmReserve.Available);
+        Assert.Equal(0.0M, xlmReserve.Unconfirmed);
+        Assert.Equal(DateTimeOffset.Parse("2020-08-19T00:00:00"), xlmReserve.Updated);
+
+        var ethReserve = response.Values.CryptoReserves.First(x => x.CryptoCode == "ETH");
+
+        Assert.Null(ethReserve.Name);
+        Assert.Equal(ReserveType.Coldstore, ethReserve.Type);
+        Assert.Null(ethReserve.ExchangeCode);
+        Assert.Equal(0.00000001M, ethReserve.Total);
+        Assert.Equal(0.0M, ethReserve.Locked);
+        Assert.Equal(0.00000001M, ethReserve.Available);
+        Assert.Null(ethReserve.Unconfirmed);
+        Assert.Equal(DateTimeOffset.Parse("2021-08-12T12:29:59"), ethReserve.Updated);
     }
 
     [Fact]
@@ -564,7 +576,10 @@ public class NexusLabelApiSdkTests
         var response = await _logicHelper.ApiService
             .GetOrders(new GetOrdersRequest
             {
-                ExchangeCode = "KRAKEN", CurrencyCode = "EUR", CryptoCode = "BTC", Limit = 1
+                ExchangeCode = "KRAKEN",
+                CurrencyCode = "EUR",
+                CryptoCode = "BTC",
+                Limit = 1
             });
 
         Assert.Equal("Successfully processed your request", response.Message);

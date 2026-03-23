@@ -1,7 +1,4 @@
-﻿using System.Net.Http.Json;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using Nexus.Crypto.SDK.Models;
+﻿using Nexus.Crypto.SDK.Models;
 using Nexus.Crypto.SDK.Models.Broker;
 using Nexus.Crypto.SDK.Models.Custodian;
 using Nexus.Crypto.SDK.Models.PriceChartModel;
@@ -46,7 +43,7 @@ public class NexusAPIService(INexusApiClientFactory nexusApiClientFactory)
         return await GetAsync<CustomResultHolder<GetLabelPartner>>("labelpartner", "1.2");
     }
 
-    public async Task<CustomResultHolder<GetReserves>> GetReserves(string reservesTimeStamp = null)
+    public async Task<CustomResultHolder<GetReserves>> GetReserves(string? reservesTimeStamp = null)
     {
         return await GetAsync<CustomResultHolder<GetReserves>>(
             $"reserves?reservesTimeStamp={reservesTimeStamp}",
@@ -72,7 +69,7 @@ public class NexusAPIService(INexusApiClientFactory nexusApiClientFactory)
         Dictionary<string, string> queryParams)
     {
         return await GetAsync<CustomResultHolder<PagedResult<GetBalanceMutation>>>(
-            $"/balances/hotwallet/mutations{CreateUriQuery(queryParams)}",
+            $"balances/hotwallet/mutations{CreateUriQuery(queryParams)}",
             "1.2");
     }
 
@@ -80,7 +77,7 @@ public class NexusAPIService(INexusApiClientFactory nexusApiClientFactory)
         Dictionary<string, string> queryParams)
     {
         return await GetAsync<CustomResultHolder<PagedResult<GetMail>>>(
-            $"/mail{CreateUriQuery(queryParams)}",
+            $"mail{CreateUriQuery(queryParams)}",
             "1.2");
     }
 
@@ -173,11 +170,11 @@ public class NexusAPIService(INexusApiClientFactory nexusApiClientFactory)
 
     public async Task<CustomResultHolder<PagedResult<CustomerBankAccountResponse>>> GetCustomerBankAccounts(string customerCode, Dictionary<string, string> queryParams)
     {
-        return  await GetAsync<CustomResultHolder<PagedResult<CustomerBankAccountResponse>>>( 
+        return  await GetAsync<CustomResultHolder<PagedResult<CustomerBankAccountResponse>>>(
             $"customer/{customerCode}/bankaccounts{CreateUriQuery(queryParams)}",
             "1.2");
     }
-    
+
     public async Task<CustomResultHolder<CustomerBankAccountResponse>> CreateCustomerBankAccount(string customerCode, CreateBankAccountRequestModel request)
     {
         return await PostAsync<CreateBankAccountRequestModel, CustomResultHolder<CustomerBankAccountResponse>>(
