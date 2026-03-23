@@ -8,10 +8,10 @@ public class GetReserves
 
 public class ReserveItem
 {
-    public string Name { get; set; }
+    public string? Name { get; set; }
     public ReserveType Type { get; set; }
-    public string BucketCode { get; set; }
-    public string ExchangeCode { get; set; }
+    public string? BucketCode { get; set; }
+    public string? ExchangeCode { get; set; }
     public decimal Total { get; set; }
     public decimal Locked { get; set; }
     public decimal Available { get; set; }
