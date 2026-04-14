@@ -8,7 +8,6 @@ public interface IDocumentStoreSettingsService
     /// <summary>
     /// Retrieve the Document Store settings
     /// </summary>
-    /// <param name="customerIPAddress"></param>
     /// <returns></returns>
     Task<CustomResultHolder<DocumentStoreSettingsResponse>> Get();
 
@@ -16,7 +15,6 @@ public interface IDocumentStoreSettingsService
     /// Create a new Document Store with the provided settings
     /// </summary>
     /// <param name="documentStoreSettings"></param>
-    /// <param name="customerIPAddress"></param>
     /// <returns></returns>
     Task<CustomResultHolder<DocumentStoreSettingsResponse>> Create(
         DocumentStoreSettingsRequest documentStoreSettings);
@@ -25,14 +23,12 @@ public interface IDocumentStoreSettingsService
     /// Update the existing Document Store settings
     /// </summary>
     /// <param name="documentStoreSettings"></param>
-    /// <param name="customerIPAddress"></param>
     /// <returns></returns>
     Task<CustomResultHolder> Update(DocumentStoreSettingsRequest documentStoreSettings);
 
     /// <summary>
     /// Delete the existing Document Store settings
     /// </summary>
-    /// <param name="customerIPAddress"></param>
     /// <returns></returns>
     Task Delete();
 }
