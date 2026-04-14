@@ -105,7 +105,7 @@ public class FileUploadRequest
     /// <summary>
     /// The DocumentStoreTypeCode is used to identify the type of document associated with the file.
     /// </summary>
-    [JsonPropertyName("documentTypeCode")]
+    [JsonPropertyName("documentStoreTypeCode")]
     [Required]
     [StringLength(40)]
     public required string DocumentStoreTypeCode { get; set; }
