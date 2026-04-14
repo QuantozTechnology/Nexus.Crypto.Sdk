@@ -7,7 +7,7 @@ public class DocumentStoreRecordService(INexusApiClientFactory nexusApiClientFac
 {
     private const string DocumentStoreRecordUrl = "integrations/documentstore/file";
     private const string DocumentStoreRecordListUrl = "integrations/documentstore/list";
-    public Task<CustomResultHolder<DocumentStoreRecordResponse>> Create(FileUploadRequest request)
+    public async Task<CustomResultHolder<DocumentStoreRecordResponse>> Create(FileUploadRequest request)
     {
         using var formContent = new MultipartFormDataContent();
         // Add file content
@@ -28,7 +28,7 @@ public class DocumentStoreRecordService(INexusApiClientFactory nexusApiClientFac
         if (!string.IsNullOrEmpty(request.ItemReference))
             formContent.Add(new StringContent(request.ItemReference), "itemReference");
 
-        return PostAsync<CustomResultHolder<DocumentStoreRecordResponse>>(DocumentStoreRecordUrl, formContent, ApiVersion);
+        return await PostAsync<CustomResultHolder<DocumentStoreRecordResponse>>(DocumentStoreRecordUrl, formContent, ApiVersion);
     }
 
     public Task<Stream> GetDocument(string filePath)
