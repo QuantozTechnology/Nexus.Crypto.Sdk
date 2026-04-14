@@ -22,9 +22,9 @@ public interface IDocumentStoreTypeService
     /// <summary>
     /// Retrieve a Document Store Type by code
     /// </summary>
-    /// <param name="documentTypeCode"></param>
+    /// <param name="documentStoreTypeCode"></param>
     /// <returns></returns>
-    Task<CustomResultHolder<DocumentStoreTypeResponse>> GetByCode(string documentTypeCode);
+    Task<CustomResultHolder<DocumentStoreTypeResponse>> GetByCode(string documentStoreTypeCode);
 
     /// <summary>
     /// Retrieve Document Store Types using query parameters
@@ -36,8 +36,8 @@ public interface IDocumentStoreTypeService
     /// <summary>
     /// Update an existing Document Store Type
     /// </summary>
-    /// <param name="documentTypeCode"></param>
+    /// <param name="documentStoreTypeCode"></param>
     /// <param name="request"></param>
     /// <returns></returns>
-    Task<CustomResultHolder<DocumentStoreTypeResponse>> Update(string documentTypeCode, DocumentStoreTypeUpdateRequest request);
+    Task<CustomResultHolder<DocumentStoreTypeResponse>> Update(string documentStoreTypeCode, DocumentStoreTypeUpdateRequest request);
 }
