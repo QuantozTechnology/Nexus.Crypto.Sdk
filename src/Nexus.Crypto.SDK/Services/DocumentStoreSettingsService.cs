@@ -9,7 +9,6 @@ public class DocumentStoreSettingsService(INexusApiClientFactory nexusApiClientF
     /// <summary>
     /// Retrieve the Document Store settings
     /// </summary>
-    /// <param name="customerIPAddress"></param>
     /// <returns></returns>
     public Task<CustomResultHolder<DocumentStoreSettingsResponse>> Get()
     {
@@ -20,7 +19,6 @@ public class DocumentStoreSettingsService(INexusApiClientFactory nexusApiClientF
     /// Create a new Document Store with the provided settings
     /// </summary>
     /// <param name="documentStoreSettings"></param>
-    /// <param name="customerIPAddress"></param>
     /// <returns></returns>
     public Task<CustomResultHolder<DocumentStoreSettingsResponse>> Create(DocumentStoreSettingsRequest documentStoreSettings)
     {
@@ -34,7 +32,6 @@ public class DocumentStoreSettingsService(INexusApiClientFactory nexusApiClientF
     /// Update the existing Document Store settings
     /// </summary>
     /// <param name="documentStoreSettings"></param>
-    /// <param name="customerIPAddress"></param>
     /// <returns></returns>
     public Task<CustomResultHolder> Update(DocumentStoreSettingsRequest documentStoreSettings)
     {
@@ -47,7 +44,6 @@ public class DocumentStoreSettingsService(INexusApiClientFactory nexusApiClientF
     /// <summary>
     /// Delete the existing Document Store settings
     /// </summary>
-    /// <param name="customerIPAddress"></param>
     /// <returns></returns>
     public Task Delete()
     {
