@@ -39,11 +39,8 @@ public class DocumentStoreRecordService(INexusApiClientFactory nexusApiClientFac
 
     public Task<CustomResultHolder<PagedResult<DocumentStoreRecordResponse>>> Get(string customerCode, Dictionary<string, string> queryParams)
     {
-        if (!queryParams.ContainsKey("customerCode"))
-        {
-            queryParams.Add("customerCode", customerCode);
-        }
-        
+        queryParams["customerCode"] = customerCode;
+
         var url = DocumentStoreRecordListUrl + CreateUriQuery(queryParams);
         return GetAsync<CustomResultHolder<PagedResult<DocumentStoreRecordResponse>>>(url, ApiVersion);
     }
