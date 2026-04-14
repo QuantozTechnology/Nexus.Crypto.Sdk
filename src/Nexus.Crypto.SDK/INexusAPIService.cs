@@ -3,11 +3,15 @@ using Nexus.Crypto.SDK.Models.Broker;
 using Nexus.Crypto.SDK.Models.Custodian;
 using Nexus.Crypto.SDK.Models.PriceChartModel;
 using Nexus.Crypto.SDK.Models.Response;
+using Nexus.Crypto.SDK.Services;
 
 namespace Nexus.Crypto.SDK;
 
 public interface INexusAPIService
 {
+    IDocumentStoreSettingsService  DocumentStoreSettings { get; }
+    IDocumentStoreTypeService  DocumentStoreType { get; }
+    IDocumentStoreRecordService  DocumentStoreRecord { get; }
     Task<CustomResultHolder<GetLabelPartner>> GetLabelPartner();
     Task<CustomResultHolder<GetCurrencies>> GetCurrencies();
     Task<CustomResultHolder<GetCustomer>> GetCustomer(string customerCode);
