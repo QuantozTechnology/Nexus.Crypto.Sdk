@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.IO;
 using System.Text.Json.Serialization;
-using Microsoft.AspNetCore.Http;
 
 namespace Nexus.Crypto.SDK.Models;
 
@@ -140,11 +140,31 @@ public class FileUploadRequest
     public string? ItemReference { get; set; }
 
     /// <summary>
-    /// The file to be added to the Document Store. 
+    /// The content stream for the file to be added to the Document Store.
     /// </summary>
-    [JsonPropertyName("file")]
+    [JsonPropertyName("fileContent")]
     [Required]
-    public required IFormFile File { get; set; }
+    public required Stream FileContent { get; set; }
+
+    /// <summary>
+    /// The file name to use for the uploaded file.
+    /// </summary>
+    [JsonPropertyName("fileName")]
+    [Required]
+    [StringLength(255)]
+    public required string FileName { get; set; }
+
+    /// <summary>
+    /// The content type of the uploaded file.
+    /// </summary>
+    [JsonPropertyName("contentType")]
+    public string? ContentType { get; set; }
+
+    /// <summary>
+    /// The content length of the uploaded file in bytes.
+    /// </summary>
+    [JsonPropertyName("contentLength")]
+    public long? ContentLength { get; set; }
 }
 
 public class DocumentStoreTypeInfo
