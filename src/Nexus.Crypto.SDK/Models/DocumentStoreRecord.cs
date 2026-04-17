@@ -153,18 +153,6 @@ public class FileUploadRequest
     [Required]
     [StringLength(255)]
     public required string FileName { get; set; }
-
-    /// <summary>
-    /// The content type of the uploaded file.
-    /// </summary>
-    [JsonPropertyName("contentType")]
-    public string? ContentType { get; set; }
-
-    /// <summary>
-    /// The content length of the uploaded file in bytes.
-    /// </summary>
-    [JsonPropertyName("contentLength")]
-    public long? ContentLength { get; set; }
 }
 
 public class DocumentStoreTypeInfo

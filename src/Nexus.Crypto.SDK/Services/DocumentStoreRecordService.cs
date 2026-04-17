@@ -10,10 +10,10 @@ public class DocumentStoreRecordService(INexusApiClientFactory nexusApiClientFac
     public async Task<CustomResultHolder<DocumentStoreRecordResponse>> Create(FileUploadRequest request)
     {
         using var formContent = new MultipartFormDataContent();
-        // Add file content
-        using var fileStream = request.File.OpenReadStream();
-        using var fileContent = new StreamContent(fileStream);
-        formContent.Add(fileContent, "file", request.File.FileName);
+        
+        // Add file content as stream content to avoid loading the entire file into memory
+        using var fileContent = new StreamContent(request.FileContent);
+        formContent.Add(fileContent, "file", request.FileName);
 
         formContent.Add(new StringContent(request.FilePath), "filePath");
         formContent.Add(new StringContent(request.CustomerCode), "customerCode");
