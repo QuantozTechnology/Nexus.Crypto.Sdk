@@ -10,6 +10,10 @@ namespace Nexus.Crypto.SDK;
 public class NexusAPIService(INexusApiClientFactory nexusApiClientFactory)
     : BaseService(nexusApiClientFactory), INexusBrokerAPIService, INexusCustodianAPIService
 {
+    public IDocumentStoreSettingsService DocumentStoreSettings { get; } = new DocumentStoreSettingsService(nexusApiClientFactory);
+    public IDocumentStoreTypeService DocumentStoreType { get; } = new DocumentStoreTypeService(nexusApiClientFactory);
+    public IDocumentStoreRecordService  DocumentStoreRecord { get; } = new DocumentStoreRecordService(nexusApiClientFactory);
+
     public NexusAPIService AddHeader(string key, string value)
     {
         _headers.Add(key, value);
