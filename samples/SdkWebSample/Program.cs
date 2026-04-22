@@ -23,7 +23,7 @@ app.UseSwaggerUI();
 
 app.MapGet("/customers", async (NexusAPIService api) =>
 {
-    var customers = await api.GetCustomers([]);
+    var customers = await api.CustomerService.GetCustomers([]);
 
     return customers.Values.Records;
 });

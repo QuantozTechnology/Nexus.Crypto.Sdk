@@ -715,7 +715,7 @@ public class NexusLabelApiSdkTests
                 Content = new StringContent(mockResponseBody, Encoding.UTF8, "application/json"),
             });
 
-        var response = await _logicHelper.ApiService.GetCustomer("NL29RABO3365135561");
+        var response = await _logicHelper.ApiService.CustomerService.GetCustomer("NL29RABO3365135561");
 
         Assert.Equal("Successfully processed your request", response.Message);
         Assert.Null(response.Errors);
@@ -787,7 +787,7 @@ public class NexusLabelApiSdkTests
                 Content = new StringContent(mockResponseBody, Encoding.UTF8, "application/json"),
             });
 
-        var response = await _logicHelper.ApiService
+        var response = await _logicHelper.ApiService.CustomerService
             .GetCustomers(new System.Collections.Generic.Dictionary<string, string>
             {
                 { "startDate", "2021-01-01T00:00:01Z" },
@@ -852,8 +852,8 @@ public class NexusLabelApiSdkTests
                 Content = new StringContent(mockResponseBody, Encoding.UTF8, "application/json"),
             });
 
-        var e = await Assert.ThrowsAsync<NexusApiException>(async () => await _logicHelper.ApiService.GetCustomers(
-            new System.Collections.Generic.Dictionary<string, string> { { "status", "abc" } }));
+        var e = await Assert.ThrowsAsync<NexusApiException>(async () => await _logicHelper.ApiService.CustomerService.GetCustomers(
+            new Dictionary<string, string> { { "status", "abc" } }));
 
         Assert.Equal(mockResponseBody, e.ResponseContent);
         Assert.Equal(HttpStatusCode.BadRequest, e.StatusCode);
@@ -900,7 +900,7 @@ public class NexusLabelApiSdkTests
                 Content = new StringContent(mockResponseBody, Encoding.UTF8, "application/json"),
             });
 
-        using (var client = _logicHelper.ApiClientFactory.GetClient(null))
+        using (_logicHelper.ApiClientFactory.GetClient(null))
         {
             var response = await _logicHelper.ApiService.GetPrices("eur");
             Assert.Null(response.Errors);
