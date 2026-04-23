@@ -13,7 +13,7 @@ public class NexusAPIService(INexusApiClientFactory nexusApiClientFactory)
     public IDocumentStoreSettingsService DocumentStoreSettings { get; } = new DocumentStoreSettingsService(nexusApiClientFactory);
     public IDocumentStoreTypeService DocumentStoreType { get; } = new DocumentStoreTypeService(nexusApiClientFactory);
     public IDocumentStoreRecordService  DocumentStoreRecord { get; } = new DocumentStoreRecordService(nexusApiClientFactory);
-    public ICustomerService CustomerService { get; } = new CustomerService(nexusApiClientFactory);
+    public ICustomerService Customer { get; } = new CustomerService(nexusApiClientFactory);
 
     public NexusAPIService AddHeader(string key, string value)
     {

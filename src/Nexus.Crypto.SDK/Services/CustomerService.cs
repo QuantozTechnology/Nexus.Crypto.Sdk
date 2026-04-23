@@ -10,7 +10,7 @@ public class CustomerService(INexusApiClientFactory nexusApiClientFactory) :Base
     {
         return GetAsync<CustomResultHolder<GetCustomerTraceSummary[]>>(
             $"customer/{customerCode}/trace/summary?startDate={startDate.ToString(ISO8601DateTimeFormat)}",
-            "1.2");
+            ApiVersion);
     }
 
     public Task<CustomResultHolder<PagedResult<GetCustomerTrace>>> GetCustomerTraces(string customerCode,
@@ -18,25 +18,25 @@ public class CustomerService(INexusApiClientFactory nexusApiClientFactory) :Base
     {
         return GetAsync<CustomResultHolder<PagedResult<GetCustomerTrace>>>(
             $"customer/{customerCode}/trace?startDate={startDate.ToString(ISO8601DateTimeFormat)}",
-            "1.2");
+            ApiVersion);
     }
     
     public async Task<CustomResultHolder<GetCustomer>> GetCustomer(string customerCode)
     {
-        return await GetAsync<CustomResultHolder<GetCustomer>>($"customer/{customerCode}", "1.2");
+        return await GetAsync<CustomResultHolder<GetCustomer>>($"customer/{customerCode}", ApiVersion);
     }
 
     public async Task<CustomResultHolder<PagedResult<GetCustomer>>> GetCustomers(Dictionary<string, string> queryParams)
     {
         return await GetAsync<CustomResultHolder<PagedResult<GetCustomer>>>(
             $"customer{CreateUriQuery(queryParams)}",
-            "1.2");
+            ApiVersion);
     }
 
     public async Task<CustomResultHolder<CreateCustomerResponse>> CreateCustomer(CreateCustomerRequest request)
     {
         return await PostAsync<CreateCustomerRequest, CustomResultHolder<CreateCustomerResponse>>(
-            "customer/",
+            "customer",
             request,
             ApiVersion
         );

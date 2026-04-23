@@ -12,7 +12,7 @@ public interface INexusAPIService
     IDocumentStoreSettingsService  DocumentStoreSettings { get; }
     IDocumentStoreTypeService  DocumentStoreType { get; }
     IDocumentStoreRecordService  DocumentStoreRecord { get; }
-    ICustomerService CustomerService { get; }
+    ICustomerService Customer { get; }
     Task<CustomResultHolder<GetLabelPartner>> GetLabelPartner();
     Task<CustomResultHolder<GetCurrencies>> GetCurrencies();
     Task<CustomResultHolder<GetPrices>> GetPrices(string currency);

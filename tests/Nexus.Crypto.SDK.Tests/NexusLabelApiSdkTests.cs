@@ -715,7 +715,7 @@ public class NexusLabelApiSdkTests
                 Content = new StringContent(mockResponseBody, Encoding.UTF8, "application/json"),
             });
 
-        var response = await _logicHelper.ApiService.CustomerService.GetCustomer("NL29RABO3365135561");
+        var response = await _logicHelper.ApiService.Customer.GetCustomer("NL29RABO3365135561");
 
         Assert.Equal("Successfully processed your request", response.Message);
         Assert.Null(response.Errors);
@@ -787,7 +787,7 @@ public class NexusLabelApiSdkTests
                 Content = new StringContent(mockResponseBody, Encoding.UTF8, "application/json"),
             });
 
-        var response = await _logicHelper.ApiService.CustomerService
+        var response = await _logicHelper.ApiService.Customer
             .GetCustomers(new System.Collections.Generic.Dictionary<string, string>
             {
                 { "startDate", "2021-01-01T00:00:01Z" },
@@ -852,7 +852,7 @@ public class NexusLabelApiSdkTests
                 Content = new StringContent(mockResponseBody, Encoding.UTF8, "application/json"),
             });
 
-        var e = await Assert.ThrowsAsync<NexusApiException>(async () => await _logicHelper.ApiService.CustomerService.GetCustomers(
+        var e = await Assert.ThrowsAsync<NexusApiException>(async () => await _logicHelper.ApiService.Customer.GetCustomers(
             new Dictionary<string, string> { { "status", "abc" } }));
 
         Assert.Equal(mockResponseBody, e.ResponseContent);
