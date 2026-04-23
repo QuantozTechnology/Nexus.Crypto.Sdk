@@ -134,6 +134,19 @@ public class BaseService(INexusApiClientFactory nexusApiClientFactory): IHttpSer
         }
     }
     
+    public async Task<TResponse> DeleteAsync<TResponse>(string endPoint, string apiVersion)
+    {
+        var client = await GetApiClient(apiVersion);
+
+        var httpResponse = await client.DeleteAsync(endPoint);
+
+        if (!httpResponse.IsSuccessStatusCode)
+        {
+            await HandleErrorResponse<TResponse>(httpResponse);
+        }
+        return (await httpResponse.Content.ReadFromJsonAsync<TResponse>(options: _serializerOptions))!;
+    }
+    
     /// <summary>
     /// Take Dictionary of query parameters and creates the query string to paste to the URI.
     /// Prepends the '?'. When the dictionary is empty, returns an empty string;

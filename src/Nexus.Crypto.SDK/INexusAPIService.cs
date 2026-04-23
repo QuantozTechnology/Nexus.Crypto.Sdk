@@ -12,10 +12,9 @@ public interface INexusAPIService
     IDocumentStoreSettingsService  DocumentStoreSettings { get; }
     IDocumentStoreTypeService  DocumentStoreType { get; }
     IDocumentStoreRecordService  DocumentStoreRecord { get; }
+    ICustomerService Customer { get; }
     Task<CustomResultHolder<GetLabelPartner>> GetLabelPartner();
     Task<CustomResultHolder<GetCurrencies>> GetCurrencies();
-    Task<CustomResultHolder<GetCustomer>> GetCustomer(string customerCode);
-    Task<CustomResultHolder<PagedResult<GetCustomer>>> GetCustomers(Dictionary<string, string> queryParams);
     Task<CustomResultHolder<GetPrices>> GetPrices(string currency);
     Task<CustomResultHolder<GetReserves>> GetReserves(string reservesTimeStamp);
     Task<CustomResultHolder<GetCustodianBalances>> GetCustodianBalances();
@@ -28,9 +27,6 @@ public interface INexusAPIService
     Task<IEnumerable<ChartSeriesModelPT>> GetMinutePrices(int timeSpan, string currencyCode, string cryptoCode);
 
     Task<CustomResultHolder<PagedResult<TransactionNotificationCallbackResponse>>> GetCallbacks(string transactionCode);
-
-    Task<CustomResultHolder<GetCustomerTraceSummary[]>> GetCustomerTraceSummary(string customerCode, DateTime startDate);
-    Task<CustomResultHolder<PagedResult<GetCustomerTrace>>> GetCustomerTraces(string customerCode, DateTime startDate);
 
     Task<CustomResultHolder<List<GetPortfolio>>> GetPortfolios();
 

@@ -13,6 +13,7 @@ public class NexusAPIService(INexusApiClientFactory nexusApiClientFactory)
     public IDocumentStoreSettingsService DocumentStoreSettings { get; } = new DocumentStoreSettingsService(nexusApiClientFactory);
     public IDocumentStoreTypeService DocumentStoreType { get; } = new DocumentStoreTypeService(nexusApiClientFactory);
     public IDocumentStoreRecordService  DocumentStoreRecord { get; } = new DocumentStoreRecordService(nexusApiClientFactory);
+    public ICustomerService Customer { get; } = new CustomerService(nexusApiClientFactory);
 
     public NexusAPIService AddHeader(string key, string value)
     {
@@ -23,18 +24,6 @@ public class NexusAPIService(INexusApiClientFactory nexusApiClientFactory)
     public async Task<CustomResultHolder<GetCurrencies>> GetCurrencies()
     {
         return await GetAsync<CustomResultHolder<GetCurrencies>>("currencies", "1.2");
-    }
-
-    public async Task<CustomResultHolder<GetCustomer>> GetCustomer(string customerCode)
-    {
-        return await GetAsync<CustomResultHolder<GetCustomer>>($"customer/{customerCode}", "1.2");
-    }
-
-    public async Task<CustomResultHolder<PagedResult<GetCustomer>>> GetCustomers(Dictionary<string, string> queryParams)
-    {
-        return await GetAsync<CustomResultHolder<PagedResult<GetCustomer>>>(
-            $"customer{CreateUriQuery(queryParams)}",
-            "1.2");
     }
 
     public async Task<CustomResultHolder<GetPrices>> GetPrices(string currency)
@@ -129,22 +118,6 @@ public class NexusAPIService(INexusApiClientFactory nexusApiClientFactory)
     {
         return await GetAsync<CustomResultHolder<PagedResult<TransactionNotificationCallbackResponse>>>(
             $"transaction/{transactionCode}/callbacks",
-            "1.2");
-    }
-
-    public Task<CustomResultHolder<GetCustomerTraceSummary[]>> GetCustomerTraceSummary(string customerCode,
-        DateTime startDate)
-    {
-        return GetAsync<CustomResultHolder<GetCustomerTraceSummary[]>>(
-            $"customer/{customerCode}/trace/summary?startDate={startDate.ToString(ISO8601DateTimeFormat)}",
-            "1.2");
-    }
-
-    public Task<CustomResultHolder<PagedResult<GetCustomerTrace>>> GetCustomerTraces(string customerCode,
-        DateTime startDate)
-    {
-        return GetAsync<CustomResultHolder<PagedResult<GetCustomerTrace>>>(
-            $"customer/{customerCode}/trace?startDate={startDate.ToString(ISO8601DateTimeFormat)}",
             "1.2");
     }
 
