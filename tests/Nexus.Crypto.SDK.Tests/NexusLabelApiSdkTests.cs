@@ -788,7 +788,7 @@ public class NexusLabelApiSdkTests
             });
 
         var response = await _logicHelper.ApiService.Customer
-            .GetCustomers(new System.Collections.Generic.Dictionary<string, string>
+            .GetCustomers(new Dictionary<string, string>
             {
                 { "startDate", "2021-01-01T00:00:01Z" },
                 { "endDate", "2022-01-01T00:00:03Z" },

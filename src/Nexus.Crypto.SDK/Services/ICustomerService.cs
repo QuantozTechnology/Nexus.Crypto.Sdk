@@ -19,4 +19,5 @@ public interface ICustomerService
     
     Task<CustomResultHolder<DeleteCustomerResponse>> DeleteCustomer(string customerCode);
     
+    Task<CustomResultHolder<GetCustomer>> UpdateCustomer(string customerCode, UpdateCustomerRequest request);
 }
