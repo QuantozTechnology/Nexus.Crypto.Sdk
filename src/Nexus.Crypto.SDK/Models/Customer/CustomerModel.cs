@@ -69,26 +69,26 @@ public class UpdateCustomerRequest
 {
     public string? TrustLevelCode { get; set; }
     public string? Email { get; set; }
-    public string Name { get; set; }
-    public string FirstName { get; set; }
-    public string LastName { get; set; }
-    public string Phone { get; set; }
-    public string DateOfBirth { get; set; }
-    public string CompanyName { get; set; }
-    public string Address { get; set; }
-    public string City { get; set; }
-    public string ZipCode { get; set; }
-    public string State { get; set; }
-    public string Tag { get; set; }
+    public string? Name { get; set; }
+    public string? FirstName { get; set; }
+    public string? LastName { get; set; }
+    public string? Phone { get; set; }
+    public string? DateOfBirth { get; set; }
+    public string? CompanyName { get; set; }
+    public string? Address { get; set; }
+    public string? City { get; set; }
+    public string? ZipCode { get; set; }
+    public string? State { get; set; }
+    public string? Tag { get; set; }
     public string? Status { get; set; }
-    public string CountryCode { get; set; }
+    public string? CountryCode { get; set; }
     public RiskQualificationEnum? RiskQualification { get; set; }
     public DateTime? LatestReview { get; set; }
     public bool? IsReviewRecommended { get; set; }
     public string? Comment { get; set; }
-    public string Reason { get; set; }
-    public IDictionary<string, string> Data { get; set; }
-    public string[] FieldsToClear { get; set; }
+    public string? Reason { get; set; }
+    public IDictionary<string, string>? Data { get; set; }
+    public string[]? FieldsToClear { get; set; }
     
     public int? CurrencyId { get; set; }
     public bool? IsBusiness { get; set; }
