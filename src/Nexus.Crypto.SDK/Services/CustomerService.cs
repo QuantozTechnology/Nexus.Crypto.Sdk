@@ -46,5 +46,13 @@ public class CustomerService(INexusApiClientFactory nexusApiClientFactory) :Base
     {
         return await DeleteAsync<CustomResultHolder<DeleteCustomerResponse>>($"customer/{customerCode}", ApiVersion);
     }
-    
+
+    public async Task<CustomResultHolder<GetCustomer>> UpdateCustomer(string customerCode,
+        UpdateCustomerRequest request)
+    {
+        return await PutAsync<UpdateCustomerRequest, CustomResultHolder<GetCustomer>>(
+            $"customer/{customerCode}",
+            request,
+            ApiVersion);
+    }
 }

@@ -93,7 +93,7 @@ public class BaseService(INexusApiClientFactory nexusApiClientFactory): IHttpSer
     {
         var client = await GetApiClient(apiVersion);
 
-        var httpResponse = await client.PostAsJsonAsync(endPoint, postObject);
+        var httpResponse = await client.PostAsJsonAsync(endPoint, postObject, _serializerOptions);
 
         if (!httpResponse.IsSuccessStatusCode)
         {
@@ -112,7 +112,7 @@ public class BaseService(INexusApiClientFactory nexusApiClientFactory): IHttpSer
     {
         var client = await GetApiClient(apiVersion);
 
-        var httpResponse = await client.PutAsJsonAsync(endPoint, postObject);
+        var httpResponse = await client.PutAsJsonAsync(endPoint, postObject, _serializerOptions);
 
         if (!httpResponse.IsSuccessStatusCode)
         {
