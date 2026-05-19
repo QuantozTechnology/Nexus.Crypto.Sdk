@@ -1,5 +1,4 @@
-﻿using Nexus.Crypto.SDK.Models;
-using Nexus.Crypto.SDK.Models.DocumentStore;
+﻿using Nexus.Crypto.SDK.Models.DocumentStore;
 using Nexus.Crypto.SDK.Models.Response;
 
 namespace Nexus.Crypto.SDK.Services;
