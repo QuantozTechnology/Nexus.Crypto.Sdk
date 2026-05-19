@@ -12,6 +12,12 @@ public class NexusAPIService(INexusApiClientFactory nexusApiClientFactory)
         INexusBrokerAPIService,
         INexusCustodianAPIService
 {
+    public new NexusAPIService AddHeader(string key, string value)
+    {
+        base.AddHeader(key, value);
+        return this;
+    }
+
     public IDocumentStoreService DocumentStore => new DocumentStoreService(this);
     public ICustomerService Customer => new CustomerService(this);
 

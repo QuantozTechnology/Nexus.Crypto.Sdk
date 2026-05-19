@@ -2,7 +2,11 @@
 
 public class DocumentStoreService(BaseService service) : IDocumentStoreService
 {
-    public IDocumentStoreTypeService Types => new DocumentStoreTypeService(service);
-    public IDocumentStoreSettingsService Settings => new DocumentStoreSettingsService(service);
-    public IDocumentStoreRecordService Records  => new DocumentStoreRecordService(service);
+    private readonly IDocumentStoreTypeService _types = new DocumentStoreTypeService(service);
+    private readonly IDocumentStoreSettingsService _settings = new DocumentStoreSettingsService(service);
+    private readonly IDocumentStoreRecordService _records = new DocumentStoreRecordService(service);
+
+    public IDocumentStoreTypeService Types => _types;
+    public IDocumentStoreSettingsService Settings => _settings;
+    public IDocumentStoreRecordService Records => _records;
 }
