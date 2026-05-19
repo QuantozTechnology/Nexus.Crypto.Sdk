@@ -6,11 +6,11 @@ using Nexus.Crypto.SDK.Models.Response;
 
 namespace Nexus.Crypto.SDK.Services;
 
-public class BaseService(INexusApiClientFactory nexusApiClientFactory): IHttpService
+public class BaseService(INexusApiClientFactory nexusApiClientFactory, Dictionary<string, string>? headers = null): IHttpService
 {
     protected const string ISO8601DateTimeFormat = "yyyy-MM-ddTHH:mm:ssZ";
     protected const string ApiVersion = "1.2";
-    protected readonly Dictionary<string, string> _headers = [];
+    protected readonly Dictionary<string, string> _headers = headers ?? [];
 
     protected readonly JsonSerializerOptions _serializerOptions = new()
     {

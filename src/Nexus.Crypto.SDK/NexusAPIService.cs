@@ -7,13 +7,20 @@ using Nexus.Crypto.SDK.Services;
 
 namespace Nexus.Crypto.SDK;
 
-public class NexusAPIService(INexusApiClientFactory nexusApiClientFactory)
-    : BaseService(nexusApiClientFactory), INexusBrokerAPIService, INexusCustodianAPIService
+public class NexusAPIService : BaseService, INexusBrokerAPIService, INexusCustodianAPIService
 {
-    public IDocumentStoreSettingsService DocumentStoreSettings { get; } = new DocumentStoreSettingsService(nexusApiClientFactory);
-    public IDocumentStoreTypeService DocumentStoreType { get; } = new DocumentStoreTypeService(nexusApiClientFactory);
-    public IDocumentStoreRecordService  DocumentStoreRecord { get; } = new DocumentStoreRecordService(nexusApiClientFactory);
-    public ICustomerService Customer { get; } = new CustomerService(nexusApiClientFactory);
+    public NexusAPIService(INexusApiClientFactory nexusApiClientFactory) : base(nexusApiClientFactory)
+    {
+        DocumentStoreSettings = new DocumentStoreSettingsService(nexusApiClientFactory, _headers);
+        DocumentStoreType = new DocumentStoreTypeService(nexusApiClientFactory, _headers);
+        DocumentStoreRecord = new DocumentStoreRecordService(nexusApiClientFactory, _headers);
+        Customer = new CustomerService(nexusApiClientFactory, _headers);
+    }
+
+    public IDocumentStoreSettingsService DocumentStoreSettings { get; }
+    public IDocumentStoreTypeService DocumentStoreType { get; }
+    public IDocumentStoreRecordService  DocumentStoreRecord { get; }
+    public ICustomerService Customer { get; }
 
     public NexusAPIService AddHeader(string key, string value)
     {

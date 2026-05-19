@@ -3,7 +3,7 @@ using Nexus.Crypto.SDK.Models.Response;
 
 namespace Nexus.Crypto.SDK.Services;
 
-public class DocumentStoreSettingsService(INexusApiClientFactory nexusApiClientFactory): BaseService(nexusApiClientFactory), IDocumentStoreSettingsService
+public class DocumentStoreSettingsService(INexusApiClientFactory nexusApiClientFactory, Dictionary<string, string>? headers = null): BaseService(nexusApiClientFactory, headers), IDocumentStoreSettingsService
 {
     private const string documentStoreUrl = "integrations/documentstore";
     /// <summary>

@@ -3,7 +3,7 @@ using Nexus.Crypto.SDK.Models.Response;
 
 namespace Nexus.Crypto.SDK.Services;
 
-public class DocumentStoreTypeService(INexusApiClientFactory nexusApiClientFactory) : BaseService(nexusApiClientFactory), IDocumentStoreTypeService
+public class DocumentStoreTypeService(INexusApiClientFactory nexusApiClientFactory, Dictionary<string, string>? headers = null) : BaseService(nexusApiClientFactory, headers), IDocumentStoreTypeService
 {
     private const string DocumentTypeUrl = "integrations/documentstore/type";
     public Task<CustomResultHolder<DocumentStoreTypeResponse>> Create(DocumentStoreTypeCreateRequest request)

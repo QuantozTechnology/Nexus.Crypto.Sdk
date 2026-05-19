@@ -3,7 +3,7 @@ using Nexus.Crypto.SDK.Models.Response;
 
 namespace Nexus.Crypto.SDK.Services;
 
-public class CustomerService(INexusApiClientFactory nexusApiClientFactory) :BaseService(nexusApiClientFactory), ICustomerService
+public class CustomerService(INexusApiClientFactory nexusApiClientFactory, Dictionary<string, string>? headers = null) :BaseService(nexusApiClientFactory, headers), ICustomerService
 {
     public Task<CustomResultHolder<GetCustomerTraceSummary[]>> GetCustomerTraceSummary(string customerCode,
         DateTime startDate)
