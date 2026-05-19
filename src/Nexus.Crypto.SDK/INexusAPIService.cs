@@ -9,9 +9,7 @@ namespace Nexus.Crypto.SDK;
 
 public interface INexusAPIService
 {
-    IDocumentStoreSettingsService  DocumentStoreSettings { get; }
-    IDocumentStoreTypeService  DocumentStoreType { get; }
-    IDocumentStoreRecordService  DocumentStoreRecord { get; }
+    IDocumentStoreService DocumentStore { get; }
     ICustomerService Customer { get; }
     Task<CustomResultHolder<GetLabelPartner>> GetLabelPartner();
     Task<CustomResultHolder<GetCurrencies>> GetCurrencies();

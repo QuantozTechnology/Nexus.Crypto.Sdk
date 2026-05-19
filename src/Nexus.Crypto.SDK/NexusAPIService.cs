@@ -8,39 +8,39 @@ using Nexus.Crypto.SDK.Services;
 namespace Nexus.Crypto.SDK;
 
 public class NexusAPIService(INexusApiClientFactory nexusApiClientFactory)
-    : BaseService(nexusApiClientFactory), INexusBrokerAPIService, INexusCustodianAPIService
+    : BaseService(nexusApiClientFactory),
+        INexusBrokerAPIService,
+        INexusCustodianAPIService
 {
-    public IDocumentStoreSettingsService DocumentStoreSettings { get; } = new DocumentStoreSettingsService(nexusApiClientFactory);
-    public IDocumentStoreTypeService DocumentStoreType { get; } = new DocumentStoreTypeService(nexusApiClientFactory);
-    public IDocumentStoreRecordService  DocumentStoreRecord { get; } = new DocumentStoreRecordService(nexusApiClientFactory);
-    public ICustomerService Customer { get; } = new CustomerService(nexusApiClientFactory);
-
-    public NexusAPIService AddHeader(string key, string value)
+    public new NexusAPIService AddHeader(string key, string value)
     {
-        _headers.Add(key, value);
+        base.AddHeader(key, value);
         return this;
     }
 
+    public IDocumentStoreService DocumentStore => new DocumentStoreService(this);
+    public ICustomerService Customer => new CustomerService(this);
+
     public async Task<CustomResultHolder<GetCurrencies>> GetCurrencies()
     {
-        return await GetAsync<CustomResultHolder<GetCurrencies>>("currencies", "1.2");
+        return await GetAsync<CustomResultHolder<GetCurrencies>>("currencies", ApiVersion1_2);
     }
 
     public async Task<CustomResultHolder<GetPrices>> GetPrices(string currency)
     {
-        return await GetAsync<CustomResultHolder<GetPrices>>($"prices/{currency}", "1.2");
+        return await GetAsync<CustomResultHolder<GetPrices>>($"prices/{currency}", ApiVersion1_2);
     }
 
     public async Task<CustomResultHolder<GetLabelPartner>> GetLabelPartner()
     {
-        return await GetAsync<CustomResultHolder<GetLabelPartner>>("labelpartner", "1.2");
+        return await GetAsync<CustomResultHolder<GetLabelPartner>>("labelpartner", ApiVersion1_2);
     }
 
     public async Task<CustomResultHolder<GetReserves>> GetReserves(string? reservesTimeStamp = null)
     {
         return await GetAsync<CustomResultHolder<GetReserves>>(
             $"reserves?reservesTimeStamp={reservesTimeStamp}",
-            "1.2");
+            ApiVersion1_2);
     }
 
     public async Task<CustomResultHolder<GetBrokerBalances_1_1>> GetBrokerBalances()
@@ -55,7 +55,7 @@ public class NexusAPIService(INexusApiClientFactory nexusApiClientFactory)
 
     public async Task<CustomResultHolder<GetCustodianBalances>> GetCustodianBalances()
     {
-        return await GetAsync<CustomResultHolder<GetCustodianBalances>>("balances", "1.2");
+        return await GetAsync<CustomResultHolder<GetCustodianBalances>>("balances", ApiVersion1_2);
     }
 
     public async Task<CustomResultHolder<PagedResult<GetBalanceMutation>>> GetBalanceMutations(
@@ -63,7 +63,7 @@ public class NexusAPIService(INexusApiClientFactory nexusApiClientFactory)
     {
         return await GetAsync<CustomResultHolder<PagedResult<GetBalanceMutation>>>(
             $"balances/hotwallet/mutations{CreateUriQuery(queryParams)}",
-            "1.2");
+            ApiVersion1_2);
     }
 
     public async Task<CustomResultHolder<PagedResult<GetMail>>> GetMails(
@@ -71,38 +71,38 @@ public class NexusAPIService(INexusApiClientFactory nexusApiClientFactory)
     {
         return await GetAsync<CustomResultHolder<PagedResult<GetMail>>>(
             $"mail{CreateUriQuery(queryParams)}",
-            "1.2");
+            ApiVersion1_2);
     }
 
     public async Task<CustomResultHolder<GetTransaction>> GetBrokerTransaction(string txCode)
     {
-        return await GetAsync<CustomResultHolder<GetTransaction>>($"transaction/{txCode}", "1.2");
+        return await GetAsync<CustomResultHolder<GetTransaction>>($"transaction/{txCode}", ApiVersion1_2);
     }
 
     public async Task<CustomResultHolder<PagedResult<GetTransaction>>> GetBrokerTransactions(
         Dictionary<string, string> queryParams)
     {
         return await GetAsync<CustomResultHolder<PagedResult<GetTransaction>>>(
-            $"transaction{CreateUriQuery(queryParams)}", "1.2");
+            $"transaction{CreateUriQuery(queryParams)}", ApiVersion1_2);
     }
 
     public async Task<CustomResultHolder<TotalsResult<TransactionTotals>>> GetBrokerTransactionTotals(
         Dictionary<string, string> queryParams)
     {
         return await GetAsync<CustomResultHolder<TotalsResult<TransactionTotals>>>(
-            $"transaction/totals{CreateUriQuery(queryParams)}", "1.2");
+            $"transaction/totals{CreateUriQuery(queryParams)}", ApiVersion1_2);
     }
 
     public async Task<CustomResultHolder<PagedResult<GetTransfer>>> GetTransfers(GetTransfersRequest? request = null)
     {
         return await GetAsync<CustomResultHolder<PagedResult<GetTransfer>>>(
-            $"/transfers?{QueryParameterHelper.ToQueryString(request)}", "1.2");
+            $"/transfers?{QueryParameterHelper.ToQueryString(request)}", ApiVersion1_2);
     }
 
     public async Task<CustomResultHolder<PagedResult<ListOrder>>> GetOrders(GetOrdersRequest? request = null)
     {
         return await GetAsync<CustomResultHolder<PagedResult<ListOrder>>>(
-            $"/orders?{QueryParameterHelper.ToQueryString(request)}", "1.2");
+            $"/orders?{QueryParameterHelper.ToQueryString(request)}", ApiVersion1_2);
     }
 
     public async Task<IEnumerable<ChartSeriesModelPT>> GetMinutePrices(int timeSpan, string currencyCode,
@@ -118,44 +118,46 @@ public class NexusAPIService(INexusApiClientFactory nexusApiClientFactory)
     {
         return await GetAsync<CustomResultHolder<PagedResult<TransactionNotificationCallbackResponse>>>(
             $"transaction/{transactionCode}/callbacks",
-            "1.2");
+            ApiVersion1_2);
     }
 
     public Task<CustomResultHolder<ListCustodianTransactionResponse>> GetCustodianTransaction(string txCode)
     {
         return GetAsync<CustomResultHolder<ListCustodianTransactionResponse>>(
             $"transactions/custodian/{txCode}",
-            "1.2");
+            ApiVersion1_2);
     }
 
     public Task<CustomResultHolder<CustodianCancelResponse>> CancelCustodianTransaction(string txCode)
     {
         return PostAsync<CustomResultHolder<CustodianCancelResponse>>(
             $"transactions/custodian/{txCode}/cancel",
-            "1.2");
+            ApiVersion1_2);
     }
 
     public async Task<CustomResultHolder<List<GetPortfolio>>> GetPortfolios()
     {
-        return await GetAsync<CustomResultHolder<List<GetPortfolio>>>("portfolios", "1.2");
+        return await GetAsync<CustomResultHolder<List<GetPortfolio>>>("portfolios", ApiVersion1_2);
     }
 
     public async Task<CustomResultHolder<PagedResult<GetTrustLevel>>> GetTrustLevels()
     {
-        return await GetAsync<CustomResultHolder<PagedResult<GetTrustLevel>>>("labelpartner/trustlevels", "1.2");
+        return await GetAsync<CustomResultHolder<PagedResult<GetTrustLevel>>>("labelpartner/trustlevels", ApiVersion1_2);
     }
 
-    public async Task<CustomResultHolder<PagedResult<CustomerBankAccountResponse>>> GetCustomerBankAccounts(string customerCode, Dictionary<string, string> queryParams)
+    public async Task<CustomResultHolder<PagedResult<CustomerBankAccountResponse>>> GetCustomerBankAccounts(
+        string customerCode, Dictionary<string, string> queryParams)
     {
-        return  await GetAsync<CustomResultHolder<PagedResult<CustomerBankAccountResponse>>>(
+        return await GetAsync<CustomResultHolder<PagedResult<CustomerBankAccountResponse>>>(
             $"customer/{customerCode}/bankaccounts{CreateUriQuery(queryParams)}",
-            "1.2");
+            ApiVersion1_2);
     }
 
-    public async Task<CustomResultHolder<CustomerBankAccountResponse>> CreateCustomerBankAccount(string customerCode, CreateBankAccountRequestModel request)
+    public async Task<CustomResultHolder<CustomerBankAccountResponse>> CreateCustomerBankAccount(string customerCode,
+        CreateBankAccountRequestModel request)
     {
         return await PostAsync<CreateBankAccountRequestModel, CustomResultHolder<CustomerBankAccountResponse>>(
-            $"customer/{customerCode}/bankaccounts", request, "1.2");
+            $"customer/{customerCode}/bankaccounts", request, ApiVersion1_2);
     }
 
     public async Task<CustomResultHolder<CustomerBankAccountResponse>> UpdateCustomerBankAccount(string customerCode,
@@ -164,7 +166,7 @@ public class NexusAPIService(INexusApiClientFactory nexusApiClientFactory)
         return await PutAsync<UpdateBankAccountRequest, CustomResultHolder<CustomerBankAccountResponse>>(
             $"customer/{customerCode}/bankaccounts/{bankAccountId}",
             request,
-            "1.2"
+            ApiVersion1_2
         );
     }
 
@@ -172,6 +174,6 @@ public class NexusAPIService(INexusApiClientFactory nexusApiClientFactory)
     {
         return DeleteAsync(
             $"customer/{customerCode}/bankAccounts/{bankAccountId}",
-            "1.2");
+            ApiVersion1_2);
     }
 }

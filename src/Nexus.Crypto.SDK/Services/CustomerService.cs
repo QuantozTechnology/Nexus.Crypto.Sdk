@@ -3,56 +3,58 @@ using Nexus.Crypto.SDK.Models.Response;
 
 namespace Nexus.Crypto.SDK.Services;
 
-public class CustomerService(INexusApiClientFactory nexusApiClientFactory) :BaseService(nexusApiClientFactory), ICustomerService
+public class CustomerService(BaseService service) : ICustomerService
 {
     public Task<CustomResultHolder<GetCustomerTraceSummary[]>> GetCustomerTraceSummary(string customerCode,
         DateTime startDate)
     {
-        return GetAsync<CustomResultHolder<GetCustomerTraceSummary[]>>(
-            $"customer/{customerCode}/trace/summary?startDate={startDate.ToString(ISO8601DateTimeFormat)}",
-            ApiVersion);
+        return service.GetAsync<CustomResultHolder<GetCustomerTraceSummary[]>>(
+            $"customer/{customerCode}/trace/summary?startDate={startDate.ToString(BaseService.ISO8601DateTimeFormat)}",
+            BaseService.ApiVersion1_2);
     }
 
     public Task<CustomResultHolder<PagedResult<GetCustomerTrace>>> GetCustomerTraces(string customerCode,
         DateTime startDate)
     {
-        return GetAsync<CustomResultHolder<PagedResult<GetCustomerTrace>>>(
-            $"customer/{customerCode}/trace?startDate={startDate.ToString(ISO8601DateTimeFormat)}",
-            ApiVersion);
+        return service.GetAsync<CustomResultHolder<PagedResult<GetCustomerTrace>>>(
+            $"customer/{customerCode}/trace?startDate={startDate.ToString(BaseService.ISO8601DateTimeFormat)}",
+            BaseService.ApiVersion1_2);
     }
-    
+
     public async Task<CustomResultHolder<GetCustomer>> GetCustomer(string customerCode)
     {
-        return await GetAsync<CustomResultHolder<GetCustomer>>($"customer/{customerCode}", ApiVersion);
+        return await service.GetAsync<CustomResultHolder<GetCustomer>>($"customer/{customerCode}",
+            BaseService.ApiVersion1_2);
     }
 
     public async Task<CustomResultHolder<PagedResult<GetCustomer>>> GetCustomers(Dictionary<string, string> queryParams)
     {
-        return await GetAsync<CustomResultHolder<PagedResult<GetCustomer>>>(
-            $"customer{CreateUriQuery(queryParams)}",
-            ApiVersion);
+        return await service.GetAsync<CustomResultHolder<PagedResult<GetCustomer>>>(
+            $"customer{BaseService.CreateUriQuery(queryParams)}",
+            BaseService.ApiVersion1_2);
     }
 
     public async Task<CustomResultHolder<CreateCustomerResponse>> CreateCustomer(CreateCustomerRequest request)
     {
-        return await PostAsync<CreateCustomerRequest, CustomResultHolder<CreateCustomerResponse>>(
+        return await service.PostAsync<CreateCustomerRequest, CustomResultHolder<CreateCustomerResponse>>(
             "customer",
             request,
-            ApiVersion
+            BaseService.ApiVersion1_2
         );
     }
 
     public async Task<CustomResultHolder<DeleteCustomerResponse>> DeleteCustomer(string customerCode)
     {
-        return await DeleteAsync<CustomResultHolder<DeleteCustomerResponse>>($"customer/{customerCode}", ApiVersion);
+        return await service.DeleteAsync<CustomResultHolder<DeleteCustomerResponse>>($"customer/{customerCode}",
+            BaseService.ApiVersion1_2);
     }
 
     public async Task<CustomResultHolder<GetCustomer>> UpdateCustomer(string customerCode,
         UpdateCustomerRequest request)
     {
-        return await PutAsync<UpdateCustomerRequest, CustomResultHolder<GetCustomer>>(
+        return await service.PutAsync<UpdateCustomerRequest, CustomResultHolder<GetCustomer>>(
             $"customer/{customerCode}",
             request,
-            ApiVersion);
+            BaseService.ApiVersion1_2);
     }
 }

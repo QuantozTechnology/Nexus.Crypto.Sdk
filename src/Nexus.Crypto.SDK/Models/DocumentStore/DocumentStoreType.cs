@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Nexus.Crypto.SDK.Models;
-
+namespace Nexus.Crypto.SDK.Models.DocumentStore;
 
 public record DocumentStoreTypeResponse
 {

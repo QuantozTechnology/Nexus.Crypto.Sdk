@@ -1,18 +1,20 @@
-﻿using Nexus.Crypto.SDK.Models;
+﻿using Nexus.Crypto.SDK.Models.DocumentStore;
 using Nexus.Crypto.SDK.Models.Response;
 
 namespace Nexus.Crypto.SDK.Services;
 
-public class DocumentStoreSettingsService(INexusApiClientFactory nexusApiClientFactory): BaseService(nexusApiClientFactory), IDocumentStoreSettingsService
+public class DocumentStoreSettingsService(BaseService service) : IDocumentStoreSettingsService
 {
     private const string documentStoreUrl = "integrations/documentstore";
+
     /// <summary>
     /// Retrieve the Document Store settings
     /// </summary>
     /// <returns></returns>
     public Task<CustomResultHolder<DocumentStoreSettingsResponse>> Get()
     {
-        return GetAsync<CustomResultHolder<DocumentStoreSettingsResponse>>(documentStoreUrl, ApiVersion);
+        return service.GetAsync<CustomResultHolder<DocumentStoreSettingsResponse>>(documentStoreUrl,
+            BaseService.ApiVersion1_2);
     }
 
     /// <summary>
@@ -20,12 +22,13 @@ public class DocumentStoreSettingsService(INexusApiClientFactory nexusApiClientF
     /// </summary>
     /// <param name="documentStoreSettings"></param>
     /// <returns></returns>
-    public Task<CustomResultHolder<DocumentStoreSettingsResponse>> Create(DocumentStoreSettingsRequest documentStoreSettings)
+    public Task<CustomResultHolder<DocumentStoreSettingsResponse>> Create(
+        DocumentStoreSettingsRequest documentStoreSettings)
     {
-        return PostAsync<DocumentStoreSettingsRequest, CustomResultHolder<DocumentStoreSettingsResponse>>(
+        return service.PostAsync<DocumentStoreSettingsRequest, CustomResultHolder<DocumentStoreSettingsResponse>>(
             documentStoreUrl,
             documentStoreSettings,
-            ApiVersion);
+            BaseService.ApiVersion1_2);
     }
 
     /// <summary>
@@ -35,10 +38,10 @@ public class DocumentStoreSettingsService(INexusApiClientFactory nexusApiClientF
     /// <returns></returns>
     public Task<CustomResultHolder> Update(DocumentStoreSettingsRequest documentStoreSettings)
     {
-        return PutAsync<DocumentStoreSettingsRequest, CustomResultHolder>(
+        return service.PutAsync<DocumentStoreSettingsRequest, CustomResultHolder>(
             documentStoreUrl,
             documentStoreSettings,
-            ApiVersion);
+            BaseService.ApiVersion1_2);
     }
 
     /// <summary>
@@ -47,6 +50,6 @@ public class DocumentStoreSettingsService(INexusApiClientFactory nexusApiClientF
     /// <returns></returns>
     public Task Delete()
     {
-        return DeleteAsync(documentStoreUrl, ApiVersion);
+        return service.DeleteAsync(documentStoreUrl, BaseService.ApiVersion1_2);
     }
 }
