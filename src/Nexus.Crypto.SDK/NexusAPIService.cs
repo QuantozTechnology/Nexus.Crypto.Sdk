@@ -8,18 +8,12 @@ using Nexus.Crypto.SDK.Services;
 namespace Nexus.Crypto.SDK;
 
 public class NexusAPIService(INexusApiClientFactory nexusApiClientFactory)
-    : BaseService(nexusApiClientFactory), INexusBrokerAPIService, INexusCustodianAPIService
+    : BaseService(nexusApiClientFactory),
+        INexusBrokerAPIService,
+        INexusCustodianAPIService
 {
-    public IDocumentStoreSettingsService DocumentStoreSettings { get; } = new DocumentStoreSettingsService(nexusApiClientFactory);
-    public IDocumentStoreTypeService DocumentStoreType { get; } = new DocumentStoreTypeService(nexusApiClientFactory);
-    public IDocumentStoreRecordService  DocumentStoreRecord { get; } = new DocumentStoreRecordService(nexusApiClientFactory);
-    public ICustomerService Customer { get; } = new CustomerService(nexusApiClientFactory);
-
-    public NexusAPIService AddHeader(string key, string value)
-    {
-        _headers.Add(key, value);
-        return this;
-    }
+    public IDocumentStoreService DocumentStore => new DocumentStoreService(this);
+    public ICustomerService Customer => new CustomerService(this);
 
     public async Task<CustomResultHolder<GetCurrencies>> GetCurrencies()
     {
@@ -145,14 +139,16 @@ public class NexusAPIService(INexusApiClientFactory nexusApiClientFactory)
         return await GetAsync<CustomResultHolder<PagedResult<GetTrustLevel>>>("labelpartner/trustlevels", "1.2");
     }
 
-    public async Task<CustomResultHolder<PagedResult<CustomerBankAccountResponse>>> GetCustomerBankAccounts(string customerCode, Dictionary<string, string> queryParams)
+    public async Task<CustomResultHolder<PagedResult<CustomerBankAccountResponse>>> GetCustomerBankAccounts(
+        string customerCode, Dictionary<string, string> queryParams)
     {
-        return  await GetAsync<CustomResultHolder<PagedResult<CustomerBankAccountResponse>>>(
+        return await GetAsync<CustomResultHolder<PagedResult<CustomerBankAccountResponse>>>(
             $"customer/{customerCode}/bankaccounts{CreateUriQuery(queryParams)}",
             "1.2");
     }
 
-    public async Task<CustomResultHolder<CustomerBankAccountResponse>> CreateCustomerBankAccount(string customerCode, CreateBankAccountRequestModel request)
+    public async Task<CustomResultHolder<CustomerBankAccountResponse>> CreateCustomerBankAccount(string customerCode,
+        CreateBankAccountRequestModel request)
     {
         return await PostAsync<CreateBankAccountRequestModel, CustomResultHolder<CustomerBankAccountResponse>>(
             $"customer/{customerCode}/bankaccounts", request, "1.2");

@@ -1,8 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.IO;
 using System.Text.Json.Serialization;
 
-namespace Nexus.Crypto.SDK.Models;
+namespace Nexus.Crypto.SDK.Models.DocumentStore;
 
 public class DocumentStoreRecordResponse
 {

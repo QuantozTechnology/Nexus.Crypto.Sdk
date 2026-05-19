@@ -8,14 +8,20 @@ namespace Nexus.Crypto.SDK.Services;
 
 public class BaseService(INexusApiClientFactory nexusApiClientFactory): IHttpService
 {
-    protected const string ISO8601DateTimeFormat = "yyyy-MM-ddTHH:mm:ssZ";
-    protected const string ApiVersion = "1.2";
-    protected readonly Dictionary<string, string> _headers = [];
+    public const string ApiVersion1_2 = "1.2";
+    public const string ISO8601DateTimeFormat = "yyyy-MM-ddTHH:mm:ssZ";
+    
+    private readonly Dictionary<string, string> _headers = [];
 
-    protected readonly JsonSerializerOptions _serializerOptions = new()
+    private readonly JsonSerializerOptions _serializerOptions = new()
     {
         Converters = { new JsonStringEnumConverter() }, PropertyNameCaseInsensitive = true
     };
+    
+    public void AddHeader(string key, string value)
+    {
+        _headers.Add(key, value);
+    }
 
     private static async Task HandleErrorResponse<T>(HttpResponseMessage response)
     {
@@ -31,7 +37,7 @@ public class BaseService(INexusApiClientFactory nexusApiClientFactory): IHttpSer
         throw exception;
     }
 
-    protected async Task<HttpClient> GetApiClient(string apiVersion)
+    private async Task<HttpClient> GetApiClient(string apiVersion)
     {
         var client = await nexusApiClientFactory.GetClient(apiVersion);
 
@@ -153,7 +159,7 @@ public class BaseService(INexusApiClientFactory nexusApiClientFactory): IHttpSer
     /// </summary>
     /// <param name="queryParams"></param>
     /// <returns></returns>
-    protected static string CreateUriQuery(Dictionary<string, string> queryParams)
+    public static string CreateUriQuery(Dictionary<string, string> queryParams)
     {
         var query = string.Empty;
 
