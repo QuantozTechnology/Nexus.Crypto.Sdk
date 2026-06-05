@@ -11,6 +11,7 @@ public interface INexusAPIService
 {
     IDocumentStoreService DocumentStore { get; }
     ICustomerService Customer { get; }
+    ICustomerPersonService CustomerPerson { get; }
     Task<CustomResultHolder<GetLabelPartner>> GetLabelPartner();
     Task<CustomResultHolder<GetCurrencies>> GetCurrencies();
     Task<CustomResultHolder<GetPrices>> GetPrices(string currency);
