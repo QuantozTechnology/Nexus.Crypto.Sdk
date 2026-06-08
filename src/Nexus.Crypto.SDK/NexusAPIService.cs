@@ -20,7 +20,8 @@ public class NexusAPIService(INexusApiClientFactory nexusApiClientFactory)
 
     public IDocumentStoreService DocumentStore => new DocumentStoreService(this);
     public ICustomerService Customer => new CustomerService(this);
-
+    public ICustomerPersonService CustomerPerson => new CustomerPersonService(this);
+    
     public async Task<CustomResultHolder<GetCurrencies>> GetCurrencies()
     {
         return await GetAsync<CustomResultHolder<GetCurrencies>>("currencies", ApiVersion1_2);
