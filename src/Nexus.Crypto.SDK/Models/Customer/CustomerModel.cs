@@ -90,7 +90,7 @@ public class UpdateCustomerRequest
     public IDictionary<string, string>? Data { get; set; }
     public string[]? FieldsToClear { get; set; }
     
-    public int? CurrencyId { get; set; }
+    public string? CurrencyCode { get; set; }
     public bool? IsBusiness { get; set; }
 }
 
