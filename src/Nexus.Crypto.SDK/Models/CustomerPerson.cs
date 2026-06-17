@@ -154,7 +154,8 @@ public enum CustomerPersonType
     Director,
     UltimateBeneficialOwner,
     PseudoUltimateBeneficialOwner,
-    AuthorisedRepresentative
+    AuthorisedRepresentative,
+    Other,
 }
 
 public class PersonCountry
