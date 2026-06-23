@@ -473,6 +473,7 @@ public class NexusLabelApiSdkTests
         Assert.Equal(-2.8580000000000004E-06M, feeMutation.Value);
     }
 
+    [Fact]
     public async Task GetOrders_Success()
     {
         var mockResponseBody = """
@@ -565,7 +566,7 @@ public class NexusLabelApiSdkTests
         _logicHelper.MockResponseHandler.AddMockResponse(
             new HttpRequestMessage(HttpMethod.Get,
                 new Uri(
-                    "https://api.quantoznexus.com/orders"))
+                    "https://api.quantoznexus.com/orders?exchangeCode=KRAKEN&cryptoCode=BTC&currencyCode=EUR&limit=1"))
             {
                 Headers = { { "api_version", "1.2" } }
             },
@@ -587,7 +588,7 @@ public class NexusLabelApiSdkTests
         Assert.Equal(1, response.Values.Page);
         Assert.Equal(3, response.Values.Total);
         Assert.Equal(1, response.Values.TotalPages);
-        Assert.Equal(0, response.Values.FilteringParameters.Count);
+        Assert.Empty(response.Values.FilteringParameters);
         Assert.Equal("TEST_ORDER_CODE_3", response.Values.Records.First().OrderCode);
         Assert.Null(response.Values.Records.First().ExchangeTradeCode);
     }
