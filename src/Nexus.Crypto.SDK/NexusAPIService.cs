@@ -63,7 +63,7 @@ public class NexusAPIService(INexusApiClientFactory nexusApiClientFactory)
         Dictionary<string, string> queryParams)
     {
         return await GetAsync<CustomResultHolder<PagedResult<GetBalanceMutation>>>(
-            $"balances/hotwallet/mutations{CreateUriQuery(queryParams)}",
+            $"balances/hotwallet/mutations{ToQueryString(queryParams)}",
             ApiVersion1_2);
     }
 
@@ -71,7 +71,7 @@ public class NexusAPIService(INexusApiClientFactory nexusApiClientFactory)
         Dictionary<string, string> queryParams)
     {
         return await GetAsync<CustomResultHolder<PagedResult<GetMail>>>(
-            $"mail{CreateUriQuery(queryParams)}",
+            $"mail{ToQueryString(queryParams)}",
             ApiVersion1_2);
     }
 
@@ -84,14 +84,14 @@ public class NexusAPIService(INexusApiClientFactory nexusApiClientFactory)
         Dictionary<string, string> queryParams)
     {
         return await GetAsync<CustomResultHolder<PagedResult<GetTransaction>>>(
-            $"transaction{CreateUriQuery(queryParams)}", ApiVersion1_2);
+            $"transaction{ToQueryString(queryParams)}", ApiVersion1_2);
     }
 
     public async Task<CustomResultHolder<TotalsResult<TransactionTotals>>> GetBrokerTransactionTotals(
         Dictionary<string, string> queryParams)
     {
         return await GetAsync<CustomResultHolder<TotalsResult<TransactionTotals>>>(
-            $"transaction/totals{CreateUriQuery(queryParams)}", ApiVersion1_2);
+            $"transaction/totals{ToQueryString(queryParams)}", ApiVersion1_2);
     }
 
     public async Task<CustomResultHolder<PagedResult<GetTransfer>>> GetTransfers(GetTransfersRequest? request = null)
@@ -150,7 +150,7 @@ public class NexusAPIService(INexusApiClientFactory nexusApiClientFactory)
         string customerCode, Dictionary<string, string> queryParams)
     {
         return await GetAsync<CustomResultHolder<PagedResult<CustomerBankAccountResponse>>>(
-            $"customer/{customerCode}/bankaccounts{CreateUriQuery(queryParams)}",
+            $"customer/{customerCode}/bankaccounts{ToQueryString(queryParams)}",
             ApiVersion1_2);
     }
 

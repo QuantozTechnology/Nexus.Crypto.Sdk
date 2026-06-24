@@ -30,7 +30,7 @@ public class CustomerService(BaseService service) : ICustomerService
     public async Task<CustomResultHolder<PagedResult<GetCustomer>>> GetCustomers(Dictionary<string, string> queryParams)
     {
         return await service.GetAsync<CustomResultHolder<PagedResult<GetCustomer>>>(
-            $"customer{BaseService.CreateUriQuery(queryParams)}",
+            $"customer{BaseService.ToQueryString(queryParams)}",
             BaseService.ApiVersion1_2);
     }
 

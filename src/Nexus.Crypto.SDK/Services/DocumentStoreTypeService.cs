@@ -26,7 +26,7 @@ public class DocumentStoreTypeService(BaseService service) : IDocumentStoreTypeS
 
     public Task<CustomResultHolder<PagedResult<DocumentStoreTypeResponse>>> Get(Dictionary<string, string> queryParams)
     {
-        var url = DocumentTypeUrl + BaseService.CreateUriQuery(queryParams);
+        var url = DocumentTypeUrl + BaseService.ToQueryString(queryParams);
         return service.GetAsync<CustomResultHolder<PagedResult<DocumentStoreTypeResponse>>>(url, BaseService.ApiVersion1_2);
     }
 

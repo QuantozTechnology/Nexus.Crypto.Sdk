@@ -82,9 +82,7 @@ public class TransactionControllerTests
                 ";
 
         _logicHelper.MockResponseHandler.AddMockResponse(
-            new HttpRequestMessage(HttpMethod.Get, new Uri("https://api.quantoznexus.com/transaction?status=BLOCKED|PAYOUTONHOLD" +
-                "&customer=NL51INGB7243913512&customerIsHighrisk=false&customerIsBusiness=False&customerTrustlevel=Trusted&customerStatus=Active" +
-                "&startDate=2020-06-04T14:52:41Z&endDate=2022-06-04T14:52:41Z&type=SELL&isSettled=false"))
+            new HttpRequestMessage(HttpMethod.Get, new Uri("https://api.quantoznexus.com/transaction?status=BLOCKED%7CPAYOUTONHOLD&customer=NL51INGB7243913512&customerIsHighrisk=false&customerIsBusiness=False&customerTrustlevel=Trusted&customerStatus=Active&startDate=2020-06-04T14%3A52%3A41Z&endDate=2022-06-04T14%3A52%3A41Z&type=SELL&isSettled=false"))
             {
                 Headers = {
                     { "api_version", "1.2" }

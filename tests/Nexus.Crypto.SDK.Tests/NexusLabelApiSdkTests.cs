@@ -262,8 +262,7 @@ public class NexusLabelApiSdkTests
 
         _logicHelper.MockResponseHandler.AddMockResponse(
             new HttpRequestMessage(HttpMethod.Get, new Uri(
-                "https://api.quantoznexus.com/mail?startDate=2020-06-21T16:24:09Z" +
-                "&endDate=2022-06-21T16:24:09Z&accountCode=CJABM2HM&customerCode=NLTEST&status=ReadyToSend&type=TransactionToBeReturned"))
+                "https://api.quantoznexus.com/mail?startDate=2020-06-21T16%3A24%3A09Z&endDate=2022-06-21T16%3A24%3A09Z&accountCode=CJABM2HM&customerCode=NLTEST&status=ReadyToSend&type=TransactionToBeReturned"))
             {
                 Headers = { { "api_version", "1.2" } }
             },
@@ -273,7 +272,7 @@ public class NexusLabelApiSdkTests
             });
 
 
-        var response = await _logicHelper.ApiService.GetMails(new System.Collections.Generic.Dictionary<string, string>
+        var response = await _logicHelper.ApiService.GetMails(new Dictionary<string, string>
         {
             { "startDate", "2020-06-21T16:24:09Z" },
             { "endDate", "2022-06-21T16:24:09Z" },
@@ -778,7 +777,7 @@ public class NexusLabelApiSdkTests
         _logicHelper.MockResponseHandler.AddMockResponse(
             new HttpRequestMessage(HttpMethod.Get,
                 new Uri(
-                    "https://api.quantoznexus.com/customer?startDate=2021-01-01T00:00:01Z&endDate=2022-01-01T00:00:03Z&status=Active"))
+                    "https://api.quantoznexus.com/customer?startDate=2021-01-01T00%3A00%3A01Z&endDate=2022-01-01T00%3A00%3A03Z&status=Active"))
             {
                 Headers = { { "api_version", "1.2" } }
             },

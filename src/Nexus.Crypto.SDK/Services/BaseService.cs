@@ -1,4 +1,6 @@
-﻿using System.Net.Http.Json;
+﻿using System.Globalization;
+using System.Net.Http.Json;
+using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Nexus.Crypto.SDK.Models;
@@ -154,30 +156,58 @@ public class BaseService(INexusApiClientFactory nexusApiClientFactory): IHttpSer
     }
     
     /// <summary>
-    /// Take Dictionary of query parameters and creates the query string to paste to the URI.
-    /// Prepends the '?'. When the dictionary is empty, returns an empty string;
+    /// Returns a query string of the given dictionary, starting with ?
     /// </summary>
-    /// <param name="queryParams"></param>
+    /// <param name="dict"></param>
     /// <returns></returns>
-    public static string CreateUriQuery(Dictionary<string, string> queryParams)
+    public static string ToQueryString(Dictionary<string, string> dict)
     {
-        var query = string.Empty;
+        var queryStrings = new List<string>();
 
-        foreach (var p in queryParams)
+        foreach (var (key, value) in dict)
         {
-            if (query == string.Empty)
+            if (!string.IsNullOrWhiteSpace(key) && !string.IsNullOrWhiteSpace(value))
             {
-                query += "?";
+                queryStrings.Add($"{Uri.EscapeDataString(ToCamelCase(key))}={Uri.EscapeDataString(value)}");
             }
-            else
-            {
-                query += "&";
-            }
-
-            query += $"{p.Key}={p.Value}";
         }
 
-        return query;
+        if (queryStrings.Count > 0)
+        {
+            return "?" + string.Join("&", queryStrings);
+        }
+
+        return string.Empty;
     }
 
+    /// <summary>
+    /// Returns a query string of the given object, starting with ?
+    /// </summary>
+    /// <param name="obj"></param>
+    /// <returns></returns>
+    public static string ToQueryString(object? obj)
+    {
+        if (obj == null) return string.Empty;
+
+        var properties = obj.GetType()
+            .GetProperties(BindingFlags.Public | BindingFlags.Instance)
+            .Where(p => p.GetValue(obj) != null)
+            .Select(p =>
+                $"{Uri.EscapeDataString(ToCamelCase(p.Name))}={Uri.EscapeDataString(p.GetValue(obj)?.ToString()!)}");
+
+        if (properties.Any())
+        {
+            return "?" + string.Join("&", properties);
+        }
+
+        return string.Empty;
+    }
+
+    private static string ToCamelCase(string name)
+    {
+        if (string.IsNullOrEmpty(name) || char.IsLower(name[0]))
+            return name;
+
+        return char.ToLower(name[0], CultureInfo.InvariantCulture) + name[1..];
+    }
 }

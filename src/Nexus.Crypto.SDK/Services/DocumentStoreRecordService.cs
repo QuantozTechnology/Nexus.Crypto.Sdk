@@ -45,7 +45,7 @@ public class DocumentStoreRecordService(BaseService service) : IDocumentStoreRec
     {
         queryParams["customerCode"] = customerCode;
 
-        var url = DocumentStoreRecordListUrl + BaseService.CreateUriQuery(queryParams);
+        var url = DocumentStoreRecordListUrl + BaseService.ToQueryString(queryParams);
         return service.GetAsync<CustomResultHolder<PagedResult<DocumentStoreRecordResponse>>>(url,
             BaseService.ApiVersion1_2);
     }
