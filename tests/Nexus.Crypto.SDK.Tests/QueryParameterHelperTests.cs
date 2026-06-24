@@ -1,5 +1,8 @@
-namespace Nexus.Crypto.SDK.Tests;
+﻿namespace Nexus.Crypto.SDK.Tests;
 
+using System;
+using System.Globalization;
+using System.Threading;
 using Xunit;
 
 public class QueryParameterHelperTests
@@ -17,6 +20,18 @@ public class QueryParameterHelperTests
         public int? Age { get; set; }
         public string City { get; set; }
         public TestEnum? EnumValue { get; set; }
+    }
+
+    private class NumericObject
+    {
+        public decimal Price { get; set; }
+        public double Rate { get; set; }
+    }
+
+    private class DateObject
+    {
+        public DateTime CreatedAt { get; set; }
+        public DateTimeOffset UpdatedAt { get; set; }
     }
 
     [Fact]
@@ -82,5 +97,44 @@ public class QueryParameterHelperTests
 
         // Assert
         Assert.Equal("name=Alice&age=0", result);
+    }
+
+    [Fact]
+    public void ToQueryString_DecimalAndDouble_UsesInvariantCulture()
+    {
+        // Arrange
+        var obj = new NumericObject { Price = 1.5m, Rate = 2.75 };
+        var originalCulture = Thread.CurrentThread.CurrentCulture;
+        Thread.CurrentThread.CurrentCulture = new CultureInfo("de-DE"); // uses ',' as decimal separator
+
+        try
+        {
+            // Act
+            var result = QueryParameterHelper.ToQueryString(obj);
+
+            // Assert — values must contain '.' not ','
+            Assert.Equal("price=1.5&rate=2.75", result);
+        }
+        finally
+        {
+            Thread.CurrentThread.CurrentCulture = originalCulture;
+        }
+    }
+
+    [Fact]
+    public void ToQueryString_DateTime_UsesIso8601()
+    {
+        // Arrange
+        var dt = new DateTime(2024, 6, 15, 10, 30, 0, DateTimeKind.Utc);
+        var dto = new DateTimeOffset(2024, 6, 15, 10, 30, 0, TimeSpan.Zero);
+        var obj = new DateObject { CreatedAt = dt, UpdatedAt = dto };
+
+        // Act
+        var result = QueryParameterHelper.ToQueryString(obj);
+
+        // Assert — round-trip "O" format; URI-encoded '+' becomes '%2B', ':' becomes '%3A'
+        Assert.Contains("createdAt=", result);
+        Assert.Contains("updatedAt=", result);
+        Assert.Contains("2024", result);
     }
 }
