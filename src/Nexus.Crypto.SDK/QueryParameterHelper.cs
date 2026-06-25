@@ -1,4 +1,4 @@
-using System.Globalization;
+﻿using System.Globalization;
 using System.Reflection;
 
 namespace Nexus.Crypto.SDK;
@@ -11,12 +11,21 @@ public static class QueryParameterHelper
 
         var properties = obj.GetType()
             .GetProperties(BindingFlags.Public | BindingFlags.Instance)
-            .Where(p => p.GetValue(obj) != null)
-            .Select(p =>
-                $"{Uri.EscapeDataString(ToCamelCase(p.Name))}={Uri.EscapeDataString(p.GetValue(obj)?.ToString()!)}");
+            .Select(p => (Key: ToCamelCase(p.Name), Value: p.GetValue(obj)))
+            .Where(kv => kv.Value != null)
+            .Select(kv =>
+                $"{Uri.EscapeDataString(kv.Key)}={Uri.EscapeDataString(FormatValue(kv.Value!))}");
 
         return string.Join("&", properties);
     }
+
+    private static string FormatValue(object value) => value switch
+    {
+        DateTime dt => dt.ToString("O", CultureInfo.InvariantCulture),
+        DateTimeOffset dto => dto.ToString("O", CultureInfo.InvariantCulture),
+        IFormattable f => f.ToString(null, CultureInfo.InvariantCulture),
+        _ => value.ToString()!
+    };
 
     private static string ToCamelCase(string name)
     {

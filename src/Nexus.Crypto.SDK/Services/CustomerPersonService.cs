@@ -16,7 +16,7 @@ public class CustomerPersonService(BaseService service) : ICustomerPersonService
 
     public Task<CustomResultHolder<PagedResult<PersonResponse>>> GetCustomerPersons(string customerCode, Dictionary<string, string> queryParams)
     {
-        var url = $"customer/{customerCode}/person" + BaseService.CreateUriQuery(queryParams);
+        var url = $"customer/{customerCode}/person" + BaseService.ToQueryString(queryParams);
         return service.GetAsync<CustomResultHolder<PagedResult<PersonResponse>>>(
             url,
             BaseService.ApiVersion1_2);
