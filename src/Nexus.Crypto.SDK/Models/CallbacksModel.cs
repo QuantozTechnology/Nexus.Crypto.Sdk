@@ -29,12 +29,33 @@ public class LabelNotificationConfirmationResponse
 public class LabelNotificationTxSendoutResponse
 {
     public string TxId { get; set; }
+    public decimal? CryptoAmount { get; set; }
+    public string DestinationAddress { get; set; }
+}
+
+public class LabelNotificationTxBrokerBuyResponse
+{
+    public string TxId { get; set; }
+    public decimal? CryptoAmount { get; set; }
+    public string DestinationAddress { get; set; }
 }
 
 public class LabelNotificationTxReceiveInResponse
 {
     public string TxId { get; set; }
+    public decimal? ReceivedFiatValue { get; set; }
     public decimal? ReceivedCryptoAmount { get; set; }
+    public string ReceiveAddress { get; set; }
+    public string BlockchainMessage { get; set; }
+}
+
+public class LabelNotificationTxBrokerSellResponse
+{
+    public string TxId { get; set; }
+    public decimal? ReceivedFiatValue { get; set; }
+    public decimal? ReceivedCryptoAmount { get; set; }
+    public string ReceiveAddress { get; set; }
+    public string BlockchainMessage { get; set; }
 }
 
 public class LabelNotificationTxSellResponse
@@ -75,6 +96,8 @@ public class LabelNotificationResponse
     public LabelNotificationTxMerchantResponse Merchant { get; set; }
     public LabelNotificationTxSendoutResponse Sendout { get; set; }
     public LabelNotificationTxReceiveInResponse ReceiveIn { get; set; }
+    public LabelNotificationTxBrokerBuyResponse BrokerBuy { get; set; }
+    public LabelNotificationTxBrokerSellResponse BrokerSell { get; set; }
     public LabelNotificationConfirmationResponse Confirmations { get; set; }
     public string ValidUntil { get; set; }
 }
