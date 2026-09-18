@@ -20,6 +20,8 @@ public enum TransactionTypes
     SENDTOBUCKET = 9,
     INTEREST = 10,
     CLAWBACK = 11,
+    BROKERBUY = 12,
+    BROKERSELL = 13
 }
 
 public enum Direction
@@ -38,7 +40,9 @@ public enum CustodianTransactionStatus
     BLOCKED = 6,
     Staged = 7,
     ToCancel = 8,
-    Initiated = 9
+    Initiated = 9,
+    ToPayout = 10,
+    PayoutConfirming = 11
 }
 
 public class ListCustodianTransactionResponse
