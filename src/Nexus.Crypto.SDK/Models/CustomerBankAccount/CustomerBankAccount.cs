@@ -126,7 +126,20 @@ public class UpdateBankAccountRequest
     /// Update the primary account indicator of a customer. Setting this true, will set the other bank accounts of a customer to false.
     /// </summary>
     public bool? IsPrimary { get; set; }
+    
+    /// <summary>
+    /// Array of field names to explicitly clear (set to null/empty).
+    /// Supported fields: Name, Bank
+    /// </summary>
+    public FieldsToClearEnum[]? FieldsToClear { get; set; }
 }
+
+public enum FieldsToClearEnum
+{
+    Name,
+    Bank
+}
+
 
 public class UpdateBankAccountBankRequest
 {
