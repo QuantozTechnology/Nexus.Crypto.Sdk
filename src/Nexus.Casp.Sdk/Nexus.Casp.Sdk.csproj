@@ -2,13 +2,36 @@
 
     <PropertyGroup>
         <TargetFramework>net10.0</TargetFramework>
+        <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+        <Company>Quantoz Technology</Company>
+        <Authors>Quantoz Technology</Authors>
+        <Product>Nexus.Casp.Sdk</Product>
+        <Description>.NET client and dependency injection support for the Quantoz Nexus CASP API.</Description>
+        <Copyright>Copyright © 2026</Copyright>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <PackageRepositoryUrl>https://github.com/QuantozTechnology/Nexus.Crypto.SDK</PackageRepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageTags>Nexus;CASP;Crypto;SDK</PackageTags>
+        <DebugType>portable</DebugType>
+        <DebugSymbols>true</DebugSymbols>
+        <IncludeSymbols>true</IncludeSymbols>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+        <PublishRepositoryUrl>true</PublishRepositoryUrl>
+        <EmbedUntrackedSources>true</EmbedUntrackedSources>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.Kiota.Bundle" Version="2.1.2"/>
-        <PackageReference Include="Microsoft.Extensions.Http" Version="10.0.0"/>
+        <PackageReference Include="Microsoft.Kiota.Bundle" Version="2.1.2" />
+        <PackageReference Include="Microsoft.Extensions.Http" Version="10.0.0" />
+        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="10.0.401" PrivateAssets="All" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Include="README.md" Pack="true" PackagePath="\" />
+        <None Include="../../LICENSE" Pack="true" PackagePath="\" />
     </ItemGroup>
 
 </Project>
