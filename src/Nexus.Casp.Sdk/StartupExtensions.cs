@@ -50,12 +50,12 @@ public static class StartupExtensions
     public static void AddNexusCaspSdk(this IServiceCollection services, Action<NexusApiOptions> configureOptions)
     {
         services.AddKiotaHandlers();
-        services.AddHttpClient("NexusApiClient")
+        services.AddHttpClient(NexusCaspClientFactory.HttpClientName)
             .AttachKiotaHandlers();
 
         services.Configure(configureOptions);
-        services.AddScoped<INexusApiClientFactory, NexusApiClientFactory>();
-        services.AddScoped<NexusClient>();
+        services.AddScoped<NexusCaspClientFactory>();
+        services.AddScoped<NexusClient>(sp => sp.GetRequiredService<NexusCaspClientFactory>().GetClient());
     }
 
     public static void AddNexusCaspSdk(this IServiceCollection services)
