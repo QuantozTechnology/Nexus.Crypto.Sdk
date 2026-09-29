@@ -1,0 +1,18 @@
+<Solution>
+  <Folder Name="/samples/">
+    <Project Path="samples/SdkWebSample/SdkWebSample.csproj" />
+  </Folder>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+    <File Path=".gitignore" />
+    <File Path="global.json" />
+    <File Path="LICENSE" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/Nexus.Casp.Sdk/Nexus.Casp.Sdk.csproj" />
+    <Project Path="src/Nexus.Crypto.SDK/Nexus.Crypto.SDK.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Nexus.Crypto.SDK.Tests/Nexus.Crypto.SDK.Tests.csproj" />
+  </Folder>
+</Solution>

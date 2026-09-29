@@ -1,0 +1,102 @@
+name: Update Kiota client
+
+on:
+  schedule:
+    - cron: "0 5 * * *"
+  workflow_dispatch:
+    inputs:
+      kiota-version:
+        description: "Kiota version to install (defaults to latest)"
+        required: false
+        type: string
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: kiota-update
+  cancel-in-progress: false
+
+env:
+  UPDATE_BRANCH: automation/kiota-update
+  SDK_PATH: src/Nexus.Casp.Sdk
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Install Kiota
+        env:
+          KIOTA_VERSION: ${{ inputs.kiota-version }}
+        run: |
+          if [ -n "$KIOTA_VERSION" ]; then
+            dotnet tool install --global Microsoft.OpenApi.Kiota --version "$KIOTA_VERSION"
+          else
+            dotnet tool install --global Microsoft.OpenApi.Kiota
+          fi
+          kiota --version
+
+      - name: Check out update branch
+        id: branch
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          pr=$(gh pr list --head "$UPDATE_BRANCH" --state open --json number --jq '.[0].number')
+          echo "pr=$pr" >> "$GITHUB_OUTPUT"
+          if [ -n "$pr" ]; then
+            # Add to the open PR's branch
+            git checkout -B "$UPDATE_BRANCH" "origin/$UPDATE_BRANCH"
+          else
+            # Start fresh from the default branch (discard any stale branch)
+            git checkout -B "$UPDATE_BRANCH"
+          fi
+
+      - name: Run kiota update
+        working-directory: ${{ env.SDK_PATH }}
+        run: kiota update -o . --clean-output
+
+      - name: Build
+        run: dotnet build "$SDK_PATH/Nexus.Casp.Sdk.csproj"
+
+      - name: Commit changes
+        id: commit
+        run: |
+          git add -A "$SDK_PATH"
+          if git diff --cached --quiet; then
+            echo "No changes from kiota update."
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          git commit -m "Update Kiota generated client ($(date -u +%Y-%m-%d))"
+          git push --force-with-lease origin "$UPDATE_BRANCH"
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+
+      - name: Create or update pull request
+        if: steps.commit.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BASE_BRANCH: ${{ github.event.repository.default_branch }}
+          PR: ${{ steps.branch.outputs.pr }}
+        run: |
+          if [ -n "$PR" ]; then
+            pr="$PR"
+            gh pr comment "$pr" --body "Added Kiota client update from run ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}."
+          else
+            gh pr create \
+              --base "$BASE_BRANCH" \
+              --head "$UPDATE_BRANCH" \
+              --title "Update Kiota generated client" \
+              --body "Automated \`kiota update\` of \`$SDK_PATH\` against the latest OpenAPI description. Subsequent daily updates are added to this PR."
+          fi
