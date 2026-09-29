@@ -31,7 +31,7 @@ public class NexusCaspClientFactory(
 
         requestAdapter.BaseUrl = baseUrl.TrimEnd('/');
 
-        return new NexusClient(requestAdapter);
+        return new NexusClient(requestAdapter, httpClient);
     }
 
     private IAuthenticationProvider CreateAuthenticationProvider()
