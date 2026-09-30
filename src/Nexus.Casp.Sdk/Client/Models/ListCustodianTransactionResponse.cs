@@ -145,7 +145,7 @@ namespace Nexus.Casp.Client.Models
         /// <summary>Transaction status</summary>
         public global::Nexus.Casp.Client.Models.CustodianTransactionStatus? Status { get; set; }
         /// <summary>Margin made from Swap transactions in crypto</summary>
-        public double? SwapMarginAmountCrypto { get; set; }
+        public decimal? SwapMarginAmountCrypto { get; set; }
         /// <summary>Unique identifier of the transaction</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -192,7 +192,7 @@ namespace Nexus.Casp.Client.Models
                 { "paymentReference", n => { PaymentReference = n.GetStringValue(); } },
                 { "requestedAmounts", n => { RequestedAmounts = n.GetObjectValue<global::Nexus.Casp.Client.Models.AmountsResponse>(global::Nexus.Casp.Client.Models.AmountsResponse.CreateFromDiscriminatorValue); } },
                 { "status", n => { Status = n.GetEnumValue<global::Nexus.Casp.Client.Models.CustodianTransactionStatus>(); } },
-                { "swapMarginAmountCrypto", n => { SwapMarginAmountCrypto = n.GetDoubleValue(); } },
+                { "swapMarginAmountCrypto", n => { SwapMarginAmountCrypto = n.GetDecimalValue(); } },
                 { "transactionCode", n => { TransactionCode = n.GetStringValue(); } },
                 { "type", n => { Type = n.GetEnumValue<global::Nexus.Casp.Client.Models.TransactionTypes>(); } },
             };
@@ -222,7 +222,7 @@ namespace Nexus.Casp.Client.Models
             writer.WriteStringValue("paymentReference", PaymentReference);
             writer.WriteObjectValue<global::Nexus.Casp.Client.Models.AmountsResponse>("requestedAmounts", RequestedAmounts);
             writer.WriteEnumValue<global::Nexus.Casp.Client.Models.CustodianTransactionStatus>("status", Status);
-            writer.WriteDoubleValue("swapMarginAmountCrypto", SwapMarginAmountCrypto);
+            writer.WriteDecimalValue("swapMarginAmountCrypto", SwapMarginAmountCrypto);
             writer.WriteStringValue("transactionCode", TransactionCode);
             writer.WriteEnumValue<global::Nexus.Casp.Client.Models.TransactionTypes>("type", Type);
         }

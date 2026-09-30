@@ -13,7 +13,7 @@ namespace Nexus.Casp.Client.Models
     #pragma warning restore CS1591
     {
         /// <summary>Rate in decimals (relative value).0.01 equals 1%.</summary>
-        public double? AdjustedRate { get; set; }
+        public decimal? AdjustedRate { get; set; }
         /// <summary>
         /// Creates a new instance of the appropriate class based on discriminator value
         /// </summary>
@@ -32,7 +32,7 @@ namespace Nexus.Casp.Client.Models
         {
             return new Dictionary<string, Action<IParseNode>>
             {
-                { "adjustedRate", n => { AdjustedRate = n.GetDoubleValue(); } },
+                { "adjustedRate", n => { AdjustedRate = n.GetDecimalValue(); } },
             };
         }
         /// <summary>
@@ -42,7 +42,7 @@ namespace Nexus.Casp.Client.Models
         public virtual void Serialize(ISerializationWriter writer)
         {
             if(ReferenceEquals(writer, null)) throw new ArgumentNullException(nameof(writer));
-            writer.WriteDoubleValue("adjustedRate", AdjustedRate);
+            writer.WriteDecimalValue("adjustedRate", AdjustedRate);
         }
     }
 }

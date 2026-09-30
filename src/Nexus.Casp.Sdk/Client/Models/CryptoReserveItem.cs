@@ -13,7 +13,7 @@ namespace Nexus.Casp.Client.Models
     #pragma warning restore CS1591
     {
         /// <summary>Total amount  - Locked amount</summary>
-        public double? Available { get; set; }
+        public decimal? Available { get; set; }
         /// <summary>Blockchain identifier in case of Cryptos</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -49,7 +49,7 @@ namespace Nexus.Casp.Client.Models
         /// <summary>Reserve is active</summary>
         public bool? IsActive { get; set; }
         /// <summary>Locked amount which are not available to use</summary>
-        public double? Locked { get; set; }
+        public decimal? Locked { get; set; }
         /// <summary>Reserve name</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -67,7 +67,7 @@ namespace Nexus.Casp.Client.Models
         public string TokenCode { get; set; }
 #endif
         /// <summary>Total amount</summary>
-        public double? Total { get; set; }
+        public decimal? Total { get; set; }
         /// <summary>Reserve type- `Exchange`- `HotWallet`- `Coldstore`- `Yield`</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -77,7 +77,7 @@ namespace Nexus.Casp.Client.Models
         public string Type { get; set; }
 #endif
         /// <summary>Unconfirmed amount is incoming crypto deposits that do not yet have enough confirmation on the blockchain.</summary>
-        public double? Unconfirmed { get; set; }
+        public decimal? Unconfirmed { get; set; }
         /// <summary>DateTime of last update</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -104,18 +104,18 @@ namespace Nexus.Casp.Client.Models
         {
             return new Dictionary<string, Action<IParseNode>>
             {
-                { "available", n => { Available = n.GetDoubleValue(); } },
+                { "available", n => { Available = n.GetDecimalValue(); } },
                 { "blockchainCode", n => { BlockchainCode = n.GetStringValue(); } },
                 { "bucketCode", n => { BucketCode = n.GetStringValue(); } },
                 { "cryptoCode", n => { CryptoCode = n.GetStringValue(); } },
                 { "exchangeCode", n => { ExchangeCode = n.GetStringValue(); } },
                 { "isActive", n => { IsActive = n.GetBoolValue(); } },
-                { "locked", n => { Locked = n.GetDoubleValue(); } },
+                { "locked", n => { Locked = n.GetDecimalValue(); } },
                 { "name", n => { Name = n.GetStringValue(); } },
                 { "tokenCode", n => { TokenCode = n.GetStringValue(); } },
-                { "total", n => { Total = n.GetDoubleValue(); } },
+                { "total", n => { Total = n.GetDecimalValue(); } },
                 { "type", n => { Type = n.GetStringValue(); } },
-                { "unconfirmed", n => { Unconfirmed = n.GetDoubleValue(); } },
+                { "unconfirmed", n => { Unconfirmed = n.GetDecimalValue(); } },
                 { "updated", n => { Updated = n.GetStringValue(); } },
             };
         }
@@ -126,18 +126,18 @@ namespace Nexus.Casp.Client.Models
         public virtual void Serialize(ISerializationWriter writer)
         {
             if(ReferenceEquals(writer, null)) throw new ArgumentNullException(nameof(writer));
-            writer.WriteDoubleValue("available", Available);
+            writer.WriteDecimalValue("available", Available);
             writer.WriteStringValue("blockchainCode", BlockchainCode);
             writer.WriteStringValue("bucketCode", BucketCode);
             writer.WriteStringValue("cryptoCode", CryptoCode);
             writer.WriteStringValue("exchangeCode", ExchangeCode);
             writer.WriteBoolValue("isActive", IsActive);
-            writer.WriteDoubleValue("locked", Locked);
+            writer.WriteDecimalValue("locked", Locked);
             writer.WriteStringValue("name", Name);
             writer.WriteStringValue("tokenCode", TokenCode);
-            writer.WriteDoubleValue("total", Total);
+            writer.WriteDecimalValue("total", Total);
             writer.WriteStringValue("type", Type);
-            writer.WriteDoubleValue("unconfirmed", Unconfirmed);
+            writer.WriteDecimalValue("unconfirmed", Unconfirmed);
             writer.WriteStringValue("updated", Updated);
         }
     }

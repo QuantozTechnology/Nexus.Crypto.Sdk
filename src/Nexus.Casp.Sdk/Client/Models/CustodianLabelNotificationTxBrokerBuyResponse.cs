@@ -13,7 +13,7 @@ namespace Nexus.Casp.Client.Models
     #pragma warning restore CS1591
     {
         /// <summary>Crypto amount of the SendOut transaction</summary>
-        public double? CryptoAmount { get; set; }
+        public decimal? CryptoAmount { get; set; }
         /// <summary>Destination of the SendOut transaction</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -48,7 +48,7 @@ namespace Nexus.Casp.Client.Models
         {
             return new Dictionary<string, Action<IParseNode>>
             {
-                { "cryptoAmount", n => { CryptoAmount = n.GetDoubleValue(); } },
+                { "cryptoAmount", n => { CryptoAmount = n.GetDecimalValue(); } },
                 { "destinationAddress", n => { DestinationAddress = n.GetStringValue(); } },
                 { "txId", n => { TxId = n.GetStringValue(); } },
             };
@@ -60,7 +60,7 @@ namespace Nexus.Casp.Client.Models
         public virtual void Serialize(ISerializationWriter writer)
         {
             if(ReferenceEquals(writer, null)) throw new ArgumentNullException(nameof(writer));
-            writer.WriteDoubleValue("cryptoAmount", CryptoAmount);
+            writer.WriteDecimalValue("cryptoAmount", CryptoAmount);
             writer.WriteStringValue("destinationAddress", DestinationAddress);
             writer.WriteStringValue("txId", TxId);
         }

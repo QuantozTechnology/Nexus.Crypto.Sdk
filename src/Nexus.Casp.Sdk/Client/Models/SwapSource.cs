@@ -21,7 +21,7 @@ namespace Nexus.Casp.Client.Models
         public string AccountCode { get; set; }
 #endif
         /// <summary>The amount of cryptocurrency.</summary>
-        public double? CryptoAmount { get; set; }
+        public decimal? CryptoAmount { get; set; }
         /// <summary>Can only consist of A-Z a-z 0-9 _ -</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -39,7 +39,7 @@ namespace Nexus.Casp.Client.Models
         public global::Nexus.Casp.Client.Models.SwapSource_data Data { get; set; }
 #endif
         /// <summary>The SELL price at which the cryptocurrency will be swapped from.**Please note** the fixed price is subject to some benchmarks configurable on the select payment method.Default ranges:- 5% price increase allowed- 10% price reduction allowed</summary>
-        public double? RequestedPrice { get; set; }
+        public decimal? RequestedPrice { get; set; }
         /// <summary>
         /// Creates a new instance of the appropriate class based on discriminator value
         /// </summary>
@@ -59,10 +59,10 @@ namespace Nexus.Casp.Client.Models
             return new Dictionary<string, Action<IParseNode>>
             {
                 { "accountCode", n => { AccountCode = n.GetStringValue(); } },
-                { "cryptoAmount", n => { CryptoAmount = n.GetDoubleValue(); } },
+                { "cryptoAmount", n => { CryptoAmount = n.GetDecimalValue(); } },
                 { "cryptoCode", n => { CryptoCode = n.GetStringValue(); } },
                 { "data", n => { Data = n.GetObjectValue<global::Nexus.Casp.Client.Models.SwapSource_data>(global::Nexus.Casp.Client.Models.SwapSource_data.CreateFromDiscriminatorValue); } },
-                { "requestedPrice", n => { RequestedPrice = n.GetDoubleValue(); } },
+                { "requestedPrice", n => { RequestedPrice = n.GetDecimalValue(); } },
             };
         }
         /// <summary>
@@ -73,10 +73,10 @@ namespace Nexus.Casp.Client.Models
         {
             if(ReferenceEquals(writer, null)) throw new ArgumentNullException(nameof(writer));
             writer.WriteStringValue("accountCode", AccountCode);
-            writer.WriteDoubleValue("cryptoAmount", CryptoAmount);
+            writer.WriteDecimalValue("cryptoAmount", CryptoAmount);
             writer.WriteStringValue("cryptoCode", CryptoCode);
             writer.WriteObjectValue<global::Nexus.Casp.Client.Models.SwapSource_data>("data", Data);
-            writer.WriteDoubleValue("requestedPrice", RequestedPrice);
+            writer.WriteDecimalValue("requestedPrice", RequestedPrice);
         }
     }
 }

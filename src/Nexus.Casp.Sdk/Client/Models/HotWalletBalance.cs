@@ -13,9 +13,9 @@ namespace Nexus.Casp.Client.Models
     #pragma warning restore CS1591
     {
         /// <summary>Available balance</summary>
-        public double? Available { get; set; }
+        public decimal? Available { get; set; }
         /// <summary>Confirmed reserve</summary>
-        public double? ConfirmedReserve { get; set; }
+        public decimal? ConfirmedReserve { get; set; }
         /// <summary>Crypto identifier</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -33,9 +33,9 @@ namespace Nexus.Casp.Client.Models
         public string CryptoName { get; set; }
 #endif
         /// <summary>Pending outgoing transactions</summary>
-        public double? DelayedSending { get; set; }
+        public decimal? DelayedSending { get; set; }
         /// <summary>Unconfirmed incoming transactions</summary>
-        public double? Unconfirmed { get; set; }
+        public decimal? Unconfirmed { get; set; }
         /// <summary>
         /// Creates a new instance of the appropriate class based on discriminator value
         /// </summary>
@@ -54,12 +54,12 @@ namespace Nexus.Casp.Client.Models
         {
             return new Dictionary<string, Action<IParseNode>>
             {
-                { "available", n => { Available = n.GetDoubleValue(); } },
-                { "confirmedReserve", n => { ConfirmedReserve = n.GetDoubleValue(); } },
+                { "available", n => { Available = n.GetDecimalValue(); } },
+                { "confirmedReserve", n => { ConfirmedReserve = n.GetDecimalValue(); } },
                 { "cryptoCode", n => { CryptoCode = n.GetStringValue(); } },
                 { "cryptoName", n => { CryptoName = n.GetStringValue(); } },
-                { "delayedSending", n => { DelayedSending = n.GetDoubleValue(); } },
-                { "unconfirmed", n => { Unconfirmed = n.GetDoubleValue(); } },
+                { "delayedSending", n => { DelayedSending = n.GetDecimalValue(); } },
+                { "unconfirmed", n => { Unconfirmed = n.GetDecimalValue(); } },
             };
         }
         /// <summary>
@@ -69,12 +69,12 @@ namespace Nexus.Casp.Client.Models
         public virtual void Serialize(ISerializationWriter writer)
         {
             if(ReferenceEquals(writer, null)) throw new ArgumentNullException(nameof(writer));
-            writer.WriteDoubleValue("available", Available);
-            writer.WriteDoubleValue("confirmedReserve", ConfirmedReserve);
+            writer.WriteDecimalValue("available", Available);
+            writer.WriteDecimalValue("confirmedReserve", ConfirmedReserve);
             writer.WriteStringValue("cryptoCode", CryptoCode);
             writer.WriteStringValue("cryptoName", CryptoName);
-            writer.WriteDoubleValue("delayedSending", DelayedSending);
-            writer.WriteDoubleValue("unconfirmed", Unconfirmed);
+            writer.WriteDecimalValue("delayedSending", DelayedSending);
+            writer.WriteDecimalValue("unconfirmed", Unconfirmed);
         }
     }
 }

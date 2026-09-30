@@ -37,9 +37,9 @@ namespace Nexus.Casp.Client.Models
         public string CryptoPaymentUri { get; set; }
 #endif
         /// <summary>The currencyAmount property</summary>
-        public double? CurrencyAmount { get; set; }
+        public decimal? CurrencyAmount { get; set; }
         /// <summary>The expectedCryptoAmount property</summary>
-        public double? ExpectedCryptoAmount { get; set; }
+        public decimal? ExpectedCryptoAmount { get; set; }
         /// <summary>The merchantCustomerEmailAddress property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -65,7 +65,7 @@ namespace Nexus.Casp.Client.Models
         public string ReceiveCryptoTxId { get; set; }
 #endif
         /// <summary>The receivedCryptoAmount property</summary>
-        public double? ReceivedCryptoAmount { get; set; }
+        public decimal? ReceivedCryptoAmount { get; set; }
         /// <summary>
         /// Creates a new instance of the appropriate class based on discriminator value
         /// </summary>
@@ -87,12 +87,12 @@ namespace Nexus.Casp.Client.Models
                 { "blockchainMessage", n => { BlockchainMessage = n.GetStringValue(); } },
                 { "cryptoPaymentAddress", n => { CryptoPaymentAddress = n.GetStringValue(); } },
                 { "cryptoPaymentUri", n => { CryptoPaymentUri = n.GetStringValue(); } },
-                { "currencyAmount", n => { CurrencyAmount = n.GetDoubleValue(); } },
-                { "expectedCryptoAmount", n => { ExpectedCryptoAmount = n.GetDoubleValue(); } },
+                { "currencyAmount", n => { CurrencyAmount = n.GetDecimalValue(); } },
+                { "expectedCryptoAmount", n => { ExpectedCryptoAmount = n.GetDecimalValue(); } },
                 { "merchantCustomerEmailAddress", n => { MerchantCustomerEmailAddress = n.GetStringValue(); } },
                 { "paymentReference", n => { PaymentReference = n.GetStringValue(); } },
                 { "receiveCryptoTxId", n => { ReceiveCryptoTxId = n.GetStringValue(); } },
-                { "receivedCryptoAmount", n => { ReceivedCryptoAmount = n.GetDoubleValue(); } },
+                { "receivedCryptoAmount", n => { ReceivedCryptoAmount = n.GetDecimalValue(); } },
             };
         }
         /// <summary>
@@ -105,12 +105,12 @@ namespace Nexus.Casp.Client.Models
             writer.WriteStringValue("blockchainMessage", BlockchainMessage);
             writer.WriteStringValue("cryptoPaymentAddress", CryptoPaymentAddress);
             writer.WriteStringValue("cryptoPaymentUri", CryptoPaymentUri);
-            writer.WriteDoubleValue("currencyAmount", CurrencyAmount);
-            writer.WriteDoubleValue("expectedCryptoAmount", ExpectedCryptoAmount);
+            writer.WriteDecimalValue("currencyAmount", CurrencyAmount);
+            writer.WriteDecimalValue("expectedCryptoAmount", ExpectedCryptoAmount);
             writer.WriteStringValue("merchantCustomerEmailAddress", MerchantCustomerEmailAddress);
             writer.WriteStringValue("paymentReference", PaymentReference);
             writer.WriteStringValue("receiveCryptoTxId", ReceiveCryptoTxId);
-            writer.WriteDoubleValue("receivedCryptoAmount", ReceivedCryptoAmount);
+            writer.WriteDecimalValue("receivedCryptoAmount", ReceivedCryptoAmount);
         }
     }
 }

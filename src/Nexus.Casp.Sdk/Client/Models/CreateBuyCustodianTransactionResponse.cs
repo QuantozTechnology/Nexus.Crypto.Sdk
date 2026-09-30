@@ -29,7 +29,7 @@ namespace Nexus.Casp.Client.Models
         public global::Nexus.Casp.Client.Models.BalanceMutationResponse BalanceMutation { get; set; }
 #endif
         /// <summary>Resulting new transaction&apos;s data</summary>
-        public double? BaseFiatAmountToPay { get; set; }
+        public decimal? BaseFiatAmountToPay { get; set; }
         /// <summary>Message sent as part of the transaction in the Blockchain</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -121,7 +121,7 @@ namespace Nexus.Casp.Client.Models
         public global::Nexus.Casp.Client.Models.FeeResponse Fees { get; set; }
 #endif
         /// <summary>Resulting new transaction&apos;s data</summary>
-        public double? FiatAmountToPay { get; set; }
+        public decimal? FiatAmountToPay { get; set; }
         /// <summary>Unique identifier of the related transactionUsed for SendInternal and Swap</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -157,7 +157,7 @@ namespace Nexus.Casp.Client.Models
         /// <summary>Transaction status</summary>
         public global::Nexus.Casp.Client.Models.CustodianTransactionStatus? Status { get; set; }
         /// <summary>Margin made from Swap transactions in crypto</summary>
-        public double? SwapMarginAmountCrypto { get; set; }
+        public decimal? SwapMarginAmountCrypto { get; set; }
         /// <summary>Unique identifier of the transaction</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -188,7 +188,7 @@ namespace Nexus.Casp.Client.Models
             {
                 { "accountCode", n => { AccountCode = n.GetStringValue(); } },
                 { "balanceMutation", n => { BalanceMutation = n.GetObjectValue<global::Nexus.Casp.Client.Models.BalanceMutationResponse>(global::Nexus.Casp.Client.Models.BalanceMutationResponse.CreateFromDiscriminatorValue); } },
-                { "baseFiatAmountToPay", n => { BaseFiatAmountToPay = n.GetDoubleValue(); } },
+                { "baseFiatAmountToPay", n => { BaseFiatAmountToPay = n.GetDecimalValue(); } },
                 { "blockchainMessage", n => { BlockchainMessage = n.GetStringValue(); } },
                 { "blockchainTransactionId", n => { BlockchainTransactionId = n.GetStringValue(); } },
                 { "callbackUrl", n => { CallbackUrl = n.GetStringValue(); } },
@@ -201,13 +201,13 @@ namespace Nexus.Casp.Client.Models
                 { "direction", n => { Direction = n.GetEnumValue<global::Nexus.Casp.Client.Models.Direction>(); } },
                 { "executedAmounts", n => { ExecutedAmounts = n.GetObjectValue<global::Nexus.Casp.Client.Models.AmountsResponse>(global::Nexus.Casp.Client.Models.AmountsResponse.CreateFromDiscriminatorValue); } },
                 { "fees", n => { Fees = n.GetObjectValue<global::Nexus.Casp.Client.Models.FeeResponse>(global::Nexus.Casp.Client.Models.FeeResponse.CreateFromDiscriminatorValue); } },
-                { "fiatAmountToPay", n => { FiatAmountToPay = n.GetDoubleValue(); } },
+                { "fiatAmountToPay", n => { FiatAmountToPay = n.GetDecimalValue(); } },
                 { "linkedTransactionCode", n => { LinkedTransactionCode = n.GetStringValue(); } },
                 { "paymentMethodCode", n => { PaymentMethodCode = n.GetStringValue(); } },
                 { "paymentReference", n => { PaymentReference = n.GetStringValue(); } },
                 { "requestedAmounts", n => { RequestedAmounts = n.GetObjectValue<global::Nexus.Casp.Client.Models.AmountsResponse>(global::Nexus.Casp.Client.Models.AmountsResponse.CreateFromDiscriminatorValue); } },
                 { "status", n => { Status = n.GetEnumValue<global::Nexus.Casp.Client.Models.CustodianTransactionStatus>(); } },
-                { "swapMarginAmountCrypto", n => { SwapMarginAmountCrypto = n.GetDoubleValue(); } },
+                { "swapMarginAmountCrypto", n => { SwapMarginAmountCrypto = n.GetDecimalValue(); } },
                 { "transactionCode", n => { TransactionCode = n.GetStringValue(); } },
                 { "type", n => { Type = n.GetEnumValue<global::Nexus.Casp.Client.Models.TransactionTypes>(); } },
             };
@@ -221,7 +221,7 @@ namespace Nexus.Casp.Client.Models
             if(ReferenceEquals(writer, null)) throw new ArgumentNullException(nameof(writer));
             writer.WriteStringValue("accountCode", AccountCode);
             writer.WriteObjectValue<global::Nexus.Casp.Client.Models.BalanceMutationResponse>("balanceMutation", BalanceMutation);
-            writer.WriteDoubleValue("baseFiatAmountToPay", BaseFiatAmountToPay);
+            writer.WriteDecimalValue("baseFiatAmountToPay", BaseFiatAmountToPay);
             writer.WriteStringValue("blockchainMessage", BlockchainMessage);
             writer.WriteStringValue("blockchainTransactionId", BlockchainTransactionId);
             writer.WriteStringValue("callbackUrl", CallbackUrl);
@@ -234,13 +234,13 @@ namespace Nexus.Casp.Client.Models
             writer.WriteEnumValue<global::Nexus.Casp.Client.Models.Direction>("direction", Direction);
             writer.WriteObjectValue<global::Nexus.Casp.Client.Models.AmountsResponse>("executedAmounts", ExecutedAmounts);
             writer.WriteObjectValue<global::Nexus.Casp.Client.Models.FeeResponse>("fees", Fees);
-            writer.WriteDoubleValue("fiatAmountToPay", FiatAmountToPay);
+            writer.WriteDecimalValue("fiatAmountToPay", FiatAmountToPay);
             writer.WriteStringValue("linkedTransactionCode", LinkedTransactionCode);
             writer.WriteStringValue("paymentMethodCode", PaymentMethodCode);
             writer.WriteStringValue("paymentReference", PaymentReference);
             writer.WriteObjectValue<global::Nexus.Casp.Client.Models.AmountsResponse>("requestedAmounts", RequestedAmounts);
             writer.WriteEnumValue<global::Nexus.Casp.Client.Models.CustodianTransactionStatus>("status", Status);
-            writer.WriteDoubleValue("swapMarginAmountCrypto", SwapMarginAmountCrypto);
+            writer.WriteDecimalValue("swapMarginAmountCrypto", SwapMarginAmountCrypto);
             writer.WriteStringValue("transactionCode", TransactionCode);
             writer.WriteEnumValue<global::Nexus.Casp.Client.Models.TransactionTypes>("type", Type);
         }

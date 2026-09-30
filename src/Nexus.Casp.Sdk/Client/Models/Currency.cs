@@ -21,7 +21,7 @@ namespace Nexus.Casp.Client.Models
         public string Code { get; set; }
 #endif
         /// <summary>Fixed Currency rate specifically set to be used instead of the retrieved rate - if fixed rate is null, fixed rate is not set and retrieved rate will be used as normal</summary>
-        public double? FixedRate { get; set; }
+        public decimal? FixedRate { get; set; }
         /// <summary>Currency status</summary>
         public bool? IsActive { get; set; }
         /// <summary>Currency Name</summary>
@@ -33,7 +33,7 @@ namespace Nexus.Casp.Client.Models
         public string Name { get; set; }
 #endif
         /// <summary>Currency rate from the base currency to the current currency (rate = 1 base currency / 1 current currency)</summary>
-        public double? Rate { get; set; }
+        public decimal? Rate { get; set; }
         /// <summary>Date and time when the rate was last updated (ISO 8601)</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -61,10 +61,10 @@ namespace Nexus.Casp.Client.Models
             return new Dictionary<string, Action<IParseNode>>
             {
                 { "code", n => { Code = n.GetStringValue(); } },
-                { "fixedRate", n => { FixedRate = n.GetDoubleValue(); } },
+                { "fixedRate", n => { FixedRate = n.GetDecimalValue(); } },
                 { "isActive", n => { IsActive = n.GetBoolValue(); } },
                 { "name", n => { Name = n.GetStringValue(); } },
-                { "rate", n => { Rate = n.GetDoubleValue(); } },
+                { "rate", n => { Rate = n.GetDecimalValue(); } },
                 { "rateUpdated", n => { RateUpdated = n.GetStringValue(); } },
             };
         }
@@ -76,10 +76,10 @@ namespace Nexus.Casp.Client.Models
         {
             if(ReferenceEquals(writer, null)) throw new ArgumentNullException(nameof(writer));
             writer.WriteStringValue("code", Code);
-            writer.WriteDoubleValue("fixedRate", FixedRate);
+            writer.WriteDecimalValue("fixedRate", FixedRate);
             writer.WriteBoolValue("isActive", IsActive);
             writer.WriteStringValue("name", Name);
-            writer.WriteDoubleValue("rate", Rate);
+            writer.WriteDecimalValue("rate", Rate);
             writer.WriteStringValue("rateUpdated", RateUpdated);
         }
     }

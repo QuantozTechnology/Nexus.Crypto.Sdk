@@ -37,7 +37,7 @@ namespace Nexus.Casp.Client.Models
         public string CurrencyCode { get; set; }
 #endif
         /// <summary>Rate in decimals (relative value).0.01 equals 1%.</summary>
-        public double? DefaultRate { get; set; }
+        public decimal? DefaultRate { get; set; }
         /// <summary>Code of the payment method which the transaction is processed with.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -93,7 +93,7 @@ namespace Nexus.Casp.Client.Models
                 { "bucketCode", n => { BucketCode = n.GetStringValue(); } },
                 { "cryptoCode", n => { CryptoCode = n.GetStringValue(); } },
                 { "currencyCode", n => { CurrencyCode = n.GetStringValue(); } },
-                { "defaultRate", n => { DefaultRate = n.GetDoubleValue(); } },
+                { "defaultRate", n => { DefaultRate = n.GetDecimalValue(); } },
                 { "paymentMethodCode", n => { PaymentMethodCode = n.GetStringValue(); } },
                 { "payoutPeriod", n => { PayoutPeriod = n.GetObjectValue<global::Nexus.Casp.Client.Models.GetSchedulePayoutPeriodRecord>(global::Nexus.Casp.Client.Models.GetSchedulePayoutPeriodRecord.CreateFromDiscriminatorValue); } },
                 { "rateType", n => { RateType = n.GetEnumValue<global::Nexus.Casp.Client.Models.CreateCustodianScheduleRequestRateType>(); } },
@@ -111,7 +111,7 @@ namespace Nexus.Casp.Client.Models
             writer.WriteStringValue("bucketCode", BucketCode);
             writer.WriteStringValue("cryptoCode", CryptoCode);
             writer.WriteStringValue("currencyCode", CurrencyCode);
-            writer.WriteDoubleValue("defaultRate", DefaultRate);
+            writer.WriteDecimalValue("defaultRate", DefaultRate);
             writer.WriteStringValue("paymentMethodCode", PaymentMethodCode);
             writer.WriteObjectValue<global::Nexus.Casp.Client.Models.GetSchedulePayoutPeriodRecord>("payoutPeriod", PayoutPeriod);
             writer.WriteEnumValue<global::Nexus.Casp.Client.Models.CreateCustodianScheduleRequestRateType>("rateType", RateType);

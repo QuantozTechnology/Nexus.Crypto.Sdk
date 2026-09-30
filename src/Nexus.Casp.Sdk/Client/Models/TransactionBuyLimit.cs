@@ -13,7 +13,7 @@ namespace Nexus.Casp.Client.Models
     #pragma warning restore CS1591
     {
         /// <summary>Specifies the minimum buy transaction amount, denominated in the base currency (e.g., USD, EUR).</summary>
-        public double? MinimalValue { get; set; }
+        public decimal? MinimalValue { get; set; }
         /// <summary>
         /// Creates a new instance of the appropriate class based on discriminator value
         /// </summary>
@@ -32,7 +32,7 @@ namespace Nexus.Casp.Client.Models
         {
             return new Dictionary<string, Action<IParseNode>>
             {
-                { "minimalValue", n => { MinimalValue = n.GetDoubleValue(); } },
+                { "minimalValue", n => { MinimalValue = n.GetDecimalValue(); } },
             };
         }
         /// <summary>
@@ -42,7 +42,7 @@ namespace Nexus.Casp.Client.Models
         public virtual void Serialize(ISerializationWriter writer)
         {
             if(ReferenceEquals(writer, null)) throw new ArgumentNullException(nameof(writer));
-            writer.WriteDoubleValue("minimalValue", MinimalValue);
+            writer.WriteDecimalValue("minimalValue", MinimalValue);
         }
     }
 }

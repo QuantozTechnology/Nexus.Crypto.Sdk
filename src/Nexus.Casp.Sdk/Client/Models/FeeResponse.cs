@@ -13,21 +13,21 @@ namespace Nexus.Casp.Client.Models
     #pragma warning restore CS1591
     {
         /// <summary>Fee in crypto used to get this transaction confirmed on the blockchain</summary>
-        public double? ActualNetworkFeeCrypto { get; set; }
+        public decimal? ActualNetworkFeeCrypto { get; set; }
         /// <summary>Fee in fiat used to get this transaction confirmed on the blockchain</summary>
-        public double? ActualNetworkFeeFiat { get; set; }
+        public decimal? ActualNetworkFeeFiat { get; set; }
         /// <summary>Bank fee in crypto</summary>
-        public double? BankFeeCrypto { get; set; }
+        public decimal? BankFeeCrypto { get; set; }
         /// <summary>Bank fee</summary>
-        public double? BankFeeFiat { get; set; }
+        public decimal? BankFeeFiat { get; set; }
         /// <summary>Estimated network fee in crypto paid by the customer.In case of RECEIVE IN it is the estimated forwarding fee in crypto e.g. ETH</summary>
-        public double? NetworkFeeCrypto { get; set; }
+        public decimal? NetworkFeeCrypto { get; set; }
         /// <summary>Estimated network fee in fiat paid by the customer.In case of RECEIVE IN it is the estimated forwarding fee in fiat e.g. ETH</summary>
-        public double? NetworkFeeFiat { get; set; }
+        public decimal? NetworkFeeFiat { get; set; }
         /// <summary>Service fee in crypto</summary>
-        public double? PartnerFeeCrypto { get; set; }
+        public decimal? PartnerFeeCrypto { get; set; }
         /// <summary>Service fee</summary>
-        public double? PartnerFeeFiat { get; set; }
+        public decimal? PartnerFeeFiat { get; set; }
         /// <summary>
         /// Creates a new instance of the appropriate class based on discriminator value
         /// </summary>
@@ -46,14 +46,14 @@ namespace Nexus.Casp.Client.Models
         {
             return new Dictionary<string, Action<IParseNode>>
             {
-                { "actualNetworkFeeCrypto", n => { ActualNetworkFeeCrypto = n.GetDoubleValue(); } },
-                { "actualNetworkFeeFiat", n => { ActualNetworkFeeFiat = n.GetDoubleValue(); } },
-                { "bankFeeCrypto", n => { BankFeeCrypto = n.GetDoubleValue(); } },
-                { "bankFeeFiat", n => { BankFeeFiat = n.GetDoubleValue(); } },
-                { "networkFeeCrypto", n => { NetworkFeeCrypto = n.GetDoubleValue(); } },
-                { "networkFeeFiat", n => { NetworkFeeFiat = n.GetDoubleValue(); } },
-                { "partnerFeeCrypto", n => { PartnerFeeCrypto = n.GetDoubleValue(); } },
-                { "partnerFeeFiat", n => { PartnerFeeFiat = n.GetDoubleValue(); } },
+                { "actualNetworkFeeCrypto", n => { ActualNetworkFeeCrypto = n.GetDecimalValue(); } },
+                { "actualNetworkFeeFiat", n => { ActualNetworkFeeFiat = n.GetDecimalValue(); } },
+                { "bankFeeCrypto", n => { BankFeeCrypto = n.GetDecimalValue(); } },
+                { "bankFeeFiat", n => { BankFeeFiat = n.GetDecimalValue(); } },
+                { "networkFeeCrypto", n => { NetworkFeeCrypto = n.GetDecimalValue(); } },
+                { "networkFeeFiat", n => { NetworkFeeFiat = n.GetDecimalValue(); } },
+                { "partnerFeeCrypto", n => { PartnerFeeCrypto = n.GetDecimalValue(); } },
+                { "partnerFeeFiat", n => { PartnerFeeFiat = n.GetDecimalValue(); } },
             };
         }
         /// <summary>
@@ -63,14 +63,14 @@ namespace Nexus.Casp.Client.Models
         public virtual void Serialize(ISerializationWriter writer)
         {
             if(ReferenceEquals(writer, null)) throw new ArgumentNullException(nameof(writer));
-            writer.WriteDoubleValue("actualNetworkFeeCrypto", ActualNetworkFeeCrypto);
-            writer.WriteDoubleValue("actualNetworkFeeFiat", ActualNetworkFeeFiat);
-            writer.WriteDoubleValue("bankFeeCrypto", BankFeeCrypto);
-            writer.WriteDoubleValue("bankFeeFiat", BankFeeFiat);
-            writer.WriteDoubleValue("networkFeeCrypto", NetworkFeeCrypto);
-            writer.WriteDoubleValue("networkFeeFiat", NetworkFeeFiat);
-            writer.WriteDoubleValue("partnerFeeCrypto", PartnerFeeCrypto);
-            writer.WriteDoubleValue("partnerFeeFiat", PartnerFeeFiat);
+            writer.WriteDecimalValue("actualNetworkFeeCrypto", ActualNetworkFeeCrypto);
+            writer.WriteDecimalValue("actualNetworkFeeFiat", ActualNetworkFeeFiat);
+            writer.WriteDecimalValue("bankFeeCrypto", BankFeeCrypto);
+            writer.WriteDecimalValue("bankFeeFiat", BankFeeFiat);
+            writer.WriteDecimalValue("networkFeeCrypto", NetworkFeeCrypto);
+            writer.WriteDecimalValue("networkFeeFiat", NetworkFeeFiat);
+            writer.WriteDecimalValue("partnerFeeCrypto", PartnerFeeCrypto);
+            writer.WriteDecimalValue("partnerFeeFiat", PartnerFeeFiat);
         }
     }
 }

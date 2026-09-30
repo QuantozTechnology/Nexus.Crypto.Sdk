@@ -37,7 +37,7 @@ namespace Nexus.Casp.Client.Models
         public global::Nexus.Casp.Client.Models.SwapDestination_data Data { get; set; }
 #endif
         /// <summary>The BUY price at which the cryptocurrency will be swapped to.Nexus checks if the requested BUY price is within certain ranges (Wiggle room).Ranges:10% price increase allowed5% price reduction allowed</summary>
-        public double? RequestedPrice { get; set; }
+        public decimal? RequestedPrice { get; set; }
         /// <summary>
         /// Creates a new instance of the appropriate class based on discriminator value
         /// </summary>
@@ -59,7 +59,7 @@ namespace Nexus.Casp.Client.Models
                 { "accountCode", n => { AccountCode = n.GetStringValue(); } },
                 { "cryptoCode", n => { CryptoCode = n.GetStringValue(); } },
                 { "data", n => { Data = n.GetObjectValue<global::Nexus.Casp.Client.Models.SwapDestination_data>(global::Nexus.Casp.Client.Models.SwapDestination_data.CreateFromDiscriminatorValue); } },
-                { "requestedPrice", n => { RequestedPrice = n.GetDoubleValue(); } },
+                { "requestedPrice", n => { RequestedPrice = n.GetDecimalValue(); } },
             };
         }
         /// <summary>
@@ -72,7 +72,7 @@ namespace Nexus.Casp.Client.Models
             writer.WriteStringValue("accountCode", AccountCode);
             writer.WriteStringValue("cryptoCode", CryptoCode);
             writer.WriteObjectValue<global::Nexus.Casp.Client.Models.SwapDestination_data>("data", Data);
-            writer.WriteDoubleValue("requestedPrice", RequestedPrice);
+            writer.WriteDecimalValue("requestedPrice", RequestedPrice);
         }
     }
 }

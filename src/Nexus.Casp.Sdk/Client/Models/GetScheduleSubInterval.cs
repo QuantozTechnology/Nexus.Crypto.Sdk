@@ -13,7 +13,7 @@ namespace Nexus.Casp.Client.Models
     #pragma warning restore CS1591
     {
         /// <summary>Adjusted rate for this SubInterval</summary>
-        public double? AdjustedRate { get; set; }
+        public decimal? AdjustedRate { get; set; }
         /// <summary>Period starting from this datetime.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -52,7 +52,7 @@ namespace Nexus.Casp.Client.Models
         {
             return new Dictionary<string, Action<IParseNode>>
             {
-                { "adjustedRate", n => { AdjustedRate = n.GetDoubleValue(); } },
+                { "adjustedRate", n => { AdjustedRate = n.GetDecimalValue(); } },
                 { "from", n => { From = n.GetStringValue(); } },
                 { "id", n => { Id = n.GetGuidValue(); } },
                 { "number", n => { Number = n.GetIntValue(); } },
@@ -66,7 +66,7 @@ namespace Nexus.Casp.Client.Models
         public virtual void Serialize(ISerializationWriter writer)
         {
             if(ReferenceEquals(writer, null)) throw new ArgumentNullException(nameof(writer));
-            writer.WriteDoubleValue("adjustedRate", AdjustedRate);
+            writer.WriteDecimalValue("adjustedRate", AdjustedRate);
             writer.WriteStringValue("from", From);
             writer.WriteGuidValue("id", Id);
             writer.WriteIntValue("number", Number);
