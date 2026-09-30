@@ -29,7 +29,7 @@ namespace Nexus.Casp.Client.Models
         public string CallbackUrl { get; set; }
 #endif
         /// <summary>The amount of cryptocurrency the transaction should be created for.</summary>
-        public double? CryptoAmount { get; set; }
+        public decimal? CryptoAmount { get; set; }
         /// <summary>Can only consist of A-Z a-z 0-9 _ -</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -87,7 +87,7 @@ namespace Nexus.Casp.Client.Models
         public string ReceiveAddress { get; set; }
 #endif
         /// <summary>The price at which the cryptocurrency will be bought.Nexus checks if the requested BUY price is within certain ranges (Wiggle room).Ranges:10% price increase allowed5% price reduction allowed</summary>
-        public double? RequestedPrice { get; set; }
+        public decimal? RequestedPrice { get; set; }
         /// <summary>
         /// Creates a new instance of the appropriate class based on discriminator value
         /// </summary>
@@ -108,7 +108,7 @@ namespace Nexus.Casp.Client.Models
             {
                 { "accountCode", n => { AccountCode = n.GetStringValue(); } },
                 { "callbackUrl", n => { CallbackUrl = n.GetStringValue(); } },
-                { "cryptoAmount", n => { CryptoAmount = n.GetDoubleValue(); } },
+                { "cryptoAmount", n => { CryptoAmount = n.GetDecimalValue(); } },
                 { "cryptoCode", n => { CryptoCode = n.GetStringValue(); } },
                 { "currencyCode", n => { CurrencyCode = n.GetStringValue(); } },
                 { "customerCode", n => { CustomerCode = n.GetStringValue(); } },
@@ -116,7 +116,7 @@ namespace Nexus.Casp.Client.Models
                 { "paymentMethodCode", n => { PaymentMethodCode = n.GetStringValue(); } },
                 { "paymentReference", n => { PaymentReference = n.GetStringValue(); } },
                 { "receiveAddress", n => { ReceiveAddress = n.GetStringValue(); } },
-                { "requestedPrice", n => { RequestedPrice = n.GetDoubleValue(); } },
+                { "requestedPrice", n => { RequestedPrice = n.GetDecimalValue(); } },
             };
         }
         /// <summary>
@@ -128,7 +128,7 @@ namespace Nexus.Casp.Client.Models
             if(ReferenceEquals(writer, null)) throw new ArgumentNullException(nameof(writer));
             writer.WriteStringValue("accountCode", AccountCode);
             writer.WriteStringValue("callbackUrl", CallbackUrl);
-            writer.WriteDoubleValue("cryptoAmount", CryptoAmount);
+            writer.WriteDecimalValue("cryptoAmount", CryptoAmount);
             writer.WriteStringValue("cryptoCode", CryptoCode);
             writer.WriteStringValue("currencyCode", CurrencyCode);
             writer.WriteStringValue("customerCode", CustomerCode);
@@ -136,7 +136,7 @@ namespace Nexus.Casp.Client.Models
             writer.WriteStringValue("paymentMethodCode", PaymentMethodCode);
             writer.WriteStringValue("paymentReference", PaymentReference);
             writer.WriteStringValue("receiveAddress", ReceiveAddress);
-            writer.WriteDoubleValue("requestedPrice", RequestedPrice);
+            writer.WriteDecimalValue("requestedPrice", RequestedPrice);
         }
     }
 }

@@ -21,7 +21,7 @@ namespace Nexus.Casp.Client.Models
         public string Address { get; set; }
 #endif
         /// <summary>The amount property</summary>
-        public double? Amount { get; set; }
+        public decimal? Amount { get; set; }
         /// <summary>
         /// Creates a new instance of the appropriate class based on discriminator value
         /// </summary>
@@ -41,7 +41,7 @@ namespace Nexus.Casp.Client.Models
             return new Dictionary<string, Action<IParseNode>>
             {
                 { "address", n => { Address = n.GetStringValue(); } },
-                { "amount", n => { Amount = n.GetDoubleValue(); } },
+                { "amount", n => { Amount = n.GetDecimalValue(); } },
             };
         }
         /// <summary>
@@ -52,7 +52,7 @@ namespace Nexus.Casp.Client.Models
         {
             if(ReferenceEquals(writer, null)) throw new ArgumentNullException(nameof(writer));
             writer.WriteStringValue("address", Address);
-            writer.WriteDoubleValue("amount", Amount);
+            writer.WriteDecimalValue("amount", Amount);
         }
     }
 }

@@ -71,7 +71,7 @@ namespace Nexus.Casp.Client.Models
         public global::Nexus.Casp.Client.Models.PersonCountry Nationality { get; set; }
 #endif
         /// <summary>Person&apos;s ownership percentage of the business - only applicable for ultimate beneficial owner type of persons. Ownership percentage value in response expressed as a decimal fraction.</summary>
-        public double? OwnershipPercentage { get; set; }
+        public decimal? OwnershipPercentage { get; set; }
         /// <summary>Country of this person&apos;s residence (ISO 4217).</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -130,7 +130,7 @@ namespace Nexus.Casp.Client.Models
                 { "id", n => { Id = n.GetGuidValue(); } },
                 { "lastName", n => { LastName = n.GetStringValue(); } },
                 { "nationality", n => { Nationality = n.GetObjectValue<global::Nexus.Casp.Client.Models.PersonCountry>(global::Nexus.Casp.Client.Models.PersonCountry.CreateFromDiscriminatorValue); } },
-                { "ownershipPercentage", n => { OwnershipPercentage = n.GetDoubleValue(); } },
+                { "ownershipPercentage", n => { OwnershipPercentage = n.GetDecimalValue(); } },
                 { "residenceCountry", n => { ResidenceCountry = n.GetObjectValue<global::Nexus.Casp.Client.Models.PersonCountry>(global::Nexus.Casp.Client.Models.PersonCountry.CreateFromDiscriminatorValue); } },
                 { "types", n => { Types = n.GetCollectionOfEnumValues<global::Nexus.Casp.Client.Models.CustomerPersonTypeDTO>()?.AsList(); } },
                 { "updatedBy", n => { UpdatedBy = n.GetStringValue(); } },
@@ -152,7 +152,7 @@ namespace Nexus.Casp.Client.Models
             writer.WriteGuidValue("id", Id);
             writer.WriteStringValue("lastName", LastName);
             writer.WriteObjectValue<global::Nexus.Casp.Client.Models.PersonCountry>("nationality", Nationality);
-            writer.WriteDoubleValue("ownershipPercentage", OwnershipPercentage);
+            writer.WriteDecimalValue("ownershipPercentage", OwnershipPercentage);
             writer.WriteObjectValue<global::Nexus.Casp.Client.Models.PersonCountry>("residenceCountry", ResidenceCountry);
             writer.WriteCollectionOfEnumValues<global::Nexus.Casp.Client.Models.CustomerPersonTypeDTO>("types", Types);
             writer.WriteStringValue("updatedBy", UpdatedBy);

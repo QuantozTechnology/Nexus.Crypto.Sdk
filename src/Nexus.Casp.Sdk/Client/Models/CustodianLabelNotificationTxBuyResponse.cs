@@ -13,9 +13,9 @@ namespace Nexus.Casp.Client.Models
     #pragma warning restore CS1591
     {
         /// <summary>Crypto amount of the buy transaction</summary>
-        public double? CryptoCurrencyAmount { get; set; }
+        public decimal? CryptoCurrencyAmount { get; set; }
         /// <summary>Currency amount of the buy transaction</summary>
-        public double? CurrencyAmount { get; set; }
+        public decimal? CurrencyAmount { get; set; }
         /// <summary>Crypto Tx Id of the buy transaction</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -42,8 +42,8 @@ namespace Nexus.Casp.Client.Models
         {
             return new Dictionary<string, Action<IParseNode>>
             {
-                { "cryptoCurrencyAmount", n => { CryptoCurrencyAmount = n.GetDoubleValue(); } },
-                { "currencyAmount", n => { CurrencyAmount = n.GetDoubleValue(); } },
+                { "cryptoCurrencyAmount", n => { CryptoCurrencyAmount = n.GetDecimalValue(); } },
+                { "currencyAmount", n => { CurrencyAmount = n.GetDecimalValue(); } },
                 { "sendCryptoTxId", n => { SendCryptoTxId = n.GetStringValue(); } },
             };
         }
@@ -54,8 +54,8 @@ namespace Nexus.Casp.Client.Models
         public virtual void Serialize(ISerializationWriter writer)
         {
             if(ReferenceEquals(writer, null)) throw new ArgumentNullException(nameof(writer));
-            writer.WriteDoubleValue("cryptoCurrencyAmount", CryptoCurrencyAmount);
-            writer.WriteDoubleValue("currencyAmount", CurrencyAmount);
+            writer.WriteDecimalValue("cryptoCurrencyAmount", CryptoCurrencyAmount);
+            writer.WriteDecimalValue("currencyAmount", CurrencyAmount);
             writer.WriteStringValue("sendCryptoTxId", SendCryptoTxId);
         }
     }

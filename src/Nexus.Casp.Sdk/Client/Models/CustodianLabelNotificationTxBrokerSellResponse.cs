@@ -29,9 +29,9 @@ namespace Nexus.Casp.Client.Models
         public string ReceiveAddress { get; set; }
 #endif
         /// <summary>Crypto amount received</summary>
-        public double? ReceivedCryptoAmount { get; set; }
+        public decimal? ReceivedCryptoAmount { get; set; }
         /// <summary>Fiat amount received</summary>
-        public double? ReceivedFiatValue { get; set; }
+        public decimal? ReceivedFiatValue { get; set; }
         /// <summary>Unique id of the ReceiveIn transaction</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -60,8 +60,8 @@ namespace Nexus.Casp.Client.Models
             {
                 { "blockchainMessage", n => { BlockchainMessage = n.GetStringValue(); } },
                 { "receiveAddress", n => { ReceiveAddress = n.GetStringValue(); } },
-                { "receivedCryptoAmount", n => { ReceivedCryptoAmount = n.GetDoubleValue(); } },
-                { "receivedFiatValue", n => { ReceivedFiatValue = n.GetDoubleValue(); } },
+                { "receivedCryptoAmount", n => { ReceivedCryptoAmount = n.GetDecimalValue(); } },
+                { "receivedFiatValue", n => { ReceivedFiatValue = n.GetDecimalValue(); } },
                 { "txId", n => { TxId = n.GetStringValue(); } },
             };
         }
@@ -74,8 +74,8 @@ namespace Nexus.Casp.Client.Models
             if(ReferenceEquals(writer, null)) throw new ArgumentNullException(nameof(writer));
             writer.WriteStringValue("blockchainMessage", BlockchainMessage);
             writer.WriteStringValue("receiveAddress", ReceiveAddress);
-            writer.WriteDoubleValue("receivedCryptoAmount", ReceivedCryptoAmount);
-            writer.WriteDoubleValue("receivedFiatValue", ReceivedFiatValue);
+            writer.WriteDecimalValue("receivedCryptoAmount", ReceivedCryptoAmount);
+            writer.WriteDecimalValue("receivedFiatValue", ReceivedFiatValue);
             writer.WriteStringValue("txId", TxId);
         }
     }

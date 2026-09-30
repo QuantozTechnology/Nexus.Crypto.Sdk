@@ -53,7 +53,7 @@ namespace Nexus.Casp.Client.Models
         public string NationalityCountryCode { get; set; }
 #endif
         /// <summary>Update the person&apos;s ownership percentage of the business - only applicable for ultimate beneficial owner type of persons. Ownership percentage should be expressed as a decimal fraction.</summary>
-        public double? OwnershipPercentage { get; set; }
+        public decimal? OwnershipPercentage { get; set; }
         /// <summary>Update the country code of this person&apos;s residence country (ISO 4217).</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -93,7 +93,7 @@ namespace Nexus.Casp.Client.Models
                 { "firstName", n => { FirstName = n.GetStringValue(); } },
                 { "lastName", n => { LastName = n.GetStringValue(); } },
                 { "nationalityCountryCode", n => { NationalityCountryCode = n.GetStringValue(); } },
-                { "ownershipPercentage", n => { OwnershipPercentage = n.GetDoubleValue(); } },
+                { "ownershipPercentage", n => { OwnershipPercentage = n.GetDecimalValue(); } },
                 { "residenceCountryCode", n => { ResidenceCountryCode = n.GetStringValue(); } },
                 { "types", n => { Types = n.GetCollectionOfEnumValues<global::Nexus.Casp.Client.Models.CustomerPersonTypeDTO>()?.AsList(); } },
             };
@@ -110,7 +110,7 @@ namespace Nexus.Casp.Client.Models
             writer.WriteStringValue("firstName", FirstName);
             writer.WriteStringValue("lastName", LastName);
             writer.WriteStringValue("nationalityCountryCode", NationalityCountryCode);
-            writer.WriteDoubleValue("ownershipPercentage", OwnershipPercentage);
+            writer.WriteDecimalValue("ownershipPercentage", OwnershipPercentage);
             writer.WriteStringValue("residenceCountryCode", ResidenceCountryCode);
             writer.WriteCollectionOfEnumValues<global::Nexus.Casp.Client.Models.CustomerPersonTypeDTO>("types", Types);
         }

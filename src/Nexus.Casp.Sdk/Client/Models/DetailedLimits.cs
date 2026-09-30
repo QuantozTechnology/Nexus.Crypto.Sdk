@@ -15,11 +15,11 @@ namespace Nexus.Casp.Client.Models
         /// <summary>Daily limit</summary>
         public double? DailyLimit { get; set; }
         /// <summary>Lifetime limit if set</summary>
-        public double? LifetimeLimit { get; set; }
+        public decimal? LifetimeLimit { get; set; }
         /// <summary>Monthly limit</summary>
         public double? MonthlyLimit { get; set; }
         /// <summary>Year limit if set</summary>
-        public double? YearLimit { get; set; }
+        public decimal? YearLimit { get; set; }
         /// <summary>
         /// Creates a new instance of the appropriate class based on discriminator value
         /// </summary>
@@ -39,9 +39,9 @@ namespace Nexus.Casp.Client.Models
             return new Dictionary<string, Action<IParseNode>>
             {
                 { "dailyLimit", n => { DailyLimit = n.GetDoubleValue(); } },
-                { "lifetimeLimit", n => { LifetimeLimit = n.GetDoubleValue(); } },
+                { "lifetimeLimit", n => { LifetimeLimit = n.GetDecimalValue(); } },
                 { "monthlyLimit", n => { MonthlyLimit = n.GetDoubleValue(); } },
-                { "yearLimit", n => { YearLimit = n.GetDoubleValue(); } },
+                { "yearLimit", n => { YearLimit = n.GetDecimalValue(); } },
             };
         }
         /// <summary>
@@ -52,9 +52,9 @@ namespace Nexus.Casp.Client.Models
         {
             if(ReferenceEquals(writer, null)) throw new ArgumentNullException(nameof(writer));
             writer.WriteDoubleValue("dailyLimit", DailyLimit);
-            writer.WriteDoubleValue("lifetimeLimit", LifetimeLimit);
+            writer.WriteDecimalValue("lifetimeLimit", LifetimeLimit);
             writer.WriteDoubleValue("monthlyLimit", MonthlyLimit);
-            writer.WriteDoubleValue("yearLimit", YearLimit);
+            writer.WriteDecimalValue("yearLimit", YearLimit);
         }
     }
 }

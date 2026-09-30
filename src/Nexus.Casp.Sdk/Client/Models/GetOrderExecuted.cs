@@ -13,15 +13,15 @@ namespace Nexus.Casp.Client.Models
     #pragma warning restore CS1591
     {
         /// <summary>Amount in crypto that is executed on the Exchange</summary>
-        public double? Amount { get; set; }
+        public decimal? Amount { get; set; }
         /// <summary>Fee paid for the order on the exchange in FIAT currency</summary>
-        public double? Fee { get; set; }
+        public decimal? Fee { get; set; }
         /// <summary>Is true when the requested amount does not match the executed amount.Meaning that the order was partially filled.</summary>
         public bool? Partial { get; set; }
         /// <summary>Price of the executed order</summary>
-        public double? Price { get; set; }
+        public decimal? Price { get; set; }
         /// <summary>Total value of the executed order</summary>
-        public double? Value { get; set; }
+        public decimal? Value { get; set; }
         /// <summary>
         /// Creates a new instance of the appropriate class based on discriminator value
         /// </summary>
@@ -40,11 +40,11 @@ namespace Nexus.Casp.Client.Models
         {
             return new Dictionary<string, Action<IParseNode>>
             {
-                { "amount", n => { Amount = n.GetDoubleValue(); } },
-                { "fee", n => { Fee = n.GetDoubleValue(); } },
+                { "amount", n => { Amount = n.GetDecimalValue(); } },
+                { "fee", n => { Fee = n.GetDecimalValue(); } },
                 { "partial", n => { Partial = n.GetBoolValue(); } },
-                { "price", n => { Price = n.GetDoubleValue(); } },
-                { "value", n => { Value = n.GetDoubleValue(); } },
+                { "price", n => { Price = n.GetDecimalValue(); } },
+                { "value", n => { Value = n.GetDecimalValue(); } },
             };
         }
         /// <summary>
@@ -54,11 +54,11 @@ namespace Nexus.Casp.Client.Models
         public virtual void Serialize(ISerializationWriter writer)
         {
             if(ReferenceEquals(writer, null)) throw new ArgumentNullException(nameof(writer));
-            writer.WriteDoubleValue("amount", Amount);
-            writer.WriteDoubleValue("fee", Fee);
+            writer.WriteDecimalValue("amount", Amount);
+            writer.WriteDecimalValue("fee", Fee);
             writer.WriteBoolValue("partial", Partial);
-            writer.WriteDoubleValue("price", Price);
-            writer.WriteDoubleValue("value", Value);
+            writer.WriteDecimalValue("price", Price);
+            writer.WriteDecimalValue("value", Value);
         }
     }
 }

@@ -21,7 +21,7 @@ namespace Nexus.Casp.Client.Models
         public global::Nexus.Casp.Client.Models.GetTransferAddress Address { get; set; }
 #endif
         /// <summary>Transfer&apos;s amount in crypto.</summary>
-        public double? Amount { get; set; }
+        public decimal? Amount { get; set; }
         /// <summary>Additional information provided by the transfer&apos;s creator as a comment.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -63,7 +63,7 @@ namespace Nexus.Casp.Client.Models
         public string Finished { get; set; }
 #endif
         /// <summary>Internal reference price at creation time.</summary>
-        public double? Price { get; set; }
+        public decimal? Price { get; set; }
         /// <summary>Status of the transfer.</summary>
         public global::Nexus.Casp.Client.Models.GetTransferStatus? Status { get; set; }
         /// <summary>Transfer&apos;s unique identifier.</summary>
@@ -111,13 +111,13 @@ namespace Nexus.Casp.Client.Models
             return new Dictionary<string, Action<IParseNode>>
             {
                 { "address", n => { Address = n.GetObjectValue<global::Nexus.Casp.Client.Models.GetTransferAddress>(global::Nexus.Casp.Client.Models.GetTransferAddress.CreateFromDiscriminatorValue); } },
-                { "amount", n => { Amount = n.GetDoubleValue(); } },
+                { "amount", n => { Amount = n.GetDecimalValue(); } },
                 { "comment", n => { Comment = n.GetStringValue(); } },
                 { "created", n => { Created = n.GetStringValue(); } },
                 { "cryptoCode", n => { CryptoCode = n.GetStringValue(); } },
                 { "exchangeTransferCode", n => { ExchangeTransferCode = n.GetStringValue(); } },
                 { "finished", n => { Finished = n.GetStringValue(); } },
-                { "price", n => { Price = n.GetDoubleValue(); } },
+                { "price", n => { Price = n.GetDecimalValue(); } },
                 { "status", n => { Status = n.GetEnumValue<global::Nexus.Casp.Client.Models.GetTransferStatus>(); } },
                 { "transferCode", n => { TransferCode = n.GetStringValue(); } },
                 { "txId", n => { TxId = n.GetStringValue(); } },
@@ -133,13 +133,13 @@ namespace Nexus.Casp.Client.Models
         {
             if(ReferenceEquals(writer, null)) throw new ArgumentNullException(nameof(writer));
             writer.WriteObjectValue<global::Nexus.Casp.Client.Models.GetTransferAddress>("address", Address);
-            writer.WriteDoubleValue("amount", Amount);
+            writer.WriteDecimalValue("amount", Amount);
             writer.WriteStringValue("comment", Comment);
             writer.WriteStringValue("created", Created);
             writer.WriteStringValue("cryptoCode", CryptoCode);
             writer.WriteStringValue("exchangeTransferCode", ExchangeTransferCode);
             writer.WriteStringValue("finished", Finished);
-            writer.WriteDoubleValue("price", Price);
+            writer.WriteDecimalValue("price", Price);
             writer.WriteEnumValue<global::Nexus.Casp.Client.Models.GetTransferStatus>("status", Status);
             writer.WriteStringValue("transferCode", TransferCode);
             writer.WriteStringValue("txId", TxId);

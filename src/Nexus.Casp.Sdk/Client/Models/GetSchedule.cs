@@ -37,7 +37,7 @@ namespace Nexus.Casp.Client.Models
         public string CurrencyCode { get; set; }
 #endif
         /// <summary>The default rate of any newly created Interval.</summary>
-        public double? DefaultRate { get; set; }
+        public decimal? DefaultRate { get; set; }
         /// <summary>Unique Identifier of this Schedule.</summary>
         public Guid? Id { get; set; }
         /// <summary>PaymentMethod used to pay out in.</summary>
@@ -93,7 +93,7 @@ namespace Nexus.Casp.Client.Models
                 { "bucketCode", n => { BucketCode = n.GetStringValue(); } },
                 { "cryptoCode", n => { CryptoCode = n.GetStringValue(); } },
                 { "currencyCode", n => { CurrencyCode = n.GetStringValue(); } },
-                { "defaultRate", n => { DefaultRate = n.GetDoubleValue(); } },
+                { "defaultRate", n => { DefaultRate = n.GetDecimalValue(); } },
                 { "id", n => { Id = n.GetGuidValue(); } },
                 { "paymentMethodCode", n => { PaymentMethodCode = n.GetStringValue(); } },
                 { "payoutPeriod", n => { PayoutPeriod = n.GetObjectValue<global::Nexus.Casp.Client.Models.GetSchedulePayoutPeriodRecord>(global::Nexus.Casp.Client.Models.GetSchedulePayoutPeriodRecord.CreateFromDiscriminatorValue); } },
@@ -111,7 +111,7 @@ namespace Nexus.Casp.Client.Models
             writer.WriteStringValue("bucketCode", BucketCode);
             writer.WriteStringValue("cryptoCode", CryptoCode);
             writer.WriteStringValue("currencyCode", CurrencyCode);
-            writer.WriteDoubleValue("defaultRate", DefaultRate);
+            writer.WriteDecimalValue("defaultRate", DefaultRate);
             writer.WriteGuidValue("id", Id);
             writer.WriteStringValue("paymentMethodCode", PaymentMethodCode);
             writer.WriteObjectValue<global::Nexus.Casp.Client.Models.GetSchedulePayoutPeriodRecord>("payoutPeriod", PayoutPeriod);

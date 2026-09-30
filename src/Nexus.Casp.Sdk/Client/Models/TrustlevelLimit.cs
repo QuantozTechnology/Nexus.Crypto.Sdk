@@ -13,13 +13,13 @@ namespace Nexus.Casp.Client.Models
     #pragma warning restore CS1591
     {
         /// <summary>The amount in fiat a customer buy/sell in a day.</summary>
-        public double? DailyLimit { get; set; }
+        public decimal? DailyLimit { get; set; }
         /// <summary>The amount in fiat a customer buy/sell.</summary>
-        public double? LifetimeLimit { get; set; }
+        public decimal? LifetimeLimit { get; set; }
         /// <summary>The amount in fiat a customer buy/sell in a month.</summary>
-        public double? MonthlyLimit { get; set; }
+        public decimal? MonthlyLimit { get; set; }
         /// <summary>The amount in fiat a customer buy/sell in a year.</summary>
-        public double? YearlyLimit { get; set; }
+        public decimal? YearlyLimit { get; set; }
         /// <summary>
         /// Creates a new instance of the appropriate class based on discriminator value
         /// </summary>
@@ -38,10 +38,10 @@ namespace Nexus.Casp.Client.Models
         {
             return new Dictionary<string, Action<IParseNode>>
             {
-                { "dailyLimit", n => { DailyLimit = n.GetDoubleValue(); } },
-                { "lifetimeLimit", n => { LifetimeLimit = n.GetDoubleValue(); } },
-                { "monthlyLimit", n => { MonthlyLimit = n.GetDoubleValue(); } },
-                { "yearlyLimit", n => { YearlyLimit = n.GetDoubleValue(); } },
+                { "dailyLimit", n => { DailyLimit = n.GetDecimalValue(); } },
+                { "lifetimeLimit", n => { LifetimeLimit = n.GetDecimalValue(); } },
+                { "monthlyLimit", n => { MonthlyLimit = n.GetDecimalValue(); } },
+                { "yearlyLimit", n => { YearlyLimit = n.GetDecimalValue(); } },
             };
         }
         /// <summary>
@@ -51,10 +51,10 @@ namespace Nexus.Casp.Client.Models
         public virtual void Serialize(ISerializationWriter writer)
         {
             if(ReferenceEquals(writer, null)) throw new ArgumentNullException(nameof(writer));
-            writer.WriteDoubleValue("dailyLimit", DailyLimit);
-            writer.WriteDoubleValue("lifetimeLimit", LifetimeLimit);
-            writer.WriteDoubleValue("monthlyLimit", MonthlyLimit);
-            writer.WriteDoubleValue("yearlyLimit", YearlyLimit);
+            writer.WriteDecimalValue("dailyLimit", DailyLimit);
+            writer.WriteDecimalValue("lifetimeLimit", LifetimeLimit);
+            writer.WriteDecimalValue("monthlyLimit", MonthlyLimit);
+            writer.WriteDecimalValue("yearlyLimit", YearlyLimit);
         }
     }
 }

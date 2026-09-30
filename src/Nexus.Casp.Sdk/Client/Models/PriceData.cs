@@ -13,11 +13,11 @@ namespace Nexus.Casp.Client.Models
     #pragma warning restore CS1591
     {
         /// <summary>The buy property</summary>
-        public double? Buy { get; set; }
+        public decimal? Buy { get; set; }
         /// <summary>The mid property</summary>
-        public double? Mid { get; set; }
+        public decimal? Mid { get; set; }
         /// <summary>The sell property</summary>
-        public double? Sell { get; set; }
+        public decimal? Sell { get; set; }
         /// <summary>The timestamp property</summary>
         public DateTimeOffset? Timestamp { get; set; }
         /// <summary>
@@ -38,9 +38,9 @@ namespace Nexus.Casp.Client.Models
         {
             return new Dictionary<string, Action<IParseNode>>
             {
-                { "buy", n => { Buy = n.GetDoubleValue(); } },
-                { "mid", n => { Mid = n.GetDoubleValue(); } },
-                { "sell", n => { Sell = n.GetDoubleValue(); } },
+                { "buy", n => { Buy = n.GetDecimalValue(); } },
+                { "mid", n => { Mid = n.GetDecimalValue(); } },
+                { "sell", n => { Sell = n.GetDecimalValue(); } },
                 { "timestamp", n => { Timestamp = n.GetDateTimeOffsetValue(); } },
             };
         }
@@ -51,9 +51,9 @@ namespace Nexus.Casp.Client.Models
         public virtual void Serialize(ISerializationWriter writer)
         {
             if(ReferenceEquals(writer, null)) throw new ArgumentNullException(nameof(writer));
-            writer.WriteDoubleValue("buy", Buy);
-            writer.WriteDoubleValue("mid", Mid);
-            writer.WriteDoubleValue("sell", Sell);
+            writer.WriteDecimalValue("buy", Buy);
+            writer.WriteDecimalValue("mid", Mid);
+            writer.WriteDecimalValue("sell", Sell);
             writer.WriteDateTimeOffsetValue("timestamp", Timestamp);
         }
     }

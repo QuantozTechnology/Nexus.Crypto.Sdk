@@ -85,7 +85,7 @@ namespace Nexus.Casp.Client.Models
         public string DestinationAddress { get; set; }
 #endif
         /// <summary>The amount of fiat currency the brokerbuy transaction should be created for.</summary>
-        public double? FiatValue { get; set; }
+        public decimal? FiatValue { get; set; }
         /// <summary>Code of the payment method which the transaction is processed with.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -103,7 +103,7 @@ namespace Nexus.Casp.Client.Models
         public string PaymentReference { get; set; }
 #endif
         /// <summary>The BUY price at which the crypto currency will be bought.Nexus checks if the requested BUY price is within certain ranges (Wiggle room).Ranges:10% price increase allowed5% price reduction allowed</summary>
-        public double? RequestedPrice { get; set; }
+        public decimal? RequestedPrice { get; set; }
         /// <summary>Stage the transaction instead of directly executing it.An additional confirmation API call to commit the transaction is required to execute it.</summary>
         public bool? Stage { get; set; }
         /// <summary>
@@ -133,10 +133,10 @@ namespace Nexus.Casp.Client.Models
                 { "customerCode", n => { CustomerCode = n.GetStringValue(); } },
                 { "data", n => { Data = n.GetObjectValue<global::Nexus.Casp.Client.Models.BrokerBuyRequest_data>(global::Nexus.Casp.Client.Models.BrokerBuyRequest_data.CreateFromDiscriminatorValue); } },
                 { "destinationAddress", n => { DestinationAddress = n.GetStringValue(); } },
-                { "fiatValue", n => { FiatValue = n.GetDoubleValue(); } },
+                { "fiatValue", n => { FiatValue = n.GetDecimalValue(); } },
                 { "paymentMethodCode", n => { PaymentMethodCode = n.GetStringValue(); } },
                 { "paymentReference", n => { PaymentReference = n.GetStringValue(); } },
-                { "requestedPrice", n => { RequestedPrice = n.GetDoubleValue(); } },
+                { "requestedPrice", n => { RequestedPrice = n.GetDecimalValue(); } },
                 { "stage", n => { Stage = n.GetBoolValue(); } },
             };
         }
@@ -156,10 +156,10 @@ namespace Nexus.Casp.Client.Models
             writer.WriteStringValue("customerCode", CustomerCode);
             writer.WriteObjectValue<global::Nexus.Casp.Client.Models.BrokerBuyRequest_data>("data", Data);
             writer.WriteStringValue("destinationAddress", DestinationAddress);
-            writer.WriteDoubleValue("fiatValue", FiatValue);
+            writer.WriteDecimalValue("fiatValue", FiatValue);
             writer.WriteStringValue("paymentMethodCode", PaymentMethodCode);
             writer.WriteStringValue("paymentReference", PaymentReference);
-            writer.WriteDoubleValue("requestedPrice", RequestedPrice);
+            writer.WriteDecimalValue("requestedPrice", RequestedPrice);
             writer.WriteBoolValue("stage", Stage);
         }
     }

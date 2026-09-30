@@ -21,7 +21,7 @@ namespace Nexus.Casp.Client.Models
         public string Action { get; set; }
 #endif
         /// <summary>Amount in FIAT</summary>
-        public double? Amount { get; set; }
+        public decimal? Amount { get; set; }
         /// <summary>DateTime when we received this Order.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -63,7 +63,7 @@ namespace Nexus.Casp.Client.Models
         public string Finished { get; set; }
 #endif
         /// <summary>Maximum Limit Amount in FIAT</summary>
-        public double? LimitPrice { get; set; }
+        public decimal? LimitPrice { get; set; }
         /// <summary>Order unique identifier</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -131,13 +131,13 @@ namespace Nexus.Casp.Client.Models
             return new Dictionary<string, Action<IParseNode>>
             {
                 { "action", n => { Action = n.GetStringValue(); } },
-                { "amount", n => { Amount = n.GetDoubleValue(); } },
+                { "amount", n => { Amount = n.GetDecimalValue(); } },
                 { "created", n => { Created = n.GetStringValue(); } },
                 { "data", n => { Data = n.GetObjectValue<global::Nexus.Casp.Client.Models.GetOrder_data>(global::Nexus.Casp.Client.Models.GetOrder_data.CreateFromDiscriminatorValue); } },
                 { "exchangeTradeCode", n => { ExchangeTradeCode = n.GetStringValue(); } },
                 { "executed", n => { Executed = n.GetObjectValue<global::Nexus.Casp.Client.Models.GetOrderExecuted>(global::Nexus.Casp.Client.Models.GetOrderExecuted.CreateFromDiscriminatorValue); } },
                 { "finished", n => { Finished = n.GetStringValue(); } },
-                { "limitPrice", n => { LimitPrice = n.GetDoubleValue(); } },
+                { "limitPrice", n => { LimitPrice = n.GetDecimalValue(); } },
                 { "orderCode", n => { OrderCode = n.GetStringValue(); } },
                 { "originalValidTill", n => { OriginalValidTill = n.GetStringValue(); } },
                 { "reason", n => { Reason = n.GetStringValue(); } },
@@ -154,13 +154,13 @@ namespace Nexus.Casp.Client.Models
         {
             if(ReferenceEquals(writer, null)) throw new ArgumentNullException(nameof(writer));
             writer.WriteStringValue("action", Action);
-            writer.WriteDoubleValue("amount", Amount);
+            writer.WriteDecimalValue("amount", Amount);
             writer.WriteStringValue("created", Created);
             writer.WriteObjectValue<global::Nexus.Casp.Client.Models.GetOrder_data>("data", Data);
             writer.WriteStringValue("exchangeTradeCode", ExchangeTradeCode);
             writer.WriteObjectValue<global::Nexus.Casp.Client.Models.GetOrderExecuted>("executed", Executed);
             writer.WriteStringValue("finished", Finished);
-            writer.WriteDoubleValue("limitPrice", LimitPrice);
+            writer.WriteDecimalValue("limitPrice", LimitPrice);
             writer.WriteStringValue("orderCode", OrderCode);
             writer.WriteStringValue("originalValidTill", OriginalValidTill);
             writer.WriteStringValue("reason", Reason);

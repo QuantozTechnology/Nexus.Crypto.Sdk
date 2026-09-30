@@ -13,7 +13,7 @@ namespace Nexus.Casp.Client.Models
     #pragma warning restore CS1591
     {
         /// <summary>Total amount available</summary>
-        public double? Available { get; set; }
+        public decimal? Available { get; set; }
         /// <summary>Balance unique identifier</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -23,7 +23,7 @@ namespace Nexus.Casp.Client.Models
         public string Code { get; set; }
 #endif
         /// <summary>Total amount Locked</summary>
-        public double? Locked { get; set; }
+        public decimal? Locked { get; set; }
         /// <summary>Balance name</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -33,7 +33,7 @@ namespace Nexus.Casp.Client.Models
         public string Name { get; set; }
 #endif
         /// <summary>Total amount</summary>
-        public double? Total { get; set; }
+        public decimal? Total { get; set; }
         /// <summary>
         /// Creates a new instance of the appropriate class based on discriminator value
         /// </summary>
@@ -52,11 +52,11 @@ namespace Nexus.Casp.Client.Models
         {
             return new Dictionary<string, Action<IParseNode>>
             {
-                { "available", n => { Available = n.GetDoubleValue(); } },
+                { "available", n => { Available = n.GetDecimalValue(); } },
                 { "code", n => { Code = n.GetStringValue(); } },
-                { "locked", n => { Locked = n.GetDoubleValue(); } },
+                { "locked", n => { Locked = n.GetDecimalValue(); } },
                 { "name", n => { Name = n.GetStringValue(); } },
-                { "total", n => { Total = n.GetDoubleValue(); } },
+                { "total", n => { Total = n.GetDecimalValue(); } },
             };
         }
         /// <summary>
@@ -66,11 +66,11 @@ namespace Nexus.Casp.Client.Models
         public virtual void Serialize(ISerializationWriter writer)
         {
             if(ReferenceEquals(writer, null)) throw new ArgumentNullException(nameof(writer));
-            writer.WriteDoubleValue("available", Available);
+            writer.WriteDecimalValue("available", Available);
             writer.WriteStringValue("code", Code);
-            writer.WriteDoubleValue("locked", Locked);
+            writer.WriteDecimalValue("locked", Locked);
             writer.WriteStringValue("name", Name);
-            writer.WriteDoubleValue("total", Total);
+            writer.WriteDecimalValue("total", Total);
         }
     }
 }

@@ -21,7 +21,7 @@ namespace Nexus.Casp.Client.Models
         public string AccountCode { get; set; }
 #endif
         /// <summary>The amount of cryptocurrency the transaction should be created for.</summary>
-        public double? CryptoAmount { get; set; }
+        public decimal? CryptoAmount { get; set; }
         /// <summary>Can only consist of A-Z a-z 0-9 _ -</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -63,7 +63,7 @@ namespace Nexus.Casp.Client.Models
         public string PaymentReference { get; set; }
 #endif
         /// <summary>The optional SELL price at which the cryptocurrency will be sold.**Please note** the fixed price is subject to some benchmarks configurable on the select payment method.Default ranges:- 5% price increase allowed- 10% price reduction allowedSince a custodian clawback transaction does not affect the fiat balance of a customer, this is purely to calculate possible fees.</summary>
-        public double? RequestedPrice { get; set; }
+        public decimal? RequestedPrice { get; set; }
         /// <summary>
         /// Creates a new instance of the appropriate class based on discriminator value
         /// </summary>
@@ -83,13 +83,13 @@ namespace Nexus.Casp.Client.Models
             return new Dictionary<string, Action<IParseNode>>
             {
                 { "accountCode", n => { AccountCode = n.GetStringValue(); } },
-                { "cryptoAmount", n => { CryptoAmount = n.GetDoubleValue(); } },
+                { "cryptoAmount", n => { CryptoAmount = n.GetDecimalValue(); } },
                 { "cryptoCode", n => { CryptoCode = n.GetStringValue(); } },
                 { "currencyCode", n => { CurrencyCode = n.GetStringValue(); } },
                 { "customerCode", n => { CustomerCode = n.GetStringValue(); } },
                 { "data", n => { Data = n.GetObjectValue<global::Nexus.Casp.Client.Models.CustodianClawbackRequest_data>(global::Nexus.Casp.Client.Models.CustodianClawbackRequest_data.CreateFromDiscriminatorValue); } },
                 { "paymentReference", n => { PaymentReference = n.GetStringValue(); } },
-                { "requestedPrice", n => { RequestedPrice = n.GetDoubleValue(); } },
+                { "requestedPrice", n => { RequestedPrice = n.GetDecimalValue(); } },
             };
         }
         /// <summary>
@@ -100,13 +100,13 @@ namespace Nexus.Casp.Client.Models
         {
             if(ReferenceEquals(writer, null)) throw new ArgumentNullException(nameof(writer));
             writer.WriteStringValue("accountCode", AccountCode);
-            writer.WriteDoubleValue("cryptoAmount", CryptoAmount);
+            writer.WriteDecimalValue("cryptoAmount", CryptoAmount);
             writer.WriteStringValue("cryptoCode", CryptoCode);
             writer.WriteStringValue("currencyCode", CurrencyCode);
             writer.WriteStringValue("customerCode", CustomerCode);
             writer.WriteObjectValue<global::Nexus.Casp.Client.Models.CustodianClawbackRequest_data>("data", Data);
             writer.WriteStringValue("paymentReference", PaymentReference);
-            writer.WriteDoubleValue("requestedPrice", RequestedPrice);
+            writer.WriteDecimalValue("requestedPrice", RequestedPrice);
         }
     }
 }

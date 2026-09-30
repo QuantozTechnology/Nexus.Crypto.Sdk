@@ -21,7 +21,7 @@ namespace Nexus.Casp.Client.Models
         public string Action { get; set; }
 #endif
         /// <summary>Amount in FIAT (ISO 4217)</summary>
-        public double? Amount { get; set; }
+        public decimal? Amount { get; set; }
         /// <summary>Crypto code</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -57,7 +57,7 @@ namespace Nexus.Casp.Client.Models
         /// <summary>DateTime indicating the expiration of this order. Defaults to Created +24h.</summary>
         public DateTimeOffset? Expiring { get; set; }
         /// <summary>Maximum Limit Price in FIAT</summary>
-        public double? LimitPrice { get; set; }
+        public decimal? LimitPrice { get; set; }
         /// <summary>Type of the order- `Market`- `Limit`</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -85,13 +85,13 @@ namespace Nexus.Casp.Client.Models
             return new Dictionary<string, Action<IParseNode>>
             {
                 { "action", n => { Action = n.GetStringValue(); } },
-                { "amount", n => { Amount = n.GetDoubleValue(); } },
+                { "amount", n => { Amount = n.GetDecimalValue(); } },
                 { "crypto", n => { Crypto = n.GetStringValue(); } },
                 { "currency", n => { Currency = n.GetStringValue(); } },
                 { "data", n => { Data = n.GetObjectValue<global::Nexus.Casp.Client.Models.CreateOrder_data>(global::Nexus.Casp.Client.Models.CreateOrder_data.CreateFromDiscriminatorValue); } },
                 { "exchangeCode", n => { ExchangeCode = n.GetStringValue(); } },
                 { "expiring", n => { Expiring = n.GetDateTimeOffsetValue(); } },
-                { "limitPrice", n => { LimitPrice = n.GetDoubleValue(); } },
+                { "limitPrice", n => { LimitPrice = n.GetDecimalValue(); } },
                 { "type", n => { Type = n.GetStringValue(); } },
             };
         }
@@ -103,13 +103,13 @@ namespace Nexus.Casp.Client.Models
         {
             if(ReferenceEquals(writer, null)) throw new ArgumentNullException(nameof(writer));
             writer.WriteStringValue("action", Action);
-            writer.WriteDoubleValue("amount", Amount);
+            writer.WriteDecimalValue("amount", Amount);
             writer.WriteStringValue("crypto", Crypto);
             writer.WriteStringValue("currency", Currency);
             writer.WriteObjectValue<global::Nexus.Casp.Client.Models.CreateOrder_data>("data", Data);
             writer.WriteStringValue("exchangeCode", ExchangeCode);
             writer.WriteDateTimeOffsetValue("expiring", Expiring);
-            writer.WriteDoubleValue("limitPrice", LimitPrice);
+            writer.WriteDecimalValue("limitPrice", LimitPrice);
             writer.WriteStringValue("type", Type);
         }
     }

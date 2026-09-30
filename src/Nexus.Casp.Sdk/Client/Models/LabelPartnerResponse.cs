@@ -45,7 +45,7 @@ namespace Nexus.Casp.Client.Models
         public string LabelPartnerCode { get; set; }
 #endif
         /// <summary>The maximum allowed fiat value the total reserve of all yield partners combinedis allowed to deviate from the bucket balance. If null there is no maximum value set</summary>
-        public double? MaximumAllowedYieldDeviationValue { get; set; }
+        public decimal? MaximumAllowedYieldDeviationValue { get; set; }
         /// <summary>
         /// Creates a new instance of the appropriate class based on discriminator value
         /// </summary>
@@ -68,7 +68,7 @@ namespace Nexus.Casp.Client.Models
                 { "businessModel", n => { BusinessModel = n.GetStringValue(); } },
                 { "features", n => { Features = n.GetObjectValue<global::Nexus.Casp.Client.Models.LabelPartnerResponse_features>(global::Nexus.Casp.Client.Models.LabelPartnerResponse_features.CreateFromDiscriminatorValue); } },
                 { "labelPartnerCode", n => { LabelPartnerCode = n.GetStringValue(); } },
-                { "maximumAllowedYieldDeviationValue", n => { MaximumAllowedYieldDeviationValue = n.GetDoubleValue(); } },
+                { "maximumAllowedYieldDeviationValue", n => { MaximumAllowedYieldDeviationValue = n.GetDecimalValue(); } },
             };
         }
         /// <summary>
@@ -82,7 +82,7 @@ namespace Nexus.Casp.Client.Models
             writer.WriteStringValue("businessModel", BusinessModel);
             writer.WriteObjectValue<global::Nexus.Casp.Client.Models.LabelPartnerResponse_features>("features", Features);
             writer.WriteStringValue("labelPartnerCode", LabelPartnerCode);
-            writer.WriteDoubleValue("maximumAllowedYieldDeviationValue", MaximumAllowedYieldDeviationValue);
+            writer.WriteDecimalValue("maximumAllowedYieldDeviationValue", MaximumAllowedYieldDeviationValue);
         }
     }
 }

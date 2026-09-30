@@ -13,9 +13,9 @@ namespace Nexus.Casp.Client.Models
     #pragma warning restore CS1591
     {
         /// <summary>Ask price in Fiat</summary>
-        public double? Ask { get; set; }
+        public decimal? Ask { get; set; }
         /// <summary>Bid price in Fiat</summary>
-        public double? Bid { get; set; }
+        public decimal? Bid { get; set; }
         /// <summary>DateTime of price</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -42,8 +42,8 @@ namespace Nexus.Casp.Client.Models
         {
             return new Dictionary<string, Action<IParseNode>>
             {
-                { "ask", n => { Ask = n.GetDoubleValue(); } },
-                { "bid", n => { Bid = n.GetDoubleValue(); } },
+                { "ask", n => { Ask = n.GetDecimalValue(); } },
+                { "bid", n => { Bid = n.GetDecimalValue(); } },
                 { "updated", n => { Updated = n.GetStringValue(); } },
             };
         }
@@ -54,8 +54,8 @@ namespace Nexus.Casp.Client.Models
         public virtual void Serialize(ISerializationWriter writer)
         {
             if(ReferenceEquals(writer, null)) throw new ArgumentNullException(nameof(writer));
-            writer.WriteDoubleValue("ask", Ask);
-            writer.WriteDoubleValue("bid", Bid);
+            writer.WriteDecimalValue("ask", Ask);
+            writer.WriteDecimalValue("bid", Bid);
             writer.WriteStringValue("updated", Updated);
         }
     }

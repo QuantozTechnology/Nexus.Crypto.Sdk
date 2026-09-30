@@ -157,10 +157,10 @@ namespace Nexus.Casp.Client.Orders
 #endif
             /// <summary>Filter on equal or more than minimun amount.</summary>
             [QueryParameter("amountFrom")]
-            public double? AmountFrom { get; set; }
+            public decimal? AmountFrom { get; set; }
             /// <summary>Filter on less than maximum amount.</summary>
             [QueryParameter("amountTo")]
-            public double? AmountTo { get; set; }
+            public decimal? AmountTo { get; set; }
             /// <summary>Filter on Created on or after the createdFrom (ISO 8601).</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable

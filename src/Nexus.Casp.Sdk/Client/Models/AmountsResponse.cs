@@ -13,11 +13,11 @@ namespace Nexus.Casp.Client.Models
     #pragma warning restore CS1591
     {
         /// <summary>The cryptoAmount property</summary>
-        public double? CryptoAmount { get; set; }
+        public decimal? CryptoAmount { get; set; }
         /// <summary>The cryptoPrice property</summary>
-        public double? CryptoPrice { get; set; }
+        public decimal? CryptoPrice { get; set; }
         /// <summary>The fiatValue property</summary>
-        public double? FiatValue { get; set; }
+        public decimal? FiatValue { get; set; }
         /// <summary>
         /// Creates a new instance of the appropriate class based on discriminator value
         /// </summary>
@@ -36,9 +36,9 @@ namespace Nexus.Casp.Client.Models
         {
             return new Dictionary<string, Action<IParseNode>>
             {
-                { "cryptoAmount", n => { CryptoAmount = n.GetDoubleValue(); } },
-                { "cryptoPrice", n => { CryptoPrice = n.GetDoubleValue(); } },
-                { "fiatValue", n => { FiatValue = n.GetDoubleValue(); } },
+                { "cryptoAmount", n => { CryptoAmount = n.GetDecimalValue(); } },
+                { "cryptoPrice", n => { CryptoPrice = n.GetDecimalValue(); } },
+                { "fiatValue", n => { FiatValue = n.GetDecimalValue(); } },
             };
         }
         /// <summary>
@@ -48,9 +48,9 @@ namespace Nexus.Casp.Client.Models
         public virtual void Serialize(ISerializationWriter writer)
         {
             if(ReferenceEquals(writer, null)) throw new ArgumentNullException(nameof(writer));
-            writer.WriteDoubleValue("cryptoAmount", CryptoAmount);
-            writer.WriteDoubleValue("cryptoPrice", CryptoPrice);
-            writer.WriteDoubleValue("fiatValue", FiatValue);
+            writer.WriteDecimalValue("cryptoAmount", CryptoAmount);
+            writer.WriteDecimalValue("cryptoPrice", CryptoPrice);
+            writer.WriteDecimalValue("fiatValue", FiatValue);
         }
     }
 }

@@ -13,9 +13,9 @@ namespace Nexus.Casp.Client.Models
     #pragma warning restore CS1591
     {
         /// <summary>Change in crypto balance (can be negative)</summary>
-        public double? Crypto { get; set; }
+        public decimal? Crypto { get; set; }
         /// <summary>Change in fiat balance (can be negative).For a BUY this absoulte amount is paid by the customer.For a SELL this amount paid out to the customer.</summary>
-        public double? Fiat { get; set; }
+        public decimal? Fiat { get; set; }
         /// <summary>
         /// Creates a new instance of the appropriate class based on discriminator value
         /// </summary>
@@ -34,8 +34,8 @@ namespace Nexus.Casp.Client.Models
         {
             return new Dictionary<string, Action<IParseNode>>
             {
-                { "crypto", n => { Crypto = n.GetDoubleValue(); } },
-                { "fiat", n => { Fiat = n.GetDoubleValue(); } },
+                { "crypto", n => { Crypto = n.GetDecimalValue(); } },
+                { "fiat", n => { Fiat = n.GetDecimalValue(); } },
             };
         }
         /// <summary>
@@ -45,8 +45,8 @@ namespace Nexus.Casp.Client.Models
         public virtual void Serialize(ISerializationWriter writer)
         {
             if(ReferenceEquals(writer, null)) throw new ArgumentNullException(nameof(writer));
-            writer.WriteDoubleValue("crypto", Crypto);
-            writer.WriteDoubleValue("fiat", Fiat);
+            writer.WriteDecimalValue("crypto", Crypto);
+            writer.WriteDecimalValue("fiat", Fiat);
         }
     }
 }

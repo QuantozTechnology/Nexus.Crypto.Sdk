@@ -13,7 +13,7 @@ namespace Nexus.Casp.Client.Models
     #pragma warning restore CS1591
     {
         /// <summary>Transfer&apos;s amount in crypto.</summary>
-        public double? Amount { get; set; }
+        public decimal? Amount { get; set; }
         /// <summary>Unique identifier of a crypto.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -76,7 +76,7 @@ namespace Nexus.Casp.Client.Models
         {
             return new Dictionary<string, Action<IParseNode>>
             {
-                { "amount", n => { Amount = n.GetDoubleValue(); } },
+                { "amount", n => { Amount = n.GetDecimalValue(); } },
                 { "cryptoCode", n => { CryptoCode = n.GetStringValue(); } },
                 { "sinkExchangeCode", n => { SinkExchangeCode = n.GetStringValue(); } },
                 { "sinkType", n => { SinkType = n.GetEnumValue<global::Nexus.Casp.Client.Models.TransferAddressType>(); } },
@@ -93,7 +93,7 @@ namespace Nexus.Casp.Client.Models
         public virtual void Serialize(ISerializationWriter writer)
         {
             if(ReferenceEquals(writer, null)) throw new ArgumentNullException(nameof(writer));
-            writer.WriteDoubleValue("amount", Amount);
+            writer.WriteDecimalValue("amount", Amount);
             writer.WriteStringValue("cryptoCode", CryptoCode);
             writer.WriteStringValue("sinkExchangeCode", SinkExchangeCode);
             writer.WriteEnumValue<global::Nexus.Casp.Client.Models.TransferAddressType>("sinkType", SinkType);
