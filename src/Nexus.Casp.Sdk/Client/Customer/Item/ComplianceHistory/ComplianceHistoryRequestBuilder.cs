@@ -12,7 +12,7 @@ using System;
 namespace Nexus.Casp.Client.Customer.Item.ComplianceHistory
 {
     /// <summary>
-    /// Builds and executes requests for operations under \customer\{customerCode-id}\complianceHistory
+    /// Builds and executes requests for operations under \customer\{customerCode}\complianceHistory
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
     public partial class ComplianceHistoryRequestBuilder : BaseRequestBuilder
@@ -22,7 +22,7 @@ namespace Nexus.Casp.Client.Customer.Item.ComplianceHistory
         /// </summary>
         /// <param name="pathParameters">Path parameters for the request</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>
-        public ComplianceHistoryRequestBuilder(Dictionary<string, object> pathParameters, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/customer/{customerCode%2Did}/complianceHistory{?EndDate*,Limit*,Page*,StartDate*}", pathParameters)
+        public ComplianceHistoryRequestBuilder(Dictionary<string, object> pathParameters, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/customer/{customerCode}/complianceHistory{?EndDate*,Limit*,Page*,StartDate*}", pathParameters)
         {
         }
         /// <summary>
@@ -30,7 +30,7 @@ namespace Nexus.Casp.Client.Customer.Item.ComplianceHistory
         /// </summary>
         /// <param name="rawUrl">The raw URL to use for the request builder.</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>
-        public ComplianceHistoryRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/customer/{customerCode%2Did}/complianceHistory{?EndDate*,Limit*,Page*,StartDate*}", rawUrl)
+        public ComplianceHistoryRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/customer/{customerCode}/complianceHistory{?EndDate*,Limit*,Page*,StartDate*}", rawUrl)
         {
         }
         /// <summary>

@@ -46,6 +46,9 @@ namespace Nexus.Casp.Client.Transactions.Custodian
         public CustodianRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/transactions/custodian{?AccountCode*,BlockchainTxId*,CreatedFrom*,CreatedTill*,CryptoCode*,CurrencyCode*,CustomerCode*,DestinationCryptoAddress*,Direction*,Limit*,LinkedTransactionCode*,Page*,PaymentMethodCode*,PaymentReference*,SortBy*,SortDirection*,Status*,TransactionCode*,Type*}", rawUrl)
         {
         }
+        /// <summary>
+        /// Get Transactions
+        /// </summary>
         /// <returns>A <see cref="global::Nexus.Casp.Client.Models.ListCustodianTransactionResponsePagedResultCustomResultHolder"/></returns>
         /// <param name="cancellationToken">Cancellation token to use when cancelling requests</param>
         /// <param name="requestConfiguration">Configuration for the request such as headers, query parameters, and middleware options.</param>
@@ -68,6 +71,9 @@ namespace Nexus.Casp.Client.Transactions.Custodian
             };
             return await RequestAdapter.SendAsync<global::Nexus.Casp.Client.Models.ListCustodianTransactionResponsePagedResultCustomResultHolder>(requestInfo, global::Nexus.Casp.Client.Models.ListCustodianTransactionResponsePagedResultCustomResultHolder.CreateFromDiscriminatorValue, errorMapping, cancellationToken).ConfigureAwait(false);
         }
+        /// <summary>
+        /// Get Transactions
+        /// </summary>
         /// <returns>A <see cref="RequestInformation"/></returns>
         /// <param name="requestConfiguration">Configuration for the request such as headers, query parameters, and middleware options.</param>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
@@ -93,10 +99,11 @@ namespace Nexus.Casp.Client.Transactions.Custodian
         {
             return new global::Nexus.Casp.Client.Transactions.Custodian.CustodianRequestBuilder(rawUrl, RequestAdapter);
         }
+        /// <summary>
+        /// Get Transactions
+        /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
-        #pragma warning disable CS1591
         public partial class CustodianRequestBuilderGetQueryParameters 
-        #pragma warning restore CS1591
         {
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable

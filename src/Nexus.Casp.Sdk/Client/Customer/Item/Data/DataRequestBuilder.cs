@@ -12,7 +12,7 @@ using System;
 namespace Nexus.Casp.Client.Customer.Item.Data
 {
     /// <summary>
-    /// Builds and executes requests for operations under \customer\{customerCode-id}\data
+    /// Builds and executes requests for operations under \customer\{customerCode}\data
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
     public partial class DataRequestBuilder : BaseRequestBuilder
@@ -22,7 +22,7 @@ namespace Nexus.Casp.Client.Customer.Item.Data
         /// </summary>
         /// <param name="pathParameters">Path parameters for the request</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>
-        public DataRequestBuilder(Dictionary<string, object> pathParameters, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/customer/{customerCode%2Did}/data", pathParameters)
+        public DataRequestBuilder(Dictionary<string, object> pathParameters, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/customer/{customerCode}/data", pathParameters)
         {
         }
         /// <summary>
@@ -30,7 +30,7 @@ namespace Nexus.Casp.Client.Customer.Item.Data
         /// </summary>
         /// <param name="rawUrl">The raw URL to use for the request builder.</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>
-        public DataRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/customer/{customerCode%2Did}/data", rawUrl)
+        public DataRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/customer/{customerCode}/data", rawUrl)
         {
         }
         /// <summary>

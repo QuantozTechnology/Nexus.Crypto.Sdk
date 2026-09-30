@@ -7,28 +7,30 @@ using System.IO;
 using System;
 namespace Nexus.Casp.Client.Models
 {
+    /// <summary>
+    /// Resulting new transaction&apos;s data
+    /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
-    #pragma warning disable CS1591
-    public partial class CustodianBuyResponse : IParsable
-    #pragma warning restore CS1591
+    public partial class CreateBuyCustodianTransactionResponse_data : IAdditionalDataHolder, IParsable
     {
-        /// <summary>New transaction</summary>
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
-#nullable enable
-        public global::Nexus.Casp.Client.Models.CreateBuyCustodianTransactionResponse? Transaction { get; set; }
-#nullable restore
-#else
-        public global::Nexus.Casp.Client.Models.CreateBuyCustodianTransactionResponse Transaction { get; set; }
-#endif
+        /// <summary>Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.</summary>
+        public IDictionary<string, object> AdditionalData { get; set; }
+        /// <summary>
+        /// Instantiates a new <see cref="global::Nexus.Casp.Client.Models.CreateBuyCustodianTransactionResponse_data"/> and sets the default values.
+        /// </summary>
+        public CreateBuyCustodianTransactionResponse_data()
+        {
+            AdditionalData = new Dictionary<string, object>();
+        }
         /// <summary>
         /// Creates a new instance of the appropriate class based on discriminator value
         /// </summary>
-        /// <returns>A <see cref="global::Nexus.Casp.Client.Models.CustodianBuyResponse"/></returns>
+        /// <returns>A <see cref="global::Nexus.Casp.Client.Models.CreateBuyCustodianTransactionResponse_data"/></returns>
         /// <param name="parseNode">The parse node to use to read the discriminator value and create the object</param>
-        public static global::Nexus.Casp.Client.Models.CustodianBuyResponse CreateFromDiscriminatorValue(IParseNode parseNode)
+        public static global::Nexus.Casp.Client.Models.CreateBuyCustodianTransactionResponse_data CreateFromDiscriminatorValue(IParseNode parseNode)
         {
             if(ReferenceEquals(parseNode, null)) throw new ArgumentNullException(nameof(parseNode));
-            return new global::Nexus.Casp.Client.Models.CustodianBuyResponse();
+            return new global::Nexus.Casp.Client.Models.CreateBuyCustodianTransactionResponse_data();
         }
         /// <summary>
         /// The deserialization information for the current model
@@ -38,7 +40,6 @@ namespace Nexus.Casp.Client.Models
         {
             return new Dictionary<string, Action<IParseNode>>
             {
-                { "transaction", n => { Transaction = n.GetObjectValue<global::Nexus.Casp.Client.Models.CreateBuyCustodianTransactionResponse>(global::Nexus.Casp.Client.Models.CreateBuyCustodianTransactionResponse.CreateFromDiscriminatorValue); } },
             };
         }
         /// <summary>
@@ -48,7 +49,7 @@ namespace Nexus.Casp.Client.Models
         public virtual void Serialize(ISerializationWriter writer)
         {
             if(ReferenceEquals(writer, null)) throw new ArgumentNullException(nameof(writer));
-            writer.WriteObjectValue<global::Nexus.Casp.Client.Models.CreateBuyCustodianTransactionResponse>("transaction", Transaction);
+            writer.WriteAdditionalData(AdditionalData);
         }
     }
 }

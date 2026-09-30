@@ -33,6 +33,9 @@ namespace Nexus.Casp.Client.Transactions.Custodian.Item.Cancel
         public CancelRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/transactions/custodian/{transactionCode%2Did}/cancel", rawUrl)
         {
         }
+        /// <summary>
+        /// Cancel Transaction
+        /// </summary>
         /// <returns>A <see cref="global::Nexus.Casp.Client.Models.CustodianCancelResponseCustomResultHolder"/></returns>
         /// <param name="cancellationToken">Cancellation token to use when cancelling requests</param>
         /// <param name="requestConfiguration">Configuration for the request such as headers, query parameters, and middleware options.</param>
@@ -55,6 +58,9 @@ namespace Nexus.Casp.Client.Transactions.Custodian.Item.Cancel
             };
             return await RequestAdapter.SendAsync<global::Nexus.Casp.Client.Models.CustodianCancelResponseCustomResultHolder>(requestInfo, global::Nexus.Casp.Client.Models.CustodianCancelResponseCustomResultHolder.CreateFromDiscriminatorValue, errorMapping, cancellationToken).ConfigureAwait(false);
         }
+        /// <summary>
+        /// Cancel Transaction
+        /// </summary>
         /// <returns>A <see cref="RequestInformation"/></returns>
         /// <param name="requestConfiguration">Configuration for the request such as headers, query parameters, and middleware options.</param>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER

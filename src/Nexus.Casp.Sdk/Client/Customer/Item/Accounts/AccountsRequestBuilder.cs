@@ -14,7 +14,7 @@ using System;
 namespace Nexus.Casp.Client.Customer.Item.Accounts
 {
     /// <summary>
-    /// Builds and executes requests for operations under \customer\{customerCode-id}\accounts
+    /// Builds and executes requests for operations under \customer\{customerCode}\accounts
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
     public partial class AccountsRequestBuilder : BaseRequestBuilder
@@ -41,7 +41,7 @@ namespace Nexus.Casp.Client.Customer.Item.Accounts
         /// </summary>
         /// <param name="pathParameters">Path parameters for the request</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>
-        public AccountsRequestBuilder(Dictionary<string, object> pathParameters, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/customer/{customerCode%2Did}/accounts{?bucketCode*,cryptoCode*,customerCode*,customerCryptoAddress*,depositAddress*,endDate*,limit*,page*,sortBy*,sortDirection*,startDate*,status*}", pathParameters)
+        public AccountsRequestBuilder(Dictionary<string, object> pathParameters, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/customer/{customerCode}/accounts{?bucketCode*,cryptoCode*,customerCryptoAddress*,depositAddress*,endDate*,limit*,page*,sortBy*,sortDirection*,startDate*,status*}", pathParameters)
         {
         }
         /// <summary>
@@ -49,7 +49,7 @@ namespace Nexus.Casp.Client.Customer.Item.Accounts
         /// </summary>
         /// <param name="rawUrl">The raw URL to use for the request builder.</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>
-        public AccountsRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/customer/{customerCode%2Did}/accounts{?bucketCode*,cryptoCode*,customerCode*,customerCryptoAddress*,depositAddress*,endDate*,limit*,page*,sortBy*,sortDirection*,startDate*,status*}", rawUrl)
+        public AccountsRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/customer/{customerCode}/accounts{?bucketCode*,cryptoCode*,customerCryptoAddress*,depositAddress*,endDate*,limit*,page*,sortBy*,sortDirection*,startDate*,status*}", rawUrl)
         {
         }
         /// <summary>
@@ -182,16 +182,6 @@ namespace Nexus.Casp.Client.Customer.Item.Accounts
 #else
             [QueryParameter("cryptoCode")]
             public string CryptoCode { get; set; }
-#endif
-            /// <summary>Get accounts of a customer.</summary>
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
-#nullable enable
-            [QueryParameter("customerCode")]
-            public string? CustomerCode { get; set; }
-#nullable restore
-#else
-            [QueryParameter("customerCode")]
-            public string CustomerCode { get; set; }
 #endif
             /// <summary>Get account for specific customer crypto address.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER

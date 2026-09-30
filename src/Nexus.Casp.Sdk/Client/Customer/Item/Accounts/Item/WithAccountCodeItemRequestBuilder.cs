@@ -12,7 +12,7 @@ using System;
 namespace Nexus.Casp.Client.Customer.Item.Accounts.Item
 {
     /// <summary>
-    /// Builds and executes requests for operations under \customer\{customerCode-id}\accounts\{accountCode}
+    /// Builds and executes requests for operations under \customer\{customerCode}\accounts\{accountCode}
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
     public partial class WithAccountCodeItemRequestBuilder : BaseRequestBuilder
@@ -22,7 +22,7 @@ namespace Nexus.Casp.Client.Customer.Item.Accounts.Item
         /// </summary>
         /// <param name="pathParameters">Path parameters for the request</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>
-        public WithAccountCodeItemRequestBuilder(Dictionary<string, object> pathParameters, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/customer/{customerCode%2Did}/accounts/{accountCode}", pathParameters)
+        public WithAccountCodeItemRequestBuilder(Dictionary<string, object> pathParameters, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/customer/{customerCode}/accounts/{accountCode}", pathParameters)
         {
         }
         /// <summary>
@@ -30,7 +30,7 @@ namespace Nexus.Casp.Client.Customer.Item.Accounts.Item
         /// </summary>
         /// <param name="rawUrl">The raw URL to use for the request builder.</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>
-        public WithAccountCodeItemRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/customer/{customerCode%2Did}/accounts/{accountCode}", rawUrl)
+        public WithAccountCodeItemRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/customer/{customerCode}/accounts/{accountCode}", rawUrl)
         {
         }
         /// <summary>

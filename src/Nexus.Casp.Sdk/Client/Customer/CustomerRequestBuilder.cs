@@ -5,7 +5,6 @@ using Microsoft.Kiota.Abstractions.Serialization;
 using Microsoft.Kiota.Abstractions;
 using Nexus.Casp.Client.Customer.Item;
 using Nexus.Casp.Client.Models;
-using Nexus.Casp.Client.Paymentmethod.Item.Fees.Customer.Item;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
@@ -19,6 +18,18 @@ namespace Nexus.Casp.Client.Customer
     [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
     public partial class CustomerRequestBuilder : BaseRequestBuilder
     {
+        /// <summary>Gets an item from the Nexus.Casp.Client.customer.item collection</summary>
+        /// <param name="position">Unique identifier of the customer.</param>
+        /// <returns>A <see cref="global::Nexus.Casp.Client.Customer.Item.WithCustomerCodeItemRequestBuilder"/></returns>
+        public global::Nexus.Casp.Client.Customer.Item.WithCustomerCodeItemRequestBuilder this[string position]
+        {
+            get
+            {
+                var urlTplParams = new Dictionary<string, object>(PathParameters);
+                urlTplParams.Add("customerCode", position);
+                return new global::Nexus.Casp.Client.Customer.Item.WithCustomerCodeItemRequestBuilder(urlTplParams, RequestAdapter);
+            }
+        }
         /// <summary>
         /// Instantiates a new <see cref="global::Nexus.Casp.Client.Customer.CustomerRequestBuilder"/> and sets the default values.
         /// </summary>
@@ -127,26 +138,6 @@ namespace Nexus.Casp.Client.Customer
             requestInfo.Headers.TryAdd("Accept", "application/json");
             requestInfo.SetContentFromParsable(RequestAdapter, "application/json", body);
             return requestInfo;
-        }
-        /// <summary>
-        /// Gets an item from the Nexus.Casp.Client.Customer.item collection
-        /// </summary>
-        /// <returns>A <see cref="global::Nexus.Casp.Client.Paymentmethod.Item.Fees.Customer.Item.WithCustomerCodeItemRequestBuilder"/></returns>
-        /// <param name="customerCode">The customer code the limits are calculated for.</param>
-        public global::Nexus.Casp.Client.Paymentmethod.Item.Fees.Customer.Item.WithCustomerCodeItemRequestBuilder WithCustomerCode(string customerCode)
-        {
-            if(string.IsNullOrEmpty(customerCode)) throw new ArgumentNullException(nameof(customerCode));
-            return null;
-        }
-        /// <summary>
-        /// Gets an item from the Nexus.Casp.Client.customer.item collection
-        /// </summary>
-        /// <returns>A <see cref="global::Nexus.Casp.Client.Customer.Item.CustomerCodeItemRequestBuilder"/></returns>
-        /// <param name="customerCodeId">Unique identifier of the item</param>
-        public global::Nexus.Casp.Client.Customer.Item.CustomerCodeItemRequestBuilder WithCustomerCodeId(string customerCodeId)
-        {
-            if(string.IsNullOrEmpty(customerCodeId)) throw new ArgumentNullException(nameof(customerCodeId));
-            return null;
         }
         /// <summary>
         /// Returns a request builder with the provided arbitrary URL. Using this method means any other path or query parameters are ignored.

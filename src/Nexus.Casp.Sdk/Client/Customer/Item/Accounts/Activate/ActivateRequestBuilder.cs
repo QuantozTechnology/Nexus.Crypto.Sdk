@@ -10,7 +10,7 @@ using System;
 namespace Nexus.Casp.Client.Customer.Item.Accounts.Activate
 {
     /// <summary>
-    /// Builds and executes requests for operations under \customer\{customerCode-id}\accounts\activate
+    /// Builds and executes requests for operations under \customer\{customerCode}\accounts\activate
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
     public partial class ActivateRequestBuilder : BaseRequestBuilder
@@ -32,7 +32,7 @@ namespace Nexus.Casp.Client.Customer.Item.Accounts.Activate
         /// </summary>
         /// <param name="pathParameters">Path parameters for the request</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>
-        public ActivateRequestBuilder(Dictionary<string, object> pathParameters, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/customer/{customerCode%2Did}/accounts/activate", pathParameters)
+        public ActivateRequestBuilder(Dictionary<string, object> pathParameters, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/customer/{customerCode}/accounts/activate", pathParameters)
         {
         }
         /// <summary>
@@ -40,7 +40,7 @@ namespace Nexus.Casp.Client.Customer.Item.Accounts.Activate
         /// </summary>
         /// <param name="rawUrl">The raw URL to use for the request builder.</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>
-        public ActivateRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/customer/{customerCode%2Did}/accounts/activate", rawUrl)
+        public ActivateRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/customer/{customerCode}/accounts/activate", rawUrl)
         {
         }
     }

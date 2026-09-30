@@ -57,6 +57,9 @@ namespace Nexus.Casp.Client.Transactions.Custodian.Item
         public TransactionCodeItemRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/transactions/custodian/{transactionCode%2Did}", rawUrl)
         {
         }
+        /// <summary>
+        /// Get Transaction
+        /// </summary>
         /// <returns>A <see cref="global::Nexus.Casp.Client.Models.GetCustodianTransactionResponseCustomResultHolder"/></returns>
         /// <param name="cancellationToken">Cancellation token to use when cancelling requests</param>
         /// <param name="requestConfiguration">Configuration for the request such as headers, query parameters, and middleware options.</param>
@@ -79,6 +82,9 @@ namespace Nexus.Casp.Client.Transactions.Custodian.Item
             };
             return await RequestAdapter.SendAsync<global::Nexus.Casp.Client.Models.GetCustodianTransactionResponseCustomResultHolder>(requestInfo, global::Nexus.Casp.Client.Models.GetCustodianTransactionResponseCustomResultHolder.CreateFromDiscriminatorValue, errorMapping, cancellationToken).ConfigureAwait(false);
         }
+        /// <summary>
+        /// Get Transaction
+        /// </summary>
         /// <returns>A <see cref="RequestInformation"/></returns>
         /// <param name="requestConfiguration">Configuration for the request such as headers, query parameters, and middleware options.</param>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
