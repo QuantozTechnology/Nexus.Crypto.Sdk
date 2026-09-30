@@ -35,7 +35,7 @@ namespace Nexus.Casp.Client.Customer.Item.BankAccounts
         /// </summary>
         /// <param name="pathParameters">Path parameters for the request</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>
-        public BankAccountsRequestBuilder(Dictionary<string, object> pathParameters, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/customer/{customerCode%2Did}/bankaccounts{?BankId*,CreatedEndDate*,CreatedStartDate*,CurrencyCode*,Id*,IsPrimary*,Limit*,Number*,Page*,SortBy*,SortDirection*,UpdatedEndDate*,UpdatedStartDate*}", pathParameters)
+        public BankAccountsRequestBuilder(Dictionary<string, object> pathParameters, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/customer/{customerCode%2Did}/bankAccounts", pathParameters)
         {
         }
         /// <summary>
@@ -43,7 +43,7 @@ namespace Nexus.Casp.Client.Customer.Item.BankAccounts
         /// </summary>
         /// <param name="rawUrl">The raw URL to use for the request builder.</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>
-        public BankAccountsRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/customer/{customerCode%2Did}/bankaccounts{?BankId*,CreatedEndDate*,CreatedStartDate*,CurrencyCode*,Id*,IsPrimary*,Limit*,Number*,Page*,SortBy*,SortDirection*,UpdatedEndDate*,UpdatedStartDate*}", rawUrl)
+        public BankAccountsRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/customer/{customerCode%2Did}/bankAccounts", rawUrl)
         {
         }
         /// <summary>
