@@ -10,7 +10,7 @@ using System;
 namespace Nexus.Casp.Client.Customer.Item.Comments.Item
 {
     /// <summary>
-    /// Builds and executes requests for operations under \customer\{customerCode-id}\comments\{id}
+    /// Builds and executes requests for operations under \customer\{customerCode}\comments\{id}
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
     public partial class CommentsItemRequestBuilder : BaseRequestBuilder
@@ -25,7 +25,7 @@ namespace Nexus.Casp.Client.Customer.Item.Comments.Item
         /// </summary>
         /// <param name="pathParameters">Path parameters for the request</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>
-        public CommentsItemRequestBuilder(Dictionary<string, object> pathParameters, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/customer/{customerCode%2Did}/comments/{id}", pathParameters)
+        public CommentsItemRequestBuilder(Dictionary<string, object> pathParameters, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/customer/{customerCode}/comments/{id}", pathParameters)
         {
         }
         /// <summary>
@@ -33,7 +33,7 @@ namespace Nexus.Casp.Client.Customer.Item.Comments.Item
         /// </summary>
         /// <param name="rawUrl">The raw URL to use for the request builder.</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>
-        public CommentsItemRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/customer/{customerCode%2Did}/comments/{id}", rawUrl)
+        public CommentsItemRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/customer/{customerCode}/comments/{id}", rawUrl)
         {
         }
     }

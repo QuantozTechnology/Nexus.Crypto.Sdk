@@ -12,7 +12,7 @@ using System;
 namespace Nexus.Casp.Client.Customer.Item.Comments.Item.History
 {
     /// <summary>
-    /// Builds and executes requests for operations under \customer\{customerCode-id}\comments\{id}\history
+    /// Builds and executes requests for operations under \customer\{customerCode}\comments\{id}\history
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
     public partial class HistoryRequestBuilder : BaseRequestBuilder
@@ -22,7 +22,7 @@ namespace Nexus.Casp.Client.Customer.Item.Comments.Item.History
         /// </summary>
         /// <param name="pathParameters">Path parameters for the request</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>
-        public HistoryRequestBuilder(Dictionary<string, object> pathParameters, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/customer/{customerCode%2Did}/comments/{id}/history{?limit*,page*}", pathParameters)
+        public HistoryRequestBuilder(Dictionary<string, object> pathParameters, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/customer/{customerCode}/comments/{id}/history{?limit*,page*}", pathParameters)
         {
         }
         /// <summary>
@@ -30,7 +30,7 @@ namespace Nexus.Casp.Client.Customer.Item.Comments.Item.History
         /// </summary>
         /// <param name="rawUrl">The raw URL to use for the request builder.</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>
-        public HistoryRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/customer/{customerCode%2Did}/comments/{id}/history{?limit*,page*}", rawUrl)
+        public HistoryRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/customer/{customerCode}/comments/{id}/history{?limit*,page*}", rawUrl)
         {
         }
         /// <summary>

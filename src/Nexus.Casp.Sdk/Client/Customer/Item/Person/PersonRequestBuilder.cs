@@ -13,7 +13,7 @@ using System;
 namespace Nexus.Casp.Client.Customer.Item.Person
 {
     /// <summary>
-    /// Builds and executes requests for operations under \customer\{customerCode-id}\person
+    /// Builds and executes requests for operations under \customer\{customerCode}\person
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
     public partial class PersonRequestBuilder : BaseRequestBuilder
@@ -35,7 +35,7 @@ namespace Nexus.Casp.Client.Customer.Item.Person
         /// </summary>
         /// <param name="pathParameters">Path parameters for the request</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>
-        public PersonRequestBuilder(Dictionary<string, object> pathParameters, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/customer/{customerCode%2Did}/person{?CreatedEndDate*,CreatedStartDate*,Id*,Limit*,Page*,SortBy*,SortDirection*,UpdatedEndDate*,UpdatedStartDate*}", pathParameters)
+        public PersonRequestBuilder(Dictionary<string, object> pathParameters, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/customer/{customerCode}/person{?CreatedEndDate*,CreatedStartDate*,Id*,Limit*,Page*,SortBy*,SortDirection*,UpdatedEndDate*,UpdatedStartDate*}", pathParameters)
         {
         }
         /// <summary>
@@ -43,7 +43,7 @@ namespace Nexus.Casp.Client.Customer.Item.Person
         /// </summary>
         /// <param name="rawUrl">The raw URL to use for the request builder.</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>
-        public PersonRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/customer/{customerCode%2Did}/person{?CreatedEndDate*,CreatedStartDate*,Id*,Limit*,Page*,SortBy*,SortDirection*,UpdatedEndDate*,UpdatedStartDate*}", rawUrl)
+        public PersonRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/customer/{customerCode}/person{?CreatedEndDate*,CreatedStartDate*,Id*,Limit*,Page*,SortBy*,SortDirection*,UpdatedEndDate*,UpdatedStartDate*}", rawUrl)
         {
         }
         /// <summary>
