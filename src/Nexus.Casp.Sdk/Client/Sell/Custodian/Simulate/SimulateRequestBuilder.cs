@@ -33,6 +33,9 @@ namespace Nexus.Casp.Client.Sell.Custodian.Simulate
         public SimulateRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/sell/custodian/simulate", rawUrl)
         {
         }
+        /// <summary>
+        /// Simulate Sell Transaction
+        /// </summary>
         /// <returns>A <see cref="global::Nexus.Casp.Client.Models.CustodianSellSimulationResponseCustomResultHolder"/></returns>
         /// <param name="body">The request body</param>
         /// <param name="cancellationToken">Cancellation token to use when cancelling requests</param>
@@ -57,6 +60,9 @@ namespace Nexus.Casp.Client.Sell.Custodian.Simulate
             };
             return await RequestAdapter.SendAsync<global::Nexus.Casp.Client.Models.CustodianSellSimulationResponseCustomResultHolder>(requestInfo, global::Nexus.Casp.Client.Models.CustodianSellSimulationResponseCustomResultHolder.CreateFromDiscriminatorValue, errorMapping, cancellationToken).ConfigureAwait(false);
         }
+        /// <summary>
+        /// Simulate Sell Transaction
+        /// </summary>
         /// <returns>A <see cref="RequestInformation"/></returns>
         /// <param name="body">The request body</param>
         /// <param name="requestConfiguration">Configuration for the request such as headers, query parameters, and middleware options.</param>

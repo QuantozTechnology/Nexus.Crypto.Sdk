@@ -33,6 +33,9 @@ namespace Nexus.Casp.Client.Transactions.Custodian.Item.Callbacks
         public CallbacksRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/transactions/custodian/{transactionCode%2Did}/callbacks{?Limit*,Page*}", rawUrl)
         {
         }
+        /// <summary>
+        /// Get Transaction Callbacks
+        /// </summary>
         /// <returns>A <see cref="global::Nexus.Casp.Client.Models.CustodianTransactionNotificationCallbackResponsePagedResultCustomResultHolder"/></returns>
         /// <param name="cancellationToken">Cancellation token to use when cancelling requests</param>
         /// <param name="requestConfiguration">Configuration for the request such as headers, query parameters, and middleware options.</param>
@@ -55,6 +58,9 @@ namespace Nexus.Casp.Client.Transactions.Custodian.Item.Callbacks
             };
             return await RequestAdapter.SendAsync<global::Nexus.Casp.Client.Models.CustodianTransactionNotificationCallbackResponsePagedResultCustomResultHolder>(requestInfo, global::Nexus.Casp.Client.Models.CustodianTransactionNotificationCallbackResponsePagedResultCustomResultHolder.CreateFromDiscriminatorValue, errorMapping, cancellationToken).ConfigureAwait(false);
         }
+        /// <summary>
+        /// Get Transaction Callbacks
+        /// </summary>
         /// <returns>A <see cref="RequestInformation"/></returns>
         /// <param name="requestConfiguration">Configuration for the request such as headers, query parameters, and middleware options.</param>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
@@ -80,10 +86,11 @@ namespace Nexus.Casp.Client.Transactions.Custodian.Item.Callbacks
         {
             return new global::Nexus.Casp.Client.Transactions.Custodian.Item.Callbacks.CallbacksRequestBuilder(rawUrl, RequestAdapter);
         }
+        /// <summary>
+        /// Get Transaction Callbacks
+        /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
-        #pragma warning disable CS1591
         public partial class CallbacksRequestBuilderGetQueryParameters 
-        #pragma warning restore CS1591
         {
             #pragma warning disable CS1591
             public int? Limit { get; set; }

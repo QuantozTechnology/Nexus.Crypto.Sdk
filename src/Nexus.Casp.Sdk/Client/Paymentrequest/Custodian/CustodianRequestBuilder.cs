@@ -39,6 +39,9 @@ namespace Nexus.Casp.Client.Paymentrequest.Custodian
         public CustodianRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/paymentrequest/custodian", rawUrl)
         {
         }
+        /// <summary>
+        /// Create Payment Request
+        /// </summary>
         /// <returns>A <see cref="global::Nexus.Casp.Client.Models.CustodianPaymentRequestResponseCustomResultHolder"/></returns>
         /// <param name="body">The request body</param>
         /// <param name="cancellationToken">Cancellation token to use when cancelling requests</param>
@@ -63,6 +66,9 @@ namespace Nexus.Casp.Client.Paymentrequest.Custodian
             };
             return await RequestAdapter.SendAsync<global::Nexus.Casp.Client.Models.CustodianPaymentRequestResponseCustomResultHolder>(requestInfo, global::Nexus.Casp.Client.Models.CustodianPaymentRequestResponseCustomResultHolder.CreateFromDiscriminatorValue, errorMapping, cancellationToken).ConfigureAwait(false);
         }
+        /// <summary>
+        /// Create Payment Request
+        /// </summary>
         /// <returns>A <see cref="RequestInformation"/></returns>
         /// <param name="body">The request body</param>
         /// <param name="requestConfiguration">Configuration for the request such as headers, query parameters, and middleware options.</param>

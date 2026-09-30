@@ -33,6 +33,9 @@ namespace Nexus.Casp.Client.Sendtobucket.Custodian
         public CustodianRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/sendtobucket/custodian", rawUrl)
         {
         }
+        /// <summary>
+        /// Create SendToBucket Transaction
+        /// </summary>
         /// <returns>A <see cref="global::Nexus.Casp.Client.Models.CustodianSendInternalSimulationResponseCustomResultHolder"/></returns>
         /// <param name="body">The request body</param>
         /// <param name="cancellationToken">Cancellation token to use when cancelling requests</param>
@@ -57,6 +60,9 @@ namespace Nexus.Casp.Client.Sendtobucket.Custodian
             };
             return await RequestAdapter.SendAsync<global::Nexus.Casp.Client.Models.CustodianSendInternalSimulationResponseCustomResultHolder>(requestInfo, global::Nexus.Casp.Client.Models.CustodianSendInternalSimulationResponseCustomResultHolder.CreateFromDiscriminatorValue, errorMapping, cancellationToken).ConfigureAwait(false);
         }
+        /// <summary>
+        /// Create SendToBucket Transaction
+        /// </summary>
         /// <returns>A <see cref="RequestInformation"/></returns>
         /// <param name="body">The request body</param>
         /// <param name="requestConfiguration">Configuration for the request such as headers, query parameters, and middleware options.</param>

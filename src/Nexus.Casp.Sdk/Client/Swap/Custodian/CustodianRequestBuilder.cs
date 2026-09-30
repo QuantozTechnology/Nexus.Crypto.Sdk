@@ -39,6 +39,9 @@ namespace Nexus.Casp.Client.Swap.Custodian
         public CustodianRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/swap/custodian", rawUrl)
         {
         }
+        /// <summary>
+        /// Create Swap Transaction
+        /// </summary>
         /// <returns>A <see cref="global::Nexus.Casp.Client.Models.CustodianSwapResponseCustomResultHolder"/></returns>
         /// <param name="body">The request body</param>
         /// <param name="cancellationToken">Cancellation token to use when cancelling requests</param>
@@ -63,6 +66,9 @@ namespace Nexus.Casp.Client.Swap.Custodian
             };
             return await RequestAdapter.SendAsync<global::Nexus.Casp.Client.Models.CustodianSwapResponseCustomResultHolder>(requestInfo, global::Nexus.Casp.Client.Models.CustodianSwapResponseCustomResultHolder.CreateFromDiscriminatorValue, errorMapping, cancellationToken).ConfigureAwait(false);
         }
+        /// <summary>
+        /// Create Swap Transaction
+        /// </summary>
         /// <returns>A <see cref="RequestInformation"/></returns>
         /// <param name="body">The request body</param>
         /// <param name="requestConfiguration">Configuration for the request such as headers, query parameters, and middleware options.</param>

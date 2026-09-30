@@ -70,7 +70,7 @@ namespace Nexus.Casp.Client.Models
 #else
         public string PaymentMethodCode { get; set; }
 #endif
-        /// <summary>Optional payment reference to associate with this transaction.</summary>
+        /// <summary>Optional payment reference to associate with this transaction for reporting purposes only.This is usually an identifier of an external payment method and or bank transfer.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public string? PaymentReference { get; set; }

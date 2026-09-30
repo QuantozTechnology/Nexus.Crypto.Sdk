@@ -39,6 +39,9 @@ namespace Nexus.Casp.Client.Paymentrequest.Brokersell
         public BrokersellRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/paymentrequest/brokersell", rawUrl)
         {
         }
+        /// <summary>
+        /// Initiate Broker Payment Request
+        /// </summary>
         /// <returns>A <see cref="global::Nexus.Casp.Client.Models.BrokerSellPaymentRequestResponseCustomResultHolder"/></returns>
         /// <param name="body">The request body</param>
         /// <param name="cancellationToken">Cancellation token to use when cancelling requests</param>
@@ -63,6 +66,9 @@ namespace Nexus.Casp.Client.Paymentrequest.Brokersell
             };
             return await RequestAdapter.SendAsync<global::Nexus.Casp.Client.Models.BrokerSellPaymentRequestResponseCustomResultHolder>(requestInfo, global::Nexus.Casp.Client.Models.BrokerSellPaymentRequestResponseCustomResultHolder.CreateFromDiscriminatorValue, errorMapping, cancellationToken).ConfigureAwait(false);
         }
+        /// <summary>
+        /// Initiate Broker Payment Request
+        /// </summary>
         /// <returns>A <see cref="RequestInformation"/></returns>
         /// <param name="body">The request body</param>
         /// <param name="requestConfiguration">Configuration for the request such as headers, query parameters, and middleware options.</param>

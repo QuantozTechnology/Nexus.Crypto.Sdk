@@ -15,10 +15,10 @@ namespace Nexus.Casp.Client.Models
         /// <summary>Resulting new transaction</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
-        public global::Nexus.Casp.Client.Models.CreateCustodianTransactionResponse? Transaction { get; set; }
+        public global::Nexus.Casp.Client.Models.CreateBuyCustodianTransactionResponse? Transaction { get; set; }
 #nullable restore
 #else
-        public global::Nexus.Casp.Client.Models.CreateCustodianTransactionResponse Transaction { get; set; }
+        public global::Nexus.Casp.Client.Models.CreateBuyCustodianTransactionResponse Transaction { get; set; }
 #endif
         /// <summary>
         /// Creates a new instance of the appropriate class based on discriminator value
@@ -38,7 +38,7 @@ namespace Nexus.Casp.Client.Models
         {
             return new Dictionary<string, Action<IParseNode>>
             {
-                { "transaction", n => { Transaction = n.GetObjectValue<global::Nexus.Casp.Client.Models.CreateCustodianTransactionResponse>(global::Nexus.Casp.Client.Models.CreateCustodianTransactionResponse.CreateFromDiscriminatorValue); } },
+                { "transaction", n => { Transaction = n.GetObjectValue<global::Nexus.Casp.Client.Models.CreateBuyCustodianTransactionResponse>(global::Nexus.Casp.Client.Models.CreateBuyCustodianTransactionResponse.CreateFromDiscriminatorValue); } },
             };
         }
         /// <summary>
@@ -48,7 +48,7 @@ namespace Nexus.Casp.Client.Models
         public virtual void Serialize(ISerializationWriter writer)
         {
             if(ReferenceEquals(writer, null)) throw new ArgumentNullException(nameof(writer));
-            writer.WriteObjectValue<global::Nexus.Casp.Client.Models.CreateCustodianTransactionResponse>("transaction", Transaction);
+            writer.WriteObjectValue<global::Nexus.Casp.Client.Models.CreateBuyCustodianTransactionResponse>("transaction", Transaction);
         }
     }
 }
