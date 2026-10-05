@@ -29,6 +29,7 @@ using Nexus.Casp.Client.Paymentrequest;
 using Nexus.Casp.Client.Portfolios;
 using Nexus.Casp.Client.Prices;
 using Nexus.Casp.Client.Reserves;
+using Nexus.Casp.Client.Sanction;
 using Nexus.Casp.Client.Sell;
 using Nexus.Casp.Client.Sendinternal;
 using Nexus.Casp.Client.Sendout;
@@ -164,6 +165,11 @@ namespace Nexus.Casp.Client
         public global::Nexus.Casp.Client.Reserves.ReservesRequestBuilder Reserves
         {
             get => new global::Nexus.Casp.Client.Reserves.ReservesRequestBuilder(PathParameters, RequestAdapter);
+        }
+        /// <summary>The sanction property</summary>
+        public global::Nexus.Casp.Client.Sanction.SanctionRequestBuilder Sanction
+        {
+            get => new global::Nexus.Casp.Client.Sanction.SanctionRequestBuilder(PathParameters, RequestAdapter);
         }
         /// <summary>The sell property</summary>
         public global::Nexus.Casp.Client.Sell.SellRequestBuilder Sell
