@@ -8,10 +8,6 @@ on:
       - ".github/workflows/casp-release.yml"
   workflow_dispatch:
 
-permissions:
-  contents: write
-  packages: write
-
 concurrency:
   group: casp-release
   cancel-in-progress: false
@@ -23,6 +19,10 @@ env:
 jobs:
   release:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+      id-token: write
     steps:
       - uses: actions/checkout@v4
         with:
@@ -53,12 +53,18 @@ jobs:
       - name: Push to GitHub Packages
         env:
           NUGET_API_KEY: ${{ secrets.GITHUB_TOKEN }}
-        run: dotnet nuget push ./nupkg/*.nupkg -k "$NUGET_API_KEY" -s https://nuget.pkg.github.com/QuantozTechnology/index.json
+        run: dotnet nuget push ./nupkg/*.nupkg -k "$NUGET_API_KEY" -s https://nuget.pkg.github.com/QuantozTechnology/index.json --skip-duplicate
+
+      - name: NuGet login (OIDC)
+        id: nuget-login
+        uses: NuGet/login@8d196754b4036150537f80ac539e15c2f1028841 # v1.2.0
+        with:
+          user: ${{ secrets.NUGET_USER }}
 
       - name: Push to NuGet.org
         env:
-          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
-        run: dotnet nuget push ./nupkg/*.nupkg -k "$NUGET_API_KEY" -s https://api.nuget.org/v3/index.json
+          NUGET_API_KEY: ${{ steps.nuget-login.outputs.NUGET_API_KEY }}
+        run: dotnet nuget push ./nupkg/*.nupkg -k "$NUGET_API_KEY" -s https://api.nuget.org/v3/index.json --skip-duplicate
 
       - name: Create GitHub release
         env:
