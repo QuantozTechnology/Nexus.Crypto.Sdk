@@ -55,6 +55,11 @@ jobs:
           NUGET_API_KEY: ${{ secrets.GITHUB_TOKEN }}
         run: dotnet nuget push ./nupkg/*.nupkg -k "$NUGET_API_KEY" -s https://nuget.pkg.github.com/QuantozTechnology/index.json
 
+      - name: Push to NuGet.org
+        env:
+          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+        run: dotnet nuget push ./nupkg/*.nupkg -k "$NUGET_API_KEY" -s https://api.nuget.org/v3/index.json
+
       - name: Create GitHub release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

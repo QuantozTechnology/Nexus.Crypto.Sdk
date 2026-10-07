@@ -32,3 +32,10 @@ Calling `AddHeader` again with the same name replaces the value;
 
 The package includes portable PDB symbols and Source Link information for
 stepping into the SDK when debugging from a supported IDE.
+
+## Publishing
+
+The CASP release workflow publishes `Nexus.Casp.Sdk` to both GitHub Packages and
+nuget.org. Configure the repository Actions secret `NUGET_API_KEY` with a
+nuget.org API key authorized to push `Nexus.Casp.Sdk`. GitHub Packages continues
+to use the workflow's `GITHUB_TOKEN`. Other SDK publishing is unchanged.
