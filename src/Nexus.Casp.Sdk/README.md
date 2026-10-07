@@ -42,7 +42,9 @@ to exchange a GitHub OIDC token for a short-lived API key.
 Before running a release:
 
 1. Sign in to nuget.org and add a **Trusted Publishing** policy for the owner of
-   `Nexus.Casp.Sdk`, with publishing scopes restricted to `Nexus.Casp.Sdk`:
+   `Nexus.Casp.Sdk`, configured as follows:
+   - Push scope: **Push new packages and package versions**
+   - Glob Patterns and Packages: `Nexus.Casp.Sdk`
    - Repository owner: `QuantozTechnology`
    - Repository: `Nexus.Crypto.Sdk`
    - Workflow file: `casp-release.yml` (file name only)
