@@ -16,6 +16,7 @@ using Nexus.Casp.Client.Clawback;
 using Nexus.Casp.Client.Cryptoaddress;
 using Nexus.Casp.Client.Currencies;
 using Nexus.Casp.Client.Customer;
+using Nexus.Casp.Client.CustomerEscaped;
 using Nexus.Casp.Client.Exchanges;
 using Nexus.Casp.Client.Gift;
 using Nexus.Casp.Client.Integrations;
@@ -37,6 +38,7 @@ using Nexus.Casp.Client.Sendtobucket;
 using Nexus.Casp.Client.Swap;
 using Nexus.Casp.Client.TradePairs;
 using Nexus.Casp.Client.Transaction;
+using Nexus.Casp.Client.TransactionEscaped;
 using Nexus.Casp.Client.Transactions;
 using Nexus.Casp.Client.Transfers;
 using System.Collections.Generic;
@@ -96,10 +98,15 @@ namespace Nexus.Casp.Client
         {
             get => new global::Nexus.Casp.Client.Currencies.CurrenciesRequestBuilder(PathParameters, RequestAdapter);
         }
-        /// <summary>The customer property</summary>
+        /// <summary>The Customer property</summary>
         public global::Nexus.Casp.Client.Customer.CustomerRequestBuilder Customer
         {
             get => new global::Nexus.Casp.Client.Customer.CustomerRequestBuilder(PathParameters, RequestAdapter);
+        }
+        /// <summary>The customerEscaped property</summary>
+        public global::Nexus.Casp.Client.CustomerEscaped.CustomerEscapedRequestBuilder CustomerEscaped
+        {
+            get => new global::Nexus.Casp.Client.CustomerEscaped.CustomerEscapedRequestBuilder(PathParameters, RequestAdapter);
         }
         /// <summary>The Exchanges property</summary>
         public global::Nexus.Casp.Client.Exchanges.ExchangesRequestBuilder Exchanges
@@ -201,10 +208,15 @@ namespace Nexus.Casp.Client
         {
             get => new global::Nexus.Casp.Client.TradePairs.TradePairsRequestBuilder(PathParameters, RequestAdapter);
         }
-        /// <summary>The transaction property</summary>
+        /// <summary>The Transaction property</summary>
         public global::Nexus.Casp.Client.Transaction.TransactionRequestBuilder Transaction
         {
             get => new global::Nexus.Casp.Client.Transaction.TransactionRequestBuilder(PathParameters, RequestAdapter);
+        }
+        /// <summary>The transactionEscaped property</summary>
+        public global::Nexus.Casp.Client.TransactionEscaped.TransactionEscapedRequestBuilder TransactionEscaped
+        {
+            get => new global::Nexus.Casp.Client.TransactionEscaped.TransactionEscapedRequestBuilder(PathParameters, RequestAdapter);
         }
         /// <summary>The transactions property</summary>
         public global::Nexus.Casp.Client.Transactions.TransactionsRequestBuilder Transactions

@@ -2,7 +2,7 @@
   "descriptionHash": "741471AFF3160B9BB986F7C0F4A4003B91855C3743A92C456C734A77F887AA95BFF728AFE20E2EA039D3B934797DAC655C07D3BB48C5D089BC0ABEC1AFCD88CA",
   "descriptionLocation": "https://api.casp.quantoznexus.com/openapi/crypto/openapi.json",
   "lockFileVersion": "1.0.0",
-  "kiotaVersion": "1.35.0",
+  "kiotaVersion": "1.36.0",
   "clientClassName": "NexusClient",
   "typeAccessModifier": "Public",
   "clientNamespaceName": "Nexus.Casp.Client",
