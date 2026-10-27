@@ -35,18 +35,17 @@ public class SanctionSearchResultTests
     }
 
     [Fact]
-    public void UppercaseKeys_FillTypedProperties()
+    public void UppercaseKeys_AreReturnedByToDictionary()
     {
-        var response = Parse(Json("OFAC", "EU"));
+        var dict = Parse(Json("OFAC", "EU")).ListResults!.ToDictionary();
 
-        var ofac = response.ListResults!.OFAC!;
+        var ofac = dict["OFAC"];
         Assert.Equal("v1", ofac.Version);
         var item = Assert.Single(ofac.SearchResults!);
         Assert.Equal("John Doe", item.WholeName);
         Assert.Equal("Johnny", Assert.Single(item.Aliases!).WholeName);
-        Assert.Equal("v2", response.ListResults.EU!.Version);
-        Assert.Null(response.ListResults.NL);
-        Assert.Empty(response.ListResults.AdditionalData);
+        Assert.Equal("v2", dict["EU"].Version);
+        Assert.False(dict.ContainsKey("NL"));
     }
 
     [Fact]
@@ -54,8 +53,7 @@ public class SanctionSearchResultTests
     {
         var response = Parse(Json("ofac", "eu"));
 
-        Assert.Null(response.ListResults!.OFAC);
-        var dict = response.ListResults.ToDictionary();
+        var dict = response.ListResults!.ToDictionary();
 
         Assert.Equal(2, dict.Count);
         var ofac = dict["OFAC"];
@@ -85,7 +83,7 @@ public class SanctionSearchResultTests
     }
 
     [Fact]
-    public void GeneratedSdk_ContainsTypedSearchModels()
+    public void Sdk_ContainsTypedSearchModels()
     {
         var assembly = typeof(GetSearchResultResponse).Assembly;
 

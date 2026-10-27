@@ -14,30 +14,6 @@ namespace Nexus.Casp.Client.Models
     {
         /// <summary>Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.</summary>
         public IDictionary<string, object> AdditionalData { get; set; }
-        /// <summary>The EU property</summary>
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
-#nullable enable
-        public global::Nexus.Casp.Client.Models.GetSearchResultListResponse? EU { get; set; }
-#nullable restore
-#else
-        public global::Nexus.Casp.Client.Models.GetSearchResultListResponse EU { get; set; }
-#endif
-        /// <summary>The NL property</summary>
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
-#nullable enable
-        public global::Nexus.Casp.Client.Models.GetSearchResultListResponse? NL { get; set; }
-#nullable restore
-#else
-        public global::Nexus.Casp.Client.Models.GetSearchResultListResponse NL { get; set; }
-#endif
-        /// <summary>The OFAC property</summary>
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
-#nullable enable
-        public global::Nexus.Casp.Client.Models.GetSearchResultListResponse? OFAC { get; set; }
-#nullable restore
-#else
-        public global::Nexus.Casp.Client.Models.GetSearchResultListResponse OFAC { get; set; }
-#endif
         /// <summary>
         /// Instantiates a new <see cref="global::Nexus.Casp.Client.Models.GetSearchResultResponse_listResults"/> and sets the default values.
         /// </summary>
@@ -63,9 +39,6 @@ namespace Nexus.Casp.Client.Models
         {
             return new Dictionary<string, Action<IParseNode>>
             {
-                { "EU", n => { EU = n.GetObjectValue<global::Nexus.Casp.Client.Models.GetSearchResultListResponse>(global::Nexus.Casp.Client.Models.GetSearchResultListResponse.CreateFromDiscriminatorValue); } },
-                { "NL", n => { NL = n.GetObjectValue<global::Nexus.Casp.Client.Models.GetSearchResultListResponse>(global::Nexus.Casp.Client.Models.GetSearchResultListResponse.CreateFromDiscriminatorValue); } },
-                { "OFAC", n => { OFAC = n.GetObjectValue<global::Nexus.Casp.Client.Models.GetSearchResultListResponse>(global::Nexus.Casp.Client.Models.GetSearchResultListResponse.CreateFromDiscriminatorValue); } },
             };
         }
         /// <summary>
@@ -75,9 +48,6 @@ namespace Nexus.Casp.Client.Models
         public virtual void Serialize(ISerializationWriter writer)
         {
             if(ReferenceEquals(writer, null)) throw new ArgumentNullException(nameof(writer));
-            writer.WriteObjectValue<global::Nexus.Casp.Client.Models.GetSearchResultListResponse>("EU", EU);
-            writer.WriteObjectValue<global::Nexus.Casp.Client.Models.GetSearchResultListResponse>("NL", NL);
-            writer.WriteObjectValue<global::Nexus.Casp.Client.Models.GetSearchResultListResponse>("OFAC", OFAC);
             writer.WriteAdditionalData(AdditionalData);
         }
     }
