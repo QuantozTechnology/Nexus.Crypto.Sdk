@@ -3,7 +3,7 @@ using System.Runtime.Serialization;
 using System;
 namespace Nexus.Casp.Client.Models
 {
-    /// <summary>Transaction sub type</summary>
+    /// <summary>&lt;ul&gt;&lt;/ul&gt;</summary>
     [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
     public enum Direction
     {
