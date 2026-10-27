@@ -63,12 +63,14 @@ jobs:
             git checkout -B "$UPDATE_BRANCH"
           fi
 
-      - name: Run kiota update
-        working-directory: ${{ env.SDK_PATH }}
-        run: kiota update -o . --clean-output
+      - name: Generate client from patched OpenAPI description
+        run: scripts/regenerate-casp-client.sh
 
       - name: Build
         run: dotnet build "$SDK_PATH/Nexus.Casp.Sdk.csproj"
+
+      - name: Test
+        run: dotnet test tests/Nexus.Casp.Sdk.Tests
 
       - name: Commit changes
         id: commit
