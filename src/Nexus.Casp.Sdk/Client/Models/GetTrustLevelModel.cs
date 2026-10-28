@@ -12,6 +12,14 @@ namespace Nexus.Casp.Client.Models
     public partial class GetTrustLevelModel : IParsable
     #pragma warning restore CS1591
     {
+        /// <summary>Customer entity type restrictions of the trust level</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+        public List<global::Nexus.Casp.Client.Models.CustomerEntityType?>? AllowedCustomerEntityType { get; set; }
+#nullable restore
+#else
+        public List<global::Nexus.Casp.Client.Models.CustomerEntityType?> AllowedCustomerEntityType { get; set; }
+#endif
         /// <summary>Buy limits of the trust level</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -27,14 +35,6 @@ namespace Nexus.Casp.Client.Models
 #nullable restore
 #else
         public string Description { get; set; }
-#endif
-        /// <summary>Flags of the trust level</summary>
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
-#nullable enable
-        public global::Nexus.Casp.Client.Models.GetTrustLevelModel_flags? Flags { get; set; }
-#nullable restore
-#else
-        public global::Nexus.Casp.Client.Models.GetTrustLevelModel_flags Flags { get; set; }
 #endif
         /// <summary>Is an active trust level</summary>
         public bool? IsActive { get; set; }
@@ -82,9 +82,9 @@ namespace Nexus.Casp.Client.Models
         {
             return new Dictionary<string, Action<IParseNode>>
             {
+                { "allowedCustomerEntityType", n => { AllowedCustomerEntityType = n.GetCollectionOfEnumValues<global::Nexus.Casp.Client.Models.CustomerEntityType>()?.AsList(); } },
                 { "buyLimits", n => { BuyLimits = n.GetObjectValue<global::Nexus.Casp.Client.Models.DetailedLimits>(global::Nexus.Casp.Client.Models.DetailedLimits.CreateFromDiscriminatorValue); } },
                 { "description", n => { Description = n.GetStringValue(); } },
-                { "flags", n => { Flags = n.GetObjectValue<global::Nexus.Casp.Client.Models.GetTrustLevelModel_flags>(global::Nexus.Casp.Client.Models.GetTrustLevelModel_flags.CreateFromDiscriminatorValue); } },
                 { "isActive", n => { IsActive = n.GetBoolValue(); } },
                 { "name", n => { Name = n.GetStringValue(); } },
                 { "overallLimits", n => { OverallLimits = n.GetObjectValue<global::Nexus.Casp.Client.Models.OverallLimits>(global::Nexus.Casp.Client.Models.OverallLimits.CreateFromDiscriminatorValue); } },
@@ -99,9 +99,9 @@ namespace Nexus.Casp.Client.Models
         public virtual void Serialize(ISerializationWriter writer)
         {
             if(ReferenceEquals(writer, null)) throw new ArgumentNullException(nameof(writer));
+            writer.WriteCollectionOfEnumValues<global::Nexus.Casp.Client.Models.CustomerEntityType>("allowedCustomerEntityType", AllowedCustomerEntityType);
             writer.WriteObjectValue<global::Nexus.Casp.Client.Models.DetailedLimits>("buyLimits", BuyLimits);
             writer.WriteStringValue("description", Description);
-            writer.WriteObjectValue<global::Nexus.Casp.Client.Models.GetTrustLevelModel_flags>("flags", Flags);
             writer.WriteBoolValue("isActive", IsActive);
             writer.WriteStringValue("name", Name);
             writer.WriteObjectValue<global::Nexus.Casp.Client.Models.OverallLimits>("overallLimits", OverallLimits);
