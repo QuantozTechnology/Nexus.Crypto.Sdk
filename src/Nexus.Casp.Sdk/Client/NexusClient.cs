@@ -231,7 +231,7 @@ namespace Nexus.Casp.Client
             ApiClientBuilder.RegisterDefaultDeserializer<FormParseNodeFactory>();
             if (string.IsNullOrEmpty(RequestAdapter.BaseUrl))
             {
-                RequestAdapter.BaseUrl = "https://api.test.casp.quantoznexus.com";
+                RequestAdapter.BaseUrl = "https://api.casp.quantoznexus.com";
             }
             PathParameters.TryAdd("baseurl", RequestAdapter.BaseUrl);
         }
