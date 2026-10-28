@@ -36,6 +36,14 @@ namespace Nexus.Casp.Client.Models
 #else
         public string CryptoCode { get; set; }
 #endif
+        /// <summary>Settings required for creating a custodian based account.</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+        public global::Nexus.Casp.Client.Models.CustodianSettingsRequest? CustodianSettings { get; set; }
+#nullable restore
+#else
+        public global::Nexus.Casp.Client.Models.CustodianSettingsRequest CustodianSettings { get; set; }
+#endif
         /// <summary>Crypto address of the new account.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -52,10 +60,6 @@ namespace Nexus.Casp.Client.Models
 #else
         public string DcCode { get; set; }
 #endif
-        /// <summary>If true, generate a Nexus receive address.</summary>
-        public bool? GenerateReceiveAddress { get; set; }
-        /// <summary>If true, generate a unique Nexus receive address.</summary>
-        public bool? GenerateUniqueReceiveAddress { get; set; }
         /// <summary>IP of the customer. For logging and analytics.Deprecated: Use customer_ip_address header insteadMust be a valid IPv4 or IPv6 address. Examples: 192.168.1.1, 2001db8::1</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -101,10 +105,9 @@ namespace Nexus.Casp.Client.Models
                 { "accountType", n => { AccountType = n.GetStringValue(); } },
                 { "bucketCode", n => { BucketCode = n.GetStringValue(); } },
                 { "cryptoCode", n => { CryptoCode = n.GetStringValue(); } },
+                { "custodianSettings", n => { CustodianSettings = n.GetObjectValue<global::Nexus.Casp.Client.Models.CustodianSettingsRequest>(global::Nexus.Casp.Client.Models.CustodianSettingsRequest.CreateFromDiscriminatorValue); } },
                 { "customerCryptoAddress", n => { CustomerCryptoAddress = n.GetStringValue(); } },
                 { "dcCode", n => { DcCode = n.GetStringValue(); } },
-                { "generateReceiveAddress", n => { GenerateReceiveAddress = n.GetBoolValue(); } },
-                { "generateUniqueReceiveAddress", n => { GenerateUniqueReceiveAddress = n.GetBoolValue(); } },
                 { "ip", n => { Ip = n.GetStringValue(); } },
                 { "nativeAccountCode", n => { NativeAccountCode = n.GetStringValue(); } },
                 { "provider", n => { Provider = n.GetObjectValue<global::Nexus.Casp.Client.Models.AccountProvider>(global::Nexus.Casp.Client.Models.AccountProvider.CreateFromDiscriminatorValue); } },
@@ -120,10 +123,9 @@ namespace Nexus.Casp.Client.Models
             writer.WriteStringValue("accountType", AccountType);
             writer.WriteStringValue("bucketCode", BucketCode);
             writer.WriteStringValue("cryptoCode", CryptoCode);
+            writer.WriteObjectValue<global::Nexus.Casp.Client.Models.CustodianSettingsRequest>("custodianSettings", CustodianSettings);
             writer.WriteStringValue("customerCryptoAddress", CustomerCryptoAddress);
             writer.WriteStringValue("dcCode", DcCode);
-            writer.WriteBoolValue("generateReceiveAddress", GenerateReceiveAddress);
-            writer.WriteBoolValue("generateUniqueReceiveAddress", GenerateUniqueReceiveAddress);
             writer.WriteStringValue("ip", Ip);
             writer.WriteStringValue("nativeAccountCode", NativeAccountCode);
             writer.WriteObjectValue<global::Nexus.Casp.Client.Models.AccountProvider>("provider", Provider);

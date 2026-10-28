@@ -28,7 +28,7 @@ namespace Nexus.Casp.Client.Models
 #else
         public string AccountStatus { get; set; }
 #endif
-        /// <summary>Type of the account.- `Custodian`- `Broker`</summary>
+        /// <summary>Type of the account.- `Custodian`- `Broker`- `Token`- `BrokerBuyOnly`- `External`</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public string? AccountType { get; set; }
@@ -92,6 +92,14 @@ namespace Nexus.Casp.Client.Models
 #else
         public string DcReceiveAddress { get; set; }
 #endif
+        /// <summary>GUID to use in case AccountCode is missing.</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+        public string? Guid { get; set; }
+#nullable restore
+#else
+        public string Guid { get; set; }
+#endif
         /// <summary>Represents the wallet service provider information for an account,including the provider type and provider name.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -128,6 +136,7 @@ namespace Nexus.Casp.Client.Models
                 { "customerCryptoAddress", n => { CustomerCryptoAddress = n.GetStringValue(); } },
                 { "dcCode", n => { DcCode = n.GetStringValue(); } },
                 { "dcReceiveAddress", n => { DcReceiveAddress = n.GetStringValue(); } },
+                { "guid", n => { Guid = n.GetStringValue(); } },
                 { "provider", n => { Provider = n.GetObjectValue<global::Nexus.Casp.Client.Models.AccountProvider>(global::Nexus.Casp.Client.Models.AccountProvider.CreateFromDiscriminatorValue); } },
             };
         }
@@ -148,6 +157,7 @@ namespace Nexus.Casp.Client.Models
             writer.WriteStringValue("customerCryptoAddress", CustomerCryptoAddress);
             writer.WriteStringValue("dcCode", DcCode);
             writer.WriteStringValue("dcReceiveAddress", DcReceiveAddress);
+            writer.WriteStringValue("guid", Guid);
             writer.WriteObjectValue<global::Nexus.Casp.Client.Models.AccountProvider>("provider", Provider);
         }
     }

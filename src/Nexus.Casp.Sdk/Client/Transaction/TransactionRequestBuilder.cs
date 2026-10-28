@@ -10,21 +10,21 @@ using System;
 namespace Nexus.Casp.Client.Transaction
 {
     /// <summary>
-    /// Builds and executes requests for operations under \transaction
+    /// Builds and executes requests for operations under \Transaction
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
     public partial class TransactionRequestBuilder : BaseRequestBuilder
     {
-        /// <summary>Gets an item from the Nexus.Casp.Client.transaction.item collection</summary>
-        /// <param name="position">Transaction Code of the transaction to retrieve.</param>
-        /// <returns>A <see cref="global::Nexus.Casp.Client.Transaction.Item.TransactionCodeItemRequestBuilder"/></returns>
-        public global::Nexus.Casp.Client.Transaction.Item.TransactionCodeItemRequestBuilder this[string position]
+        /// <summary>Gets an item from the Nexus.Casp.Client.Transaction.item collection</summary>
+        /// <param name="position">Unique Nexus identifier of the transaction or custom identifier.</param>
+        /// <returns>A <see cref="global::Nexus.Casp.Client.Transaction.Item.WithTxCodeItemRequestBuilder"/></returns>
+        public global::Nexus.Casp.Client.Transaction.Item.WithTxCodeItemRequestBuilder this[string position]
         {
             get
             {
                 var urlTplParams = new Dictionary<string, object>(PathParameters);
-                urlTplParams.Add("transactionCode%2Did", position);
-                return new global::Nexus.Casp.Client.Transaction.Item.TransactionCodeItemRequestBuilder(urlTplParams, RequestAdapter);
+                urlTplParams.Add("txCode", position);
+                return new global::Nexus.Casp.Client.Transaction.Item.WithTxCodeItemRequestBuilder(urlTplParams, RequestAdapter);
             }
         }
         /// <summary>
@@ -32,7 +32,7 @@ namespace Nexus.Casp.Client.Transaction
         /// </summary>
         /// <param name="pathParameters">Path parameters for the request</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>
-        public TransactionRequestBuilder(Dictionary<string, object> pathParameters, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/transaction", pathParameters)
+        public TransactionRequestBuilder(Dictionary<string, object> pathParameters, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/Transaction", pathParameters)
         {
         }
         /// <summary>
@@ -40,7 +40,7 @@ namespace Nexus.Casp.Client.Transaction
         /// </summary>
         /// <param name="rawUrl">The raw URL to use for the request builder.</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>
-        public TransactionRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/transaction", rawUrl)
+        public TransactionRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/Transaction", rawUrl)
         {
         }
     }
