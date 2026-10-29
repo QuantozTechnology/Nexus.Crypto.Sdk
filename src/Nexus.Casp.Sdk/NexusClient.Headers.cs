@@ -1,5 +1,6 @@
 using System.Net.Http.Headers;
 using Microsoft.Kiota.Abstractions;
+using Nexus.Casp.Sdk;
 
 // Extends the Kiota-generated client; kept outside Client/ so `kiota update --clean-output` preserves it.
 namespace Nexus.Casp.Client;
@@ -12,6 +13,13 @@ public partial class NexusClient
     {
         _defaultRequestHeaders = httpClient.DefaultRequestHeaders;
     }
+
+    /// <summary>
+    /// Returns the Kiota request adapter used by this client. Use it to build custom request builders for
+    /// endpoints that are not part of the generated client. Requests sent through it share the base URL,
+    /// authentication, handlers and the headers added with <see cref="AddHeader"/>.
+    /// </summary>
+    public IRequestAdapter GetRequestAdapter() => RequestAdapter;
 
     /// <summary>
     /// Adds a header that is sent with every subsequent request made by this client instance,

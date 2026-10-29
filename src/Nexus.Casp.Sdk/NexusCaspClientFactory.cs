@@ -1,5 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using Microsoft.Kiota.Abstractions;
 using Microsoft.Kiota.Abstractions.Authentication;
 using Microsoft.Kiota.Http.HttpClientLibrary;
 using Nexus.Casp.Client;
@@ -18,6 +19,20 @@ public class NexusCaspClientFactory(
 
     public NexusClient GetClient()
     {
+        var (requestAdapter, httpClient) = BuildRequestAdapter();
+        return new NexusClient(requestAdapter, httpClient);
+    }
+
+    /// <summary>
+    /// Creates a request adapter configured like the one used by <see cref="GetClient"/>, for custom Kiota request builders.
+    /// Prefer <see cref="NexusClient.GetRequestAdapter"/> when headers added with <see cref="NexusClient.AddHeader"/> must be shared.
+    /// </summary>
+    public IRequestAdapter CreateRequestAdapter() => BuildRequestAdapter().RequestAdapter;
+
+    private (HttpClientRequestAdapter RequestAdapter, HttpClient HttpClient) BuildRequestAdapter()
+    {
+        KiotaDefaults.EnsureRegistered();
+
         var httpClient = httpClientFactory.CreateClient(HttpClientName);
         var authenticationProvider = CreateAuthenticationProvider();
 
@@ -31,7 +46,7 @@ public class NexusCaspClientFactory(
 
         requestAdapter.BaseUrl = baseUrl.TrimEnd('/');
 
-        return new NexusClient(requestAdapter, httpClient);
+        return (requestAdapter, httpClient);
     }
 
     private IAuthenticationProvider CreateAuthenticationProvider()
