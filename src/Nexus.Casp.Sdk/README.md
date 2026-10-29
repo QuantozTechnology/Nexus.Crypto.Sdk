@@ -35,13 +35,13 @@ stepping into the SDK when debugging from a supported IDE.
 
 ## Calling endpoints that are not in the generated client
 
-Some endpoints are hidden from the OpenAPI document and therefore not generated.
-You can call them with a hand-written Kiota request builder that reuses the
-adapter of an existing `NexusClient`:
+When you are working on an endpoint that is not (yet) part of the generated
+client and want to try it out with Kiota, you can call it with a hand-written
+request builder that reuses the adapter of an existing `NexusClient`:
 
 ```csharp
-public class MyHiddenRequestBuilder(IRequestAdapter adapter)
-    : BaseRequestBuilder(adapter, "{+baseurl}/my/hidden/endpoint", new Dictionary<string, object>
+public class MyEndpointRequestBuilder(IRequestAdapter adapter)
+    : BaseRequestBuilder(adapter, "{+baseurl}/my/new/endpoint", new Dictionary<string, object>
     {
         ["baseurl"] = adapter.BaseUrl!,
     })
@@ -54,7 +54,7 @@ public class MyHiddenRequestBuilder(IRequestAdapter adapter)
     }
 }
 
-var builder = new MyHiddenRequestBuilder(nexusClient.GetRequestAdapter());
+var builder = new MyEndpointRequestBuilder(nexusClient.GetRequestAdapter());
 ```
 
 Requests sent through `GetRequestAdapter()` share the base URL, authentication,
