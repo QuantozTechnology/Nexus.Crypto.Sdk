@@ -11,6 +11,7 @@ using Nexus.Casp.Client.Customer.Item.Data;
 using Nexus.Casp.Client.Customer.Item.Nonnativeaccount;
 using Nexus.Casp.Client.Customer.Item.Person;
 using Nexus.Casp.Client.Customer.Item.PersonalData;
+using Nexus.Casp.Client.Customer.Item.Trace;
 using Nexus.Casp.Client.Models;
 using System.Collections.Generic;
 using System.IO;
@@ -64,6 +65,11 @@ namespace Nexus.Casp.Client.Customer.Item
         public global::Nexus.Casp.Client.Customer.Item.PersonalData.PersonalDataRequestBuilder PersonalData
         {
             get => new global::Nexus.Casp.Client.Customer.Item.PersonalData.PersonalDataRequestBuilder(PathParameters, RequestAdapter);
+        }
+        /// <summary>The tracePath property</summary>
+        public global::Nexus.Casp.Client.Customer.Item.Trace.TraceRequestBuilder TracePath
+        {
+            get => new global::Nexus.Casp.Client.Customer.Item.Trace.TraceRequestBuilder(PathParameters, RequestAdapter);
         }
         /// <summary>
         /// Instantiates a new <see cref="global::Nexus.Casp.Client.Customer.Item.WithCustomerCodeItemRequestBuilder"/> and sets the default values.
