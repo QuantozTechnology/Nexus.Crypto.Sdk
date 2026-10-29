@@ -16,6 +16,8 @@ public class NexusCaspClientFactory(
     IOptions<NexusApiOptions> options)
 {
     public const string HttpClientName = "NexusApiClient";
+    public const string ApiVersionHeaderName = "api_version";
+    public const string ApiVersion = "1.2";
 
     public NexusClient GetClient()
     {
@@ -34,6 +36,11 @@ public class NexusCaspClientFactory(
         KiotaDefaults.EnsureRegistered();
 
         var httpClient = httpClientFactory.CreateClient(HttpClientName);
+        if (!httpClient.DefaultRequestHeaders.Contains(ApiVersionHeaderName))
+        {
+            httpClient.DefaultRequestHeaders.TryAddWithoutValidation(ApiVersionHeaderName, ApiVersion);
+        }
+
         var authenticationProvider = CreateAuthenticationProvider();
 
         var requestAdapter = new HttpClientRequestAdapter(authenticationProvider, httpClient: httpClient);
