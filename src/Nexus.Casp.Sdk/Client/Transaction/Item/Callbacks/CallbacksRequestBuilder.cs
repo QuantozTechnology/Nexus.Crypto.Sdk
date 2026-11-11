@@ -12,7 +12,7 @@ using System;
 namespace Nexus.Casp.Client.Transaction.Item.Callbacks
 {
     /// <summary>
-    /// Builds and executes requests for operations under \Transaction\{txCode}\callbacks
+    /// Builds and executes requests for operations under \transaction\{transactionCode-id}\callbacks
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
     public partial class CallbacksRequestBuilder : BaseRequestBuilder
@@ -22,7 +22,7 @@ namespace Nexus.Casp.Client.Transaction.Item.Callbacks
         /// </summary>
         /// <param name="pathParameters">Path parameters for the request</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>
-        public CallbacksRequestBuilder(Dictionary<string, object> pathParameters, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/Transaction/{txCode}/callbacks{?limit*,page*}", pathParameters)
+        public CallbacksRequestBuilder(Dictionary<string, object> pathParameters, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/transaction/{transactionCode%2Did}/callbacks{?limit*,page*}", pathParameters)
         {
         }
         /// <summary>
@@ -30,7 +30,7 @@ namespace Nexus.Casp.Client.Transaction.Item.Callbacks
         /// </summary>
         /// <param name="rawUrl">The raw URL to use for the request builder.</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>
-        public CallbacksRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/Transaction/{txCode}/callbacks{?limit*,page*}", rawUrl)
+        public CallbacksRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/transaction/{transactionCode%2Did}/callbacks{?limit*,page*}", rawUrl)
         {
         }
         /// <summary>
