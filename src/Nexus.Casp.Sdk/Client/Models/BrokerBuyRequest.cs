@@ -76,14 +76,6 @@ namespace Nexus.Casp.Client.Models
 #else
         public global::Nexus.Casp.Client.Models.BrokerBuyRequest_data Data { get; set; }
 #endif
-        /// <summary>Must start with a letter or digit (A-Z, a-z, or 0-9), and can only consist of A-Z a-z 0-9 space , . / # &apos; -</summary>
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
-#nullable enable
-        public string? DestinationAddress { get; set; }
-#nullable restore
-#else
-        public string DestinationAddress { get; set; }
-#endif
         /// <summary>The amount of fiat currency the brokerbuy transaction should be created for.</summary>
         public decimal? FiatValue { get; set; }
         /// <summary>Code of the payment method which the transaction is processed with.</summary>
@@ -132,7 +124,6 @@ namespace Nexus.Casp.Client.Models
                 { "currencyCode", n => { CurrencyCode = n.GetStringValue(); } },
                 { "customerCode", n => { CustomerCode = n.GetStringValue(); } },
                 { "data", n => { Data = n.GetObjectValue<global::Nexus.Casp.Client.Models.BrokerBuyRequest_data>(global::Nexus.Casp.Client.Models.BrokerBuyRequest_data.CreateFromDiscriminatorValue); } },
-                { "destinationAddress", n => { DestinationAddress = n.GetStringValue(); } },
                 { "fiatValue", n => { FiatValue = n.GetDecimalValue(); } },
                 { "paymentMethodCode", n => { PaymentMethodCode = n.GetStringValue(); } },
                 { "paymentReference", n => { PaymentReference = n.GetStringValue(); } },
@@ -155,7 +146,6 @@ namespace Nexus.Casp.Client.Models
             writer.WriteStringValue("currencyCode", CurrencyCode);
             writer.WriteStringValue("customerCode", CustomerCode);
             writer.WriteObjectValue<global::Nexus.Casp.Client.Models.BrokerBuyRequest_data>("data", Data);
-            writer.WriteStringValue("destinationAddress", DestinationAddress);
             writer.WriteDecimalValue("fiatValue", FiatValue);
             writer.WriteStringValue("paymentMethodCode", PaymentMethodCode);
             writer.WriteStringValue("paymentReference", PaymentReference);
