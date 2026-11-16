@@ -33,6 +33,35 @@ Calling `AddHeader` again with the same name replaces the value;
 The package includes portable PDB symbols and Source Link information for
 stepping into the SDK when debugging from a supported IDE.
 
+## Calling endpoints that are not in the generated client
+
+When you are working on an endpoint that is not (yet) part of the generated
+client and want to try it out with Kiota, you can call it with a hand-written
+request builder that reuses the adapter of an existing `NexusClient`:
+
+```csharp
+public class MyEndpointRequestBuilder(IRequestAdapter adapter)
+    : BaseRequestBuilder(adapter, "{+baseurl}/my/new/endpoint", new Dictionary<string, object>
+    {
+        ["baseurl"] = adapter.BaseUrl!,
+    })
+{
+    public Task PostAsync(Stream jsonBody, CancellationToken ct = default)
+    {
+        var info = new RequestInformation(Method.POST, UrlTemplate, PathParameters);
+        info.SetStreamContent(jsonBody, "application/json");
+        return RequestAdapter.SendNoContentAsync(info, cancellationToken: ct);
+    }
+}
+
+var builder = new MyEndpointRequestBuilder(nexusClient.GetRequestAdapter());
+```
+
+Requests sent through `GetRequestAdapter()` share the base URL, authentication,
+handlers and the headers added with `AddHeader`. Prefer it over
+`NexusCaspClientFactory.CreateRequestAdapter()` when you need headers shared
+with an existing client; `CreateRequestAdapter()` returns a new adapter on its own `HttpClient`.
+
 ## Publishing
 
 The CASP release workflow publishes `Nexus.Casp.Sdk` to both GitHub Packages and

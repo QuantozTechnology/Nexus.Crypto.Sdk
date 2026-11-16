@@ -1,5 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using Microsoft.Kiota.Abstractions;
 using Microsoft.Kiota.Abstractions.Authentication;
 using Microsoft.Kiota.Http.HttpClientLibrary;
 using Nexus.Casp.Client;
@@ -15,10 +16,31 @@ public class NexusCaspClientFactory(
     IOptions<NexusApiOptions> options)
 {
     public const string HttpClientName = "NexusApiClient";
+    public const string ApiVersionHeaderName = "api_version";
+    public const string ApiVersion = "1.2";
 
     public NexusClient GetClient()
     {
+        var (requestAdapter, httpClient) = BuildRequestAdapter();
+        return new NexusClient(requestAdapter, httpClient);
+    }
+
+    /// <summary>
+    /// Creates a request adapter configured like the one used by <see cref="GetClient"/>, for custom Kiota request builders.
+    /// Prefer <see cref="NexusClient.GetRequestAdapter"/> when headers added with <see cref="NexusClient.AddHeader"/> must be shared.
+    /// </summary>
+    public IRequestAdapter CreateRequestAdapter() => BuildRequestAdapter().RequestAdapter;
+
+    private (HttpClientRequestAdapter RequestAdapter, HttpClient HttpClient) BuildRequestAdapter()
+    {
+        KiotaDefaults.EnsureRegistered();
+
         var httpClient = httpClientFactory.CreateClient(HttpClientName);
+        if (!httpClient.DefaultRequestHeaders.Contains(ApiVersionHeaderName))
+        {
+            httpClient.DefaultRequestHeaders.TryAddWithoutValidation(ApiVersionHeaderName, ApiVersion);
+        }
+
         var authenticationProvider = CreateAuthenticationProvider();
 
         var requestAdapter = new HttpClientRequestAdapter(authenticationProvider, httpClient: httpClient);
@@ -31,7 +53,7 @@ public class NexusCaspClientFactory(
 
         requestAdapter.BaseUrl = baseUrl.TrimEnd('/');
 
-        return new NexusClient(requestAdapter, httpClient);
+        return (requestAdapter, httpClient);
     }
 
     private IAuthenticationProvider CreateAuthenticationProvider()

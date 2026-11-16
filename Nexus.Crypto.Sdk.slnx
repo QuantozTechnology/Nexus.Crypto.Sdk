@@ -13,6 +13,7 @@
     <Project Path="src/Nexus.Crypto.SDK/Nexus.Crypto.SDK.csproj" />
   </Folder>
   <Folder Name="/tests/">
+    <Project Path="tests/Nexus.Casp.Sdk.Tests/Nexus.Casp.Sdk.Tests.csproj" />
     <Project Path="tests/Nexus.Crypto.SDK.Tests/Nexus.Crypto.SDK.Tests.csproj" />
   </Folder>
 </Solution>
