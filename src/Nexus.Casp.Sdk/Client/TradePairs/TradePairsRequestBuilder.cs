@@ -49,20 +49,20 @@ namespace Nexus.Casp.Client.TradePairs
         /// <summary>
         /// List tradePairs
         /// </summary>
-        /// <returns>A <see cref="global::Nexus.Casp.Client.Models.GetTradePairCustomResultHolder"/></returns>
+        /// <returns>A <see cref="global::Nexus.Casp.Client.Models.TradePairItemArrayCustomResultHolder"/></returns>
         /// <param name="cancellationToken">Cancellation token to use when cancelling requests</param>
         /// <param name="requestConfiguration">Configuration for the request such as headers, query parameters, and middleware options.</param>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
-        public async Task<global::Nexus.Casp.Client.Models.GetTradePairCustomResultHolder?> GetAsync(Action<RequestConfiguration<DefaultQueryParameters>>? requestConfiguration = default, CancellationToken cancellationToken = default)
+        public async Task<global::Nexus.Casp.Client.Models.TradePairItemArrayCustomResultHolder?> GetAsync(Action<RequestConfiguration<DefaultQueryParameters>>? requestConfiguration = default, CancellationToken cancellationToken = default)
         {
 #nullable restore
 #else
-        public async Task<global::Nexus.Casp.Client.Models.GetTradePairCustomResultHolder> GetAsync(Action<RequestConfiguration<DefaultQueryParameters>> requestConfiguration = default, CancellationToken cancellationToken = default)
+        public async Task<global::Nexus.Casp.Client.Models.TradePairItemArrayCustomResultHolder> GetAsync(Action<RequestConfiguration<DefaultQueryParameters>> requestConfiguration = default, CancellationToken cancellationToken = default)
         {
 #endif
             var requestInfo = ToGetRequestInformation(requestConfiguration);
-            return await RequestAdapter.SendAsync<global::Nexus.Casp.Client.Models.GetTradePairCustomResultHolder>(requestInfo, global::Nexus.Casp.Client.Models.GetTradePairCustomResultHolder.CreateFromDiscriminatorValue, default, cancellationToken).ConfigureAwait(false);
+            return await RequestAdapter.SendAsync<global::Nexus.Casp.Client.Models.TradePairItemArrayCustomResultHolder>(requestInfo, global::Nexus.Casp.Client.Models.TradePairItemArrayCustomResultHolder.CreateFromDiscriminatorValue, default, cancellationToken).ConfigureAwait(false);
         }
         /// <summary>
         /// List tradePairs

@@ -80,6 +80,14 @@ namespace Nexus.Casp.Client.Models
 #else
         public string PaymentReference { get; set; }
 #endif
+        /// <summary>Must start with a letter or digit (A-Z, a-z, or 0-9), and can only consist of A-Z a-z 0-9 space , . / # &apos; -</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+        public string? ReceiveAddress { get; set; }
+#nullable restore
+#else
+        public string ReceiveAddress { get; set; }
+#endif
         /// <summary>The SELL price at which the crypto currency will be valued.**Please note** the fixed price is subject to some benchmarks configurable on the select payment method.Default ranges:- 5% price increase allowed- 10% price reduction allowed</summary>
         public decimal? RequestedPrice { get; set; }
         /// <summary>
@@ -110,6 +118,7 @@ namespace Nexus.Casp.Client.Models
                 { "fiatValue", n => { FiatValue = n.GetDecimalValue(); } },
                 { "paymentMethodCode", n => { PaymentMethodCode = n.GetStringValue(); } },
                 { "paymentReference", n => { PaymentReference = n.GetStringValue(); } },
+                { "receiveAddress", n => { ReceiveAddress = n.GetStringValue(); } },
                 { "requestedPrice", n => { RequestedPrice = n.GetDecimalValue(); } },
             };
         }
@@ -130,6 +139,7 @@ namespace Nexus.Casp.Client.Models
             writer.WriteDecimalValue("fiatValue", FiatValue);
             writer.WriteStringValue("paymentMethodCode", PaymentMethodCode);
             writer.WriteStringValue("paymentReference", PaymentReference);
+            writer.WriteStringValue("receiveAddress", ReceiveAddress);
             writer.WriteDecimalValue("requestedPrice", RequestedPrice);
         }
     }
